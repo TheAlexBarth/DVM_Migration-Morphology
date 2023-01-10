@@ -16,7 +16,7 @@ library(ggplot2)
 library(ggpubr)
 source('../R/tools.R')
 
-cluster_cope <- readRDS('../data/03_cluster-conc-50mBins.rds')
+cluster_cope <- readRDS('../data/03_cluster-conc.rds')
 uvp_data  <- readRDS('../data/01_uvp-trim-final.rds') |> trim_to_cope()
 
 cast_times <- list(day = uvp_data$meta$profileid[which(uvp_data$meta$tod == 'day')],
