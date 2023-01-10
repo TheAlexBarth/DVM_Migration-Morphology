@@ -1,5 +1,5 @@
 ###
-# Occurence probability by environmental factors #########
+# Occurrence probability by environmental factors #########
 ###
 
 rm(list = ls())
@@ -334,7 +334,7 @@ for(i in 1:length(bmeso_mod_data)) {
 # |- Save Model Output ------------------------------
 
 saveRDS(db_list, './data/06_dblist.rds')
-saveRDS(epi_mod_output, './data/06_occ-model-output_epi.rds')
-saveRDS(tmeso_mod_output, './data/06_occ-model-output_tmeso.rds')
-saveRDS(bmeso_mod_output, './data/06_occ-model-output_bmeso.rds')
+saveRDS(epi_mod_output, './data/06_occ-model-output_epi_large.rds')
+saveRDS(tmeso_mod_output, './data/06_occ-model-output_tmeso_large.rds')
+saveRDS(bmeso_mod_output, './data/06_occ-model-output_bmeso_large.rds')
 saveRDS(environ_summary, './data/06_enviornmental-summary.rds')

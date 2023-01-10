@@ -207,9 +207,7 @@ for(i in 1:length(bmeso_mod_data)) {
 
 # |- Save Model Output ------------------------------
 
-saveRDS(list(
-  db = db_list,
-  epi = epi_mod_output,
-  tmeso = tmeso_mod_output,
-  bmeso = bmeso_mod_output
-), './data/05_cluster-occ-model-output.rds')
+saveRDS(db_list, './data/05_db-list.rds')
+saveRDS(epi_mod_output, './data/05_cluster-occ-mod-epi.rds')
+saveRDS(tmeso_mod_output, './data/05_cluster-occ-mod-tmeso.rds')
+saveRDS(bmeso_mod_output, './data/05_cluster-occ-mod-bmeso.rds')

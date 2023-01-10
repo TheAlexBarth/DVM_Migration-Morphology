@@ -9,9 +9,9 @@ library(wiqid)
 source('./R/tools.R')
 
 db_list <- readRDS('./data/06_dblist.rds')
-epi_mod <- readRDS('./data/06_occ-model-output_epi.rds')
-tmeso_mod <- readRDS('./data/06_occ-model-output_tmeso.rds')
-bmeso_mod <- readRDS('./data/06_occ-model-output_bmeso.rds')
+epi_mod <- readRDS('./data/06_occ-model-output_epi_large.rds')
+tmeso_mod <- readRDS('./data/06_occ-model-output_tmeso_large.rds')
+bmeso_mod <- readRDS('./data/06_occ-model-output_bmeso_large.rds')
 environ_summary <- readRDS('./data/06_enviornmental-summary.rds')
 
 

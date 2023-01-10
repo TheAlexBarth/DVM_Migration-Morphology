@@ -8,7 +8,12 @@ library(ggpubr)
 library(wiqid)
 source('./R/tools.R')
 
-mod_output <- readRDS('./data/05_cluster-occ-model-output.rds')
+
+db <- readRDS('./data/05_db-list.rds')
+epi_mod_output <- readRDS('./data/05_cluster-occ-mod-epi.rds')
+tmeso_mod_output <- readRDS('./data/05_cluster-occ-mod-tmeso.rds')
+bmeso_mod_output <- readRDS('./data/05_cluster-occ-mod-bmeso.rds')
+
 
 # |- Extact credible intervals from models -------------
 
@@ -34,15 +39,15 @@ occ_pred <- vector('list', 4)
 for(i in 1:4) {
   for(tod in c('day', 'night')) {
     occ_pred[[i]][[tod]] <- do.call(rbind,list(
-      psi_extract(mod_output$epi[[i]],
+      psi_extract(epi_mod_output[[i]],
                   tod, 0, 200,
-                  db = mod_output$db[[i]]),
-      psi_extract(mod_output$tmeso[[i]],
+                  db = db[[i]]),
+      psi_extract(tmeso_mod_output[[i]],
                   tod, 200, 600,
-                  db = mod_output$db[[i]]),
-      psi_extract(mod_output$bmeso[[i]],
+                  db = db[[i]]),
+      psi_extract(bmeso_mod_output[[i]],
                   tod, 600, 1200,
-                  db = mod_output$db[[i]]))) |> 
+                  db = db[[i]]))) |> 
       bin_format()
   }
 }
@@ -83,31 +88,31 @@ ribbon_plot <- function(cluster) {
   return(out_plot)
 }
 
-point_plot <- function(cluster) {
-  plot_data <- occ_pred[occ_pred$cluster == cluster,]
-  
-  out_plot <- ggplot(plot_data) +
-    geom_pointrange(aes(x = mp,
-                        y = mean,
-                        ymin = low,
-                        ymax = high,
-                        color = tod),
-                    position = position_dodge(width = 5)) +
-    scale_x_reverse() +
-    scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
-    scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
-    coord_flip()+
-    theme_pubr() +
-    labs(x = 'Depth [m]', y = "Occupancy") +
-    theme(legend.position = 'none')
-  return(out_plot)
-}
+# point_plot <- function(cluster) {
+#   plot_data <- occ_pred[occ_pred$cluster == cluster,]
+#   
+#   out_plot <- ggplot(plot_data) +
+#     geom_pointrange(aes(x = mp,
+#                         y = mean,
+#                         ymin = low,
+#                         ymax = high,
+#                         color = tod),
+#                     position = position_dodge(width = 5)) +
+#     scale_x_reverse() +
+#     scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+#     scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+#     coord_flip()+
+#     theme_pubr() +
+#     labs(x = 'Depth [m]', y = "Occupancy") +
+#     theme(legend.position = 'none')
+#   return(out_plot)
+# }
 
 ribbon_occupancy <- vector('list',4)
-point_occupancy <- vector('list', 4)
+# point_occupancy <- vector('list', 4)
 for(i in 1:4) {
   ribbon_occupancy[[i]] <- ribbon_plot(i)
-  point_occupancy[[i]] <- point_plot(i)
+  # point_occupancy[[i]] <- point_plot(i)
 }
 
 ggarrange(ribbon_occupancy[[1]],
@@ -116,8 +121,8 @@ ggarrange(ribbon_occupancy[[1]],
           ribbon_occupancy[[4]] + theme(axis.title.y = element_blank()),
           ncol = 4)
 
-ggarrange(point_occupancy[[1]],
-          point_occupancy[[2]] + theme(axis.title.y = element_blank()),
-          point_occupancy[[3]] + theme(axis.title.y = element_blank()),
-          point_occupancy[[4]] + theme(axis.title.y = element_blank()),
-          ncol = 4)
+# ggarrange(point_occupancy[[1]],
+#           point_occupancy[[2]] + theme(axis.title.y = element_blank()),
+#           point_occupancy[[3]] + theme(axis.title.y = element_blank()),
+#           point_occupancy[[4]] + theme(axis.title.y = element_blank()),
+#           ncol = 4)

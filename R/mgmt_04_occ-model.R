@@ -59,7 +59,6 @@ cc_df$db <- cc_df$db |> factor(levels=unique(cc_df$db))
 
 #trim no-sampled regions
 cc_df <- cc_df[-which(is.na(cc_df$vol_sampled)),]
-saveRDS(cc_df, './data/04_count-data-20mBins.rds')
 
 
 
@@ -102,17 +101,16 @@ get_db <- function(tod) {
   
   db_out <- NULL
   for(j in 1:length(row_len)) {
-    db_out <- c(db_out, rep(names(detection_list)[j], row_len[j]))
+    db_out <- c(db_out, rep(names(detection_list[[tod]])[j], row_len[j]))
   }
   return(db_out)
 }
 
+db <- list(
+  day = get_db('day'),
+  night = get_db('night')
+)
 
-
-db <- vector('list', 2)
-
-db[['day']] <- get_db('day')
-db[['night']] <- get_db('night')
 
 vol_matrix <- list()
 vol_matrix$day <- detection_list$day |> 
