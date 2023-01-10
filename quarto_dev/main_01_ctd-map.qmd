@@ -1,0 +1,21 @@
+---
+title: CTD & UVP Profile Locations 
+---
+
+
+```{r}
+ctd_map <- ggplot()+
+  geom_sf(data = world, fill = 'green')+
+  geom_point(aes(x = -trim_loc$lon, y = trim_loc$lat,
+                 shape = trim_loc$tod, col = trim_loc$tod),
+             position = position_jitter(width = .05, height = 0.05))+
+  coord_sf(xlim = c(-65,-62.75), ylim = c(30.5,32.55))+
+  theme_bw()+
+  labs(x = "",y = "", shape = "", col = "")+
+  scale_color_manual(values = c('beige','black'))+
+  theme(panel.background = element_rect(fill = 'cornflowerblue'),
+        axis.text.x = element_text(angle = 45, hjust = c(1,1)),
+        legend.position = 'bottom')
+
+```
+

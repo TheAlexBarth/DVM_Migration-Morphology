@@ -1,0 +1,77 @@
+---
+title: Weighted Mean Depth Across cruises
+---
+
+
+Shown are the weighted mean depths across cruises. Missing values are removed.
+
+```{r, fig.height=10, fig.width=6, fig.out = '100%'}
+
+#| column: screen-inset
+
+rm(list = ls())
+library(EcotaxaTools)
+library(ggplot2)
+library(ggpubr)
+library(lubridate)
+source('../R/tools.R')
+
+# |- load in data ---------------------------------------------
+wmd_data <- readRDS('../data/04_wmd-by-cruise-seasonal.rds')
+
+
+# |- format wmd CIs for each cruise --------------------------
+
+# honestly, at this point I've created a ridiculous data structure
+# the list is too deep - it is a messy tree
+# there has to be a better way but this is going to just be an ugly solution
+# I have re-sampled distributions in a tree-like list. I then need to get the quantiles
+# and force it all into a top-level dataframe
+
+wmd_df <- wmd_df_construct(wmd_data, 'season')
+
+wmd_df <- wmd_df[-which(wmd_df$metric == 'dn_diff'),]
+
+###
+# Plotting ################
+###
+
+# setting up a plotting shell
+plot_list <- vector('list',length(unique(wmd_df$cluster)))
+names(plot_list) <- unique(wmd_df$cluster)
+
+for(i in 1:length(plot_list)) {
+  
+  clust <- names(plot_list)[i]
+  
+  plot_list[[i]]<- ggplot(wmd_df[wmd_df$cluster == clust,]) +
+    geom_point(aes(x = season,
+                   y = mid,
+                   color = metric),
+               position = position_dodge(width = .5),
+               size = 2) +
+    geom_errorbar(aes(x = season,
+                      ymin = low,
+                      ymax = high,
+                      color = metric),
+                  position = position_dodge(width=.5),
+                  size = 1,
+                  width = 0.5) +
+    scale_y_reverse(limits = c(600,0)) +
+    labs(y = 'Depth [m]', col = "", x = "")+
+    theme_pubr()+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+
+}
+
+ggarrange(plot_list$c1 + 
+            theme(axis.text.x = element_blank()),
+          plot_list$c2 + 
+            theme(axis.text.x = element_blank()),
+          plot_list$c3 + 
+            theme(axis.text.x = element_blank()),
+          plot_list$c4,
+          ncol =1, heights = c(.8,.8,.8,1),
+          common.legend = T)
+
+```

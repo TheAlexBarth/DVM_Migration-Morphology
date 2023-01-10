@@ -1,0 +1,119 @@
+---
+title: DVM Seasonality
+---
+
+To assess changes in DVM over seasons, the amplitude was estimated using a bin-constrained boostrapping approach. 
+
+```{r, fig.width=10, fig.height=6, fig.out = '100%'}
+
+#| column: body-outset
+
+rm(list = ls())
+library(EcotaxaTools)
+library(ggplot2)
+library(ggpubr)
+library(lubridate)
+source('../R/tools.R')
+
+# |- load in data ---------------------------------------------
+wmd_data <- readRDS('../data/04_wmd-by-cruise.rds')
+uvp_data_meta <- readRDS('../data/01_uvp-trim-final.rds')$meta
+uvp_data_meta$cruise_id <- paste0(uvp_data_meta$stationid,
+                                  uvp_data_meta$programid)
+
+uvp_data_meta$dateabv <- paste(year(uvp_data_meta$sampledate),
+                               month(uvp_data_meta$sampledate),
+                               '01', sep = '-') |> 
+  as.Date()
+
+
+# |- format wmd CIs for each cruise --------------------------
+
+# honestly, at this point I've created a ridiculous data structure
+# the list is too deep - it is a messy tree
+# there has to be a better way but this is going to just be an ugly solution
+# I have re-sampled distributions in a tree-like list. I then need to get the quantiles
+# and force it all into a top-level dataframe
+
+wmd_list <- vector('list',length(wmd_data))
+names(wmd_list) <- names(wmd_data)
+for(i in 1:length(wmd_list)) {
+  #get quantiles recursively
+  wmd_list[[i]] <- wmd_data[[i]] |> 
+    lapply(function(x) lapply(x, quantile, probs = c(0.025,.5,0.975), na.rm = T)) 
+  
+  
+  wmd_list[[i]] <- wmd_list[[i]] |> 
+    lapply(function(x) lapply(x, quant_to_df)) |> 
+    lapply(list_to_tib, 'metric') |> 
+    list_to_tib('cluster')
+}
+wmd_df <- wmd_list |> list_to_tib('cruise_id')
+
+wmd_df$date <- rep(NA, nrow(wmd_df))
+for(i in 1:length(unique(wmd_df$cruise_id))) {
+  cruise_temp <- unique(wmd_df$cruise_id)[i]
+  meta_idx <- which(uvp_data_meta$cruise_id == unique(wmd_df$cruise_id)[i])
+  wmd_idx <- which(wmd_df$cruise_id == unique(wmd_df$cruise_id)[i])
+  wmd_df$date[wmd_idx] <- unique(uvp_data_meta$dateabv[meta_idx])
+}
+wmd_df$date <- wmd_df$date |> as.Date(origin = '1970-01-01')
+
+
+month_df <- aggregate(list(low = wmd_df$low, 
+                           mid = wmd_df$mid, 
+                           high = wmd_df$high),
+                      by = list(metric = wmd_df$metric,
+                                cluster = wmd_df$cluster,
+                                month = month(wmd_df$date)),
+                      FUN = mean, na.rm = T)
+
+dvm_amplitude <- ggplot(month_df[month_df$metric == 'dn_diff',]) +
+  geom_point(aes(x = month,
+                 y = mid,
+                 color = cluster,
+                 shape = cluster),
+             size = 2.5,
+             position = position_dodge(.5)) +
+  geom_errorbar(aes(x = month,
+                 ymin = low,
+                 ymax = high,
+                 color = cluster),
+             size = .5,
+             width = .25,
+             position = position_dodge(.5)) + 
+  geom_hline(yintercept = 0, color = 'lightgrey', size = .5) +
+  scale_color_manual(values = gg_cbb_col(4)) +
+  labs(x = 'Month', y = 'Depth [m]', color = "") +
+  scale_x_continuous(breaks = seq(1:12)) +
+  theme_pubr()
+
+med_day_depth <- ggplot(month_df[month_df$metric == 'wmd_d',]) +
+  geom_point(aes(x = month,
+                 y = mid,
+                 color = cluster,
+                 shape = cluster),
+             size = 2.5,
+             position = position_dodge(.5)) +
+  geom_errorbar(aes(x = month,
+                 ymin = low,
+                 ymax = high,
+                 color = cluster),
+             size = .5,
+             width = .25,
+             position = position_dodge(.5)) + 
+  scale_color_manual(values = gg_cbb_col(4)) +
+  scale_x_continuous(breaks = seq(1:12),
+                     position = 'top') +
+  scale_y_reverse() +
+  labs(x = 'Month', y = 'Depth [m]', color = "") +
+  theme_pubr()
+
+
+ggarrange(dvm_amplitude + 
+            theme(axis.text.x = element_blank(),
+                  axis.title.x = element_blank()),
+          med_day_depth,
+          nrow =2,
+          common.legend = T)
+```

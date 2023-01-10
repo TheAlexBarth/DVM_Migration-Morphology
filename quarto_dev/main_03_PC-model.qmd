@@ -1,0 +1,45 @@
+---
+title: PC- Depth predictive model
+---
+
+
+```{r}
+rm(list = ls())
+library(dplyr)
+source('../r/tools.r')
+copepod <- readRDS('../data/02_cluster-copepods.rds')
+copepod <- split(copepod, f= copepod$profileid)
+
+uvp_data  <- readRDS('../data/01_uvp-trim-final.rds') |>
+  trim_to_cope()
+
+for(i in 1:length(uvp_data$zoo_files)) {
+  copepod[[i]] <- copepod[[i]] |>
+    left_join(uvp_data$zoo_files[[i]][,c('orig_id','depth_including_offset',
+                                         'major','feret','mean')],
+              by = 'orig_id')
+  
+  copepod[[i]]['tod'] <- uvp_data$meta$tod[[i]]
+  copepod[[i]]['cruise_id'] <- paste0(uvp_data$meta$stationid[[i]], 
+                                      uvp_data$meta$programid[[i]])
+  copepod[[i]]['sampledate'] <- uvp_data$meta$sampledate[[i]]
+  copepod[[i]]['year'] <- year(copepod[[i]]$sampledate)
+  copepod[[i]]['month'] <- month(copepod[[i]]$sampledate)
+  copepod[[i]]['y_mo'] <- as.Date(paste(copepod[[i]]$year,
+                                        copepod[[i]]$month,
+                                        '01', sep = '-'))
+  copepod[[i]]['season'] <- copepod[[i]]$sampledate |>
+    unique() |> 
+    season_assign()
+}
+
+copepod <- copepod |> list_to_tib('profileid')
+copepod$db <- copepod |> bin_by('Custom', c(seq(0,200,10),seq(250,1200,50)))
+trim_cope <- copepod[copepod$depth_including_offset <= 600 ,]
+
+```
+
+```{r}
+# ggplot(trim_cope) +
+#   geom_point(aes(x = ))
+```

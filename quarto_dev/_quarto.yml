@@ -1,0 +1,59 @@
+project:
+  type: website
+
+website:
+  title: "Migrator Morphology"
+  navbar:
+    background: dark
+    search: false
+    right:
+      - href: index.qmd
+        text: Home
+      - text: Main Analyses
+        menu:
+        - href: main_01_ctd_interp.qmd
+          text: Physical Backdrop
+        - href: main_02_PC-Clusters.qmd
+          text: PCA-Morphogroup clustering
+        - href: main_03_PC-model.qmd
+          text: PC-Environment Model
+        - href: main_03_Vert-Distrib.qmd
+          text: Vertical Profiles of MGs
+        - href: main_04_DVM-amplitude-seasonal.qmd
+          text: DVM Seasonality by Season
+        - href: main_04_DVM-amplitude.qmd
+          text: DVM Seasonality by Cruise
+        - href: main_05_model-seasonal.qmd
+          text: Environ Model by Seasons
+        - href: main_05_model.qmd
+          text: Environ Model by Cruise
+        
+      - text: Supplemental
+        menu:
+        - href: supp_01_ctd-by-cruise.qmd
+          text: CTD by Cruise
+        - href: supp_02_pc-extended-info.qmd
+          text: Extended PCA/Clustering Plots
+        - href: supp_03_cluster-conc.qmd
+          text: Integrated Abundancy by Morphogroup
+        - href: supp_04_wmd-by-cruise.qmd
+          text: Cruise specific WMD
+        - href: supp_04_wmd-by-season.qmd
+          text: Seasonal Specific WMD
+    tools:
+      - icon: github
+        href: https://github.com/TheAlexBarth/DMV_BATS
+      - icon: house-fill
+        href: https://thealexbarth.github.io/#about
+
+format:
+  html:
+    theme: journal
+    css: styles.css
+    code-fold: true
+    code-tools: true
+    
+execute: 
+  warning: false
+
+editor: visual

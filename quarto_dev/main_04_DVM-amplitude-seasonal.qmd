@@ -1,0 +1,104 @@
+---
+title: Weighted Mean Depth Across cruises
+---
+  
+  
+Shown are the weighted mean depths across cruises. Missing values are removed.
+
+```{r, fig.height=10, fig.width=6, fig.out = '100%'}
+
+#| column: screen-inset
+
+rm(list = ls())
+library(EcotaxaTools)
+library(ggplot2)
+library(ggpubr)
+library(lubridate)
+source('../R/tools.R')
+
+# |- load in data ---------------------------------------------
+wmd_data <- readRDS('../data/04_wmd-by-cruise-seasonal.rds')
+
+
+# |- format wmd CIs for each cruise --------------------------
+
+# honestly, at this point I've created a ridiculous data structure
+# the list is too deep - it is a messy tree
+# there has to be a better way but this is going to just be an ugly solution
+# I have re-sampled distributions in a tree-like list. I then need to get the quantiles
+# and force it all into a top-level dataframe
+
+wmd_list <- vector('list',length(wmd_data))
+names(wmd_list) <- names(wmd_data)
+for(i in 1:length(wmd_list)) {
+  #get quantiles recursively
+  wmd_list[[i]] <- wmd_data[[i]] |> 
+    lapply(function(x) lapply(x, quantile, probs = c(0.025,.5,0.975), na.rm = T)) 
+  
+  
+  wmd_list[[i]] <- wmd_list[[i]] |> 
+    lapply(function(x) lapply(x, quant_to_df)) |> 
+    lapply(list_to_tib, 'metric') |> 
+    list_to_tib('cluster')
+}
+wmd_df <- wmd_list |> list_to_tib('season')
+
+wmd_df$season <- factor(wmd_df$season,
+                        levels = c('winter',
+                                   'spring',
+                                   'summer',
+                                   'fall'))
+
+###
+# Plotting ################
+###
+
+
+dvm_amplitude <- ggplot(wmd_df[wmd_df$metric == 'dn_diff',]) +
+  geom_point(aes(x = season,
+                 y = mid,
+                 color = cluster,
+                 shape = cluster),
+             size = 2.5,
+             position = position_dodge(.5)) +
+  geom_errorbar(aes(x = season,
+                    ymin = low,
+                    ymax = high,
+                    color = cluster),
+                size = .5,
+                width = .25,
+                position = position_dodge(.5)) + 
+  geom_hline(yintercept = 0, color = 'lightgrey', size = .5) +
+  scale_color_manual(values = gg_cbb_col(4)) +
+  labs(x = '', y = 'Depth [m]', color = "", shape = "") +
+  theme_pubr()
+
+med_day_depth <- ggplot(wmd_df[wmd_df$metric == 'wmd_d',]) +
+  geom_point(aes(x = season,
+                 y = mid,
+                 color = cluster,
+                 shape = cluster),
+             size = 2.5,
+             position = position_dodge(.5)) +
+  geom_errorbar(aes(x = season,
+                    ymin = low,
+                    ymax = high,
+                    color = cluster),
+                size = .5,
+                width = .25,
+                position = position_dodge(.5)) + 
+  geom_hline(yintercept = 0, color = 'lightgrey', size = .5) +
+  scale_color_manual(values = gg_cbb_col(4)) +
+  scale_y_reverse(expand =c(0,0)) + 
+  scale_x_discrete(position = 'top') + 
+  labs(x = '', y = 'Depth [m]', color = "", shape = "") +
+  theme_pubr()
+
+
+ggarrange(dvm_amplitude + 
+            theme(axis.text.x = element_blank(),
+                  axis.title.x = element_blank()),
+          med_day_depth,
+          nrow =2,
+          common.legend = T)
+```

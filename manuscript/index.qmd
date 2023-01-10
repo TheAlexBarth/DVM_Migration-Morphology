@@ -1,0 +1,21 @@
+---
+title: |
+  Migrator Morphology: Mesozooplankton 
+format:
+  pdf:
+   number-sections: true
+date: now
+date-format: "DD MMM YYYY"
+bibliography: bibliography.bib
+execute:
+  echo: false
+  warning: false
+author:
+  - name: Alex Barth
+    orcid: 
+    affiliations:
+      - name: University of South Carolina
+  - name: Joshua Stone
+    affiliations:
+      - name: 
+---

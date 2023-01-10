@@ -1,0 +1,7 @@
+---
+title: "Migrator Morphology"
+---
+
+Diel vertical migration (DVM) is a widespread phenomenon in marine and freshwater systems. In general, DVM is described as the movement of copepods from food-rich surface waters at night to deeper, darker waters at daytime. There 
+
+Here, I investigate how diel vertical migration varies between copepods based on morphotypes determined from *in-situ* imaging.

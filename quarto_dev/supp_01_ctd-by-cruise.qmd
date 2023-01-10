@@ -1,0 +1,195 @@
+---
+title: CTD-interpolation across cruises
+---
+
+For this study, cruises were treated as a single site which was surveyed repeatedly. This approach assumes that there are no major differences in the water column so that similar profiles may be pooled. While assumption may not always hold true, so long as there are equal day/night samples in a water mass, comparison of DVM will still be valid.
+
+
+```{r, warning=FALSE}
+
+rm(list = ls())
+library(ggplot2)
+library(ggpubr)
+library(suncalc)
+library(EcotaxaTools)
+
+####
+# Data loading and set up #######
+####
+plot_values <- readRDS('../data/ctd_01_interp-grid.rds')$by_cruise
+
+# |- ctd data format -------------------------------
+ctd_data <- readRDS('../data/01_ctd-trim-final.rds')
+
+#mush all casts together
+all_casts <- ctd_data|> list_to_tib('ctd_orgfilename')
+all_casts <- all_casts[,-1]
+
+#trim mess from the data
+all_casts <- all_casts[-which(is.na(all_casts$Depth)),]
+all_casts <- all_casts[-which(is.na(all_casts$Sal)),]
+all_casts <- all_casts[-which(is.na(all_casts$DO)),]
+all_casts <- all_casts[-which(is.na(all_casts$RFU)),]
+
+#keep only shallow casts
+all_casts <- all_casts[which(all_casts$Depth < 1200),]
+
+# |- Time of Day ----------------------------------
+
+# set up
+all_casts$tod <- rep(NA, nrow(all_casts))
+all_casts$cruise <- paste0(all_casts$proj_id, all_casts$cruise_id)
+
+for(i in 1:length(ctd_data)) {
+  
+  #get time
+  casttime <- ctd_data[[i]]$Date[1]
+  
+  # assign tod
+  suntimes <- getSunlightTimes(
+    date = as.Date(casttime),
+    lat = ctd_data[[i]]$Lat[1],
+    lon = ctd_data[[i]]$Lon[1],
+    tz = 'GMT'
+  )
+  
+  if(casttime < suntimes$nauticalDawn | casttime > suntimes$nauticalDusk) {
+    tod <- 'night'
+  } else if (casttime > suntimes$nauticalDawn & casttime < suntimes$nauticalDusk) {
+    tod <- 'day'
+  } else {
+    tod <- 'twilight'
+  }
+  
+  #match to mega-df
+  all_casts$tod[all_casts$ctd_orgfilename == names(ctd_data)[i]] = tod
+}
+
+
+###
+# Plotting ################
+###
+
+#save colors
+ODV_colours <- c("#feb483", "#d31f2a", "#ffc000", "#27ab19", "#0db5e6", "#7139fe", "#d16cfa")
+
+# set up
+value_class <- function(cruise){
+  ret_list <- vector('list',4)
+  names(ret_list) <- c('Sal',"Temperature",'RFU','DO')
+  return(ret_list)
+}
+
+cruises <- unique(names(plot_values))
+plot_list <- lapply(cruises,value_class)
+names(plot_list) <- cruises
+
+# |- Loop out for all casts -----------------------------
+for(i in 1:length(plot_list)) {
+  cast_df <- all_casts[all_casts$cruise == names(plot_list)[i],]
+  
+  plot_list[[i]]$Sal <- ggplot()+
+    geom_tile(data = plot_values[[i]]$Sal,
+              aes(x = Date,
+                  y = Depth,
+                  fill = Sal)) +
+    geom_vline(data = cast_df,
+               aes(xintercept = Date,
+                   color = tod),
+               size = 1) +
+    scale_y_reverse()+
+    scale_fill_distiller(palette = 'Spectral')+
+    scale_color_manual(breaks = c('day','night'),
+                       values = c('grey','black'))+
+    labs(x = "",y = "Depth [m]", fill = "Sal [PSU]",
+         color = "")+
+    theme_pubr()+
+    theme(legend.position = 'right')+
+    coord_cartesian(expand = 0)
+  
+  plot_list[[i]]$Temperature <- ggplot()+
+    geom_tile(data = plot_values[[i]]$Temperature,
+              aes(x = Date,
+                  y = Depth,
+                  fill = Temperature)) +
+    geom_vline(data = cast_df,
+               aes(xintercept = Date,
+                   color = tod),
+               size = 1) +
+    scale_y_reverse()+
+    scale_fill_gradientn(colors = rev(ODV_colours))+
+    scale_color_manual(breaks = c('day','night'),
+                       values = c('grey','black'))+
+    labs(x = "",y = "Depth [m]", fill = "Temperature",
+         color = "")+
+    theme_pubr()+
+    theme(legend.position = 'right')+
+    coord_cartesian(expand = 0)
+  
+  plot_list[[i]]$RFU <- ggplot() + 
+    geom_tile(data = plot_values[[i]]$RFU,
+              aes(x = Date,
+                  y = Depth,
+                  fill = RFU)) +
+    geom_vline(data = cast_df,
+               aes(xintercept = Date,
+                   color = tod),
+               size = 1) +
+    scale_y_reverse()+
+    scale_fill_distiller(palette = 'BuGn',
+                         direction = 1)+
+    scale_color_manual(breaks = c('day','night'),
+                       values = c('grey','black'))+
+    labs(x = "",y = "Depth [m]", fill = "RFU",
+         color = "")+
+    theme_pubr()+
+    theme(legend.position = 'right')+
+    coord_cartesian(expand = 0)
+  
+  plot_list[[i]]$DO <- ggplot() + 
+    geom_tile(data = plot_values[[i]]$DO,
+              aes(x = Date,
+                  y = Depth,
+                  fill = DO)) +
+    geom_vline(data = cast_df,
+               aes(xintercept = Date,
+                   color = tod),
+               size = 1) +
+    scale_y_reverse()+
+    scale_fill_distiller(palette = 'GnBu',
+                         direction = 1)+
+    scale_color_manual(breaks = c('day','night'),
+                       values = c('grey','black'))+
+    labs(x = "",y = "Depth [m]", fill = "DO",
+         color = "")+
+    theme_pubr()+
+    theme(legend.position = 'right')+
+    coord_cartesian(expand = 0)
+}
+
+```
+
+```{r, fig.cap='Physical parameters across individual cruises. Vertical bars indicate CTD casts events with black indicating night and grey indicating day.',out.width='100%', fig.width=12}
+#| column: screen-inset
+
+for(i in 1:length(plot_list)) {
+  
+  outplot <- ggarrange(plot_list[[i]]$Sal + 
+                         guides(color = 'none')+
+                         theme(axis.text.x = element_blank()),
+                        plot_list[[i]]$Temperature+ 
+                         guides(color = 'none')+
+                         theme(axis.text = element_blank())+
+                         labs(y = ""),
+                        plot_list[[i]]$RFU + 
+                         guides(color = 'none'),
+                        plot_list[[i]]$DO +
+                         guides(color = 'none') +
+                         theme(axis.text.y = element_blank())+
+                         labs(y = ""),
+                        ncol = 2, nrow = 2,
+                       align = 'hv')
+              
+  annotate_figure(outplot, top = text_grob(paste0('Cruise: ',cruises[i]))) |> print()
+}
+```

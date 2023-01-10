@@ -1,0 +1,241 @@
+---
+title: Vertical Distribution of Morphotypes
+---
+
+
+
+```{r}
+
+####
+# Get project-wide night-day differences #######
+####
+
+rm(list = ls())
+library(EcotaxaTools)
+library(ggplot2)
+library(ggpubr)
+source('../R/tools.R')
+
+cluster_cope <- readRDS('../data/03_cluster-conc-50mBins.rds')
+uvp_data  <- readRDS('../data/01_uvp-trim-final.rds') |> trim_to_cope()
+
+cast_times <- list(day = uvp_data$meta$profileid[which(uvp_data$meta$tod == 'day')],
+                   night = uvp_data$meta$profileid[which(uvp_data$meta$tod == 'night')])
+
+avg_cope <- cluster_cope |> 
+  average_casts(cast_times) |> 
+  lapply(bin_format)
+
+
+###
+# Create cluster profiles ####
+###
+
+# |- Area Profile ----------------------------------------------------
+# profile_plot <- ggplot() +
+#   geom_area(data = avg_cope$day,
+#             aes(x = mp, y = -mean, fill = as.factor(group))) +
+#   geom_area(data = avg_cope$night,
+#             aes(x = mp, y = mean, fill = as.factor(group)))+
+#   geom_hline(yintercept = 0)+
+#   coord_flip()+
+#   scale_x_reverse(expand = c(0,0))+
+#   scale_y_continuous(breaks = c(-2:2),
+#                      labels = abs(-2:2),
+#                      expand = c(0,0))+
+#   labs(x = "Depth [m]",
+#        y = "Concentration",
+#        fill = 'Cluster')+
+#   scale_fill_manual(values = gg_cbb_col(4))+
+#   theme_pubr()
+
+# |- Concentration Profile --------------------------------------------
+
+cluster_profile <- function(k) {
+  ret_plot <- ggplot()+
+    geom_rect(data = avg_cope$day[avg_cope$day$group == k,],
+              aes(xmin = min_d, xmax = max_d,
+                  ymin = 0, ymax = -mean),
+              fill = dn_cols['day']) +
+    geom_errorbar(data = avg_cope$day[avg_cope$day$group == k,],
+                  aes(x = mp, ymin = -mean, ymax = -(mean+sd)),
+                  alpha = .25) +
+    geom_rect(data = avg_cope$night[avg_cope$night$group == k,],
+              aes(xmin = min_d, xmax = max_d,
+                  ymin = 0, ymax = mean),
+              fill = dn_cols['night']) +
+    geom_errorbar(data = avg_cope$night[avg_cope$night$group == k,],
+                  aes(x = mp, ymin = mean, ymax = (mean+sd)),
+                  alpha = .25)+
+    labs(x = 'Depth [m]', y = 'Concentration [indv./m3]')+
+    coord_flip()+
+    scale_x_reverse(expand = c(0,0))+
+    scale_y_continuous(position = 'right') +
+    theme_pubr()
+
+  return(ret_plot)
+}
+
+cluster_1_profile <- cluster_profile(1)
+cluster_2_profile <- cluster_profile(2)
+cluster_3_profile <- cluster_profile(3)
+cluster_4_profile <- cluster_profile(4)
+
+# |- Proportional Difference ----------------------------------------
+
+# calculate the proportional difference between night and day profiles
+# this approach calculates the bin-specific night-day difference
+# 
+
+diff_profile <- function(k) {
+  ni_conc <- avg_cope$night$mean[which(avg_cope$night$group == k)]
+  day_conc <- avg_cope$day$mean[which(avg_cope$day$group == k)]
+  
+  diel_diff <- (ni_conc - day_conc) / sum(c(ni_conc, day_conc))
+  
+  mp <- avg_cope$night$mp[which(avg_cope$night$group == k)]
+  
+  ret_plot <- ggplot() + 
+    geom_point(aes(x = mp, y = diel_diff),
+               size = 1.5, color = 'black')+
+    geom_line(aes(x = mp, y=diel_diff)) +
+    labs(x = 'Depth [m]', y = 'Proportional Difference') +
+    geom_hline(yintercept = 0) +
+    coord_flip()+
+    scale_x_reverse(expand = c(0,0)) +
+    scale_y_continuous(expand = c(0,0),
+                       position = 'right') +
+    theme_pubr()
+  
+  return(ret_plot)
+}
+
+diff_1_profile <- diff_profile(1)
+diff_2_profile <- diff_profile(2)
+diff_3_profile <- diff_profile(3)
+diff_4_profile <- diff_profile(4)
+```
+
+
+
+```{r, out.width='100%', fig.width=10}
+
+#| column: page-inset
+
+ggarrange(cluster_1_profile,
+          cluster_2_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          cluster_3_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          cluster_4_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          diff_1_profile,
+          diff_2_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          diff_3_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          diff_4_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()),
+          nrow = 2, ncol = 4,
+          widths = c(1,.9,.9,.9))
+```
+
+
+We can zoom in on the upper 600m to get a better picture of the changes in the upper layers.
+
+```{r, out.width='100%', fig.width = 10}
+
+#| column: screen-inset
+
+ggarrange(cluster_1_profile +
+            xlim(600,0),
+          cluster_2_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          cluster_3_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          cluster_4_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          diff_1_profile +
+            xlim(600,0),
+          diff_2_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          diff_3_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          diff_4_profile + 
+            theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank()) +
+            xlim(600,0),
+          nrow = 2, ncol = 4,
+          widths = c(1,.9,.9,.9))
+```
+
+
+Next, to better understand the magnitude of DVM within morphotype groups, weighted mean depths were calucated using a bin-constrained bootstrap approach (bc_boot). By using the bcBoot method, confidence intervals can be constructed around the estimates of WMD. The size of the confidence interval represents both the spread of the MG throughout the water column and the accuracy of the estimate, given the available data. i.e. a wider confidence interval indicates that the distribution of the MG throughout the water column is larger or the data available are more sparse. If the nighttime and daytime WMD confidence intervals do not overlap, we can conclude that the morphogroup has a clear signal of DVM.
+
+```{r, fig.width=10, fig.height=5}
+boot_wmd <- readRDS('../data/04_wmd-all-merged.rds')
+
+day_summary <- boot_wmd$day |> lapply(quantile, probs = c(0.025,0.5,0.975))
+night_summary <- boot_wmd$night |> lapply(quantile, probs = c(0.025,0.5,0.975))
+
+wmd_df <- data.frame(cluster = rep(1:4, 2),
+                     tod = rep(c('day','night'),each = 4),
+                     low = rep(NA, 8),
+                     mid = rep(NA, 8),
+                     high = rep(NA, 8))
+
+for(i in 1:4) {
+  
+  wmd_df$low[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['97.5%']]
+  
+  
+  wmd_df$low[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['97.5%']]
+  
+}
+
+
+ggplot(wmd_df) +
+  geom_point(aes(x = cluster,
+                 y = mid,
+                 color = tod),
+             position = position_dodge(width = .5),
+             size = 2) +
+  geom_errorbar(aes(x = cluster,
+                    ymin = low,
+                    ymax = high,
+                    color = tod),
+                width = .25,
+                position = position_dodge(width = .5),
+                size = 1) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_y_reverse(limits = c(600,0)) +
+  labs(y = 'Depth [m]', x = 'Morphogroup Cluster', col = "")+
+  theme_pubr()
+  
+```

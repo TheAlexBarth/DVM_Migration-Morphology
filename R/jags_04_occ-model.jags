@@ -1,0 +1,44 @@
+model{
+  
+  #Likelihood
+  
+  for(i in 1:nSites) {
+    
+    #biological model
+    logit(psi[i]) <- b0[db[i]] + 
+                          b_dcm[db[i]] * dcm[i] +
+                          b_prey[db[i]] * prey[i] +
+                          b_par[db[i]] * par[i] +
+                          b_dac[db[i]] * dac[i]
+                      
+    z[i] ~ dbern(psi[i])
+    
+    
+    # observation process
+    for(j in 1:n[i]) {
+      
+      logit(p[i, j]) <- a0 + a_vs * vs[i, j]
+      Y[i,j] ~ dbern(p[i, j] * z[i])
+      
+    }
+    
+  }
+  
+  
+  #Priors
+  psi0 ~ dbeta(1,1)
+  for(i in 1:dbLength) {
+    b0[i] <- logit(psi0)
+    b_dcm[i] ~ dnorm(0, 1/10^2)
+    b_prey[i] ~ dnorm(0, 1/10^2)
+    b_par[i] ~ dnorm(0, 1/10^2)
+    b_dac[i] ~ dnorm(0, 1/10^2)
+  }
+
+  p0 ~ dbeta(1,1)
+  a0 <- logit(p0)
+  a_vs ~ dnorm(0,1/10^2)
+  
+  # Derived variable
+  N = sum(z)
+}
