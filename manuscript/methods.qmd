@@ -17,10 +17,12 @@ To identify
 ### 2.2.2 K-mean clustering
 To select the optimal number of clusters, clusters were added until addition centers did not increase the overall explanatory power $\frac{WithinSS}{TotalSS}$ by more than 10%.
 
-## 2.3 
+## 2.3 Investigating Vertical Structure
 
 Copepods in this system show a clear diel vertical migration. However, it is not clear the maximum depths at which migrations are often done.
 
+
+## 2.4 Quantifying DVM variability across morphogroups
 
 ## 2.4 Occupancy modelling to investigate drivers of vertical variability.
 

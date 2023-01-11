@@ -2,8 +2,9 @@
 title: Cruise Cluster Concentration
 ---
 
-Concentration of each morphogroup across the study period.
-Shown are the integrated abundances from 0-600m
+Concentration of each morphogroup across the study period. The average integrated abundance $\frac{numb.individuals}{m^{2}}$ was calculated for each month. Typically cruises occur monthly although in a few cases, multiple cruises in a month occurred. To see details on cruise information look at the data table on the [location page](./main_00_CTD-UVP-map.html)
+
+Shown are the integrated abundances from 0-1200m. Overall copepod abundance across all morphogroups followed similar patterns. In all months, morphogroups 1 and 2 were less abundant, which is expected for larger individuals. Generally, abundance peaked in the spring to summer and was at lower values during the fall and winter.
 
 ```{r}
 rm(list = ls())
@@ -15,7 +16,7 @@ source('../R/tools.R')
 
 conc_data <- readRDS('../data/03_cluster-conc.rds') |> 
   lapply(bin_format) |> 
-  lapply(function(x) x[which(x$max_d <= 600),1:3]) # this is really ugly bug fix 1:3, need to fix in package
+  lapply(function(x) x[which(x$max_d <= 1200),1:3]) # this is really ugly bug fix 1:3, need to fix in package
   
 uvp_data_meta <- readRDS('../data/01_uvp-trim-final.rds')$meta
 uvp_data_meta$cruise_id <- paste0(uvp_data_meta$stationid,
@@ -50,8 +51,8 @@ intg_plot_early <- ggplot(avg_conc[year(avg_conc$date) < 2020,]) +
   scale_fill_manual(values = gg_cbb_col(4)) +
   scale_x_date(date_labels = '%Y-%m',
                date_breaks = '1 month') +
-  scale_y_continuous(limits = c(0,350), expand = c(0,0)) +
-  labs(x = "", y = 'Integrated Abundance', fill = "") + 
+  scale_y_continuous(limits = c(0,750), expand = c(0,0)) +
+  labs(x = "", y = 'Integrated Abundance [indv./m^2]', fill = "Morphogroup") + 
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
@@ -64,8 +65,8 @@ intg_plot <- ggplot(avg_conc[year(avg_conc$date) >= 2020,]) +
   scale_fill_manual(values = gg_cbb_col(4)) +
   scale_x_date(date_labels = '%Y-%m',
                date_breaks = '1 month') +
-  scale_y_continuous(limits = c(0,350), expand = c(0,0)) +
-  labs(x = "", y = 'Integrated Abundance', fill = "") + 
+  scale_y_continuous(limits = c(0,750), expand = c(0,0)) +
+  labs(x = "", y = 'Integrated Abundance [indv./m^2]', fill = "Morphogroup") + 
   theme_pubr() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
@@ -75,6 +76,6 @@ ggarrange(intg_plot_early,
                             axis.line.y = element_blank(),
                             axis.ticks.y = element_blank()),
           common.legend = TRUE,
-          widths = c(0.2,0.80),
+          widths = c(0.18,.82),
           nrow = 1)
 ```

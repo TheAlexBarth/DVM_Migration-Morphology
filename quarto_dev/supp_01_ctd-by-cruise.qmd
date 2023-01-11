@@ -16,7 +16,7 @@ library(EcotaxaTools)
 ####
 # Data loading and set up #######
 ####
-plot_values <- readRDS('../data/ctd_01_interp-grid.rds')$by_cruise
+plot_values <- readRDS('../data/ctd_02_interp-grid.rds')$by_cruise
 
 # |- ctd data format -------------------------------
 ctd_data <- readRDS('../data/01_ctd-trim-final.rds')

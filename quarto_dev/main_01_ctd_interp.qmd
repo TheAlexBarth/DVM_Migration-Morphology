@@ -9,7 +9,7 @@ Over the course of the cruises, there was some seasonal variation. Figures below
 rm(list = ls())
 library(ggplot2)
 library(ggpubr)
-full_proj_values <- readRDS('../data/ctd_01_interp-grid.rds')$full_proj
+full_proj_values <- readRDS('../data/ctd_02_interp-grid.rds')$full_proj
 
 ODV_colours <- c("#feb483", "#d31f2a", "#ffc000", "#27ab19", "#0db5e6", "#7139fe", "#d16cfa")
 

@@ -149,6 +149,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-main-analyses" role="button" data-bs-toggle="dropdown" aria-expanded="false">Main Analyses</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-main-analyses">    
         <li>
+    <a class="dropdown-item" href="./main_00_CTD-UVP-map.html">
+ <span class="dropdown-text">Sampling Region</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./main_01_ctd_interp.html">
  <span class="dropdown-text">Physical Backdrop</span></a>
   </li>  
@@ -157,28 +161,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">PCA-Morphogroup clustering</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./main_03_PC-model.html">
- <span class="dropdown-text">PC-Environment Model</span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./main_03_Vert-Distrib.html">
  <span class="dropdown-text">Vertical Profiles of MGs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./main_04_DVM-amplitude-seasonal.html">
- <span class="dropdown-text">DVM Seasonality by Season</span></a>
+    <a class="dropdown-item" href="./main_04_WMD-by-morphogroup.html">
+ <span class="dropdown-text">Weight Mean Depth of Morphogroups</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./main_04_DVM-amplitude.html">
- <span class="dropdown-text">DVM Seasonality by Cruise</span></a>
+    <a class="dropdown-item" href="./main_05_all-copepod-occupancy.html">
+ <span class="dropdown-text">All Copepod Occupancy Model</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./main_05_model-seasonal.html">
- <span class="dropdown-text">Environ Model by Seasons</span></a>
+    <a class="dropdown-item" href="./main_06_cluster-occurence.html">
+ <span class="dropdown-text">Occupancy by Morphogroup</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./main_05_model.html">
- <span class="dropdown-text">Environ Model by Cruise</span></a>
+    <a class="dropdown-item" href="./main_07_environmental-effect-model.html">
+ <span class="dropdown-text">Environmental Effects on Occupancy</span></a>
   </li>  
     </ul>
   </li>
@@ -198,12 +198,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Integrated Abundancy by Morphogroup</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./supp_04_wmd-by-cruise.html">
- <span class="dropdown-text">Cruise specific WMD</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./supp_04_wmd-by-season.html">
- <span class="dropdown-text">Seasonal Specific WMD</span></a>
+    <a class="dropdown-item" href="./supp_04_all-copepod-occurence.qmd">
+ <span class="dropdown-text">All Copepod Occupancy</span></a>
   </li>  
     </ul>
   </li>
@@ -254,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>full_proj_values <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/ctd_01_interp-grid.rds'</span>)<span class="sc">$</span>full_proj</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>full_proj_values <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/ctd_02_interp-grid.rds'</span>)<span class="sc">$</span>full_proj</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ODV_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#feb483"</span>, <span class="st">"#d31f2a"</span>, <span class="st">"#ffc000"</span>, <span class="st">"#27ab19"</span>, <span class="st">"#0db5e6"</span>, <span class="st">"#7139fe"</span>, <span class="st">"#d16cfa"</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -619,7 +615,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>full_proj_values <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/ctd_01_interp-grid.rds'</span>)<span class="sc">$</span>full_proj</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>full_proj_values <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/ctd_02_interp-grid.rds'</span>)<span class="sc">$</span>full_proj</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>ODV_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#feb483"</span>, <span class="st">"#d31f2a"</span>, <span class="st">"#ffc000"</span>, <span class="st">"#27ab19"</span>, <span class="st">"#0db5e6"</span>, <span class="st">"#7139fe"</span>, <span class="st">"#d16cfa"</span>)</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>

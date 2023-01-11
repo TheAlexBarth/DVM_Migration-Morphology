@@ -4,16 +4,12 @@
 
 
 
-library('ggplot2')
-library('rnaturalearth')
-library('rnaturalearthdata')
+
 
 # |- get data in data -----------
 source('./R/mgmt_00_profile-org.R')
 rm(list = ls()[-which(ls() %in% c('ctd_data','uvp_data'))])
 
-# |- get spatial data ----------
-world <- ne_countries(scale = 'medium', returnclass = 'sf')
 
 # |- Get ctd lat lons ---------------
 ctd_loc <- data.frame(ctdid = names(ctd_data),

@@ -2,7 +2,18 @@
 title: Vertical Distribution of Morphotypes
 ---
 
+## Methodology:
 
+To understand the vertical distribution of the different morphogroups, the concentration of each cluster was calculated in a 20m-bin then averaged across all profiles in the study (following the average-cast method described in [Barth & Stone 2022](https://thealexbarth.github.io/Oligotrophic_in-situ_net_comparison/main_analysis_03.html). Using the average-cast approach is beneficial as it allows for data to be included from casts with different max descents, so long as an entire 20m depth bin was sampled, it is included.Averages were calculated separately for daytime and nighttime casts.
+
+\n\n
+
+Then to better visualize day/night differences, the proportional difference in each depth bin was calculated. For each $i^{th}$ depth bin in all $N$ bins, $PropDiff_{i} = \frac{Night_{i} - Day_i}{\sum_{i}^N{Night_i+Day_i}}$. This technique shows how much more a nighttime abundance is compared to the daytime relative to the total, average concentration of the morphogroup. Thus, morphogroup proportional differences can be compared to see overall trends in diel patterns across the water column. However, it is important to note that this method does not directly evaluate any magnitude of DVM.
+
+## Figures & Take-aways:
+
+First, it is clear the smaller-sized morphogroups (3 & 4) are in higher average abundances in all areas of the water column. This is again expected as smaller zooplankton dominate in this system. For all morphogroups, nighttime abundances are higher in the surface (0-200m) compared to the daytime surface abundances. Overall abundances are lowest around 300m with a daytime abundance dominated region around the upper-to-mid mesopelagic (400-600m). This pattern shows a clear DVM occurring in all morphogroups between around 150m-600m. Below 600m, there is no trend in day/night differences and the variation in proportional differences seems to be random noise. This is expected as it would be nearly impossible for regular migrations of individual copepods to move below 600m on a daily basis.\n\n
+It is also clear that the variability between casts is extremely large. Often the standard deviation of depth-bin abundance is much larger than the average abundance. This is in part driven by high variability between [cruises which occurred in different seasons](./supp_03_cluster-conc.html) getting averaged together. However, there is also large variability between individual casts, which can be driven by the small sampling volume of the UVP as described by [Barth & Stone 2022](https://www.frontiersin.org/articles/10.3389/fmars.2022.898057/full). This variation driven by the sampling variability led to the need for new analysis methods on in-situ imaging data [used in this paper](./main_05_all-copepod-occupancy.html).
 
 ```{r}
 
@@ -70,7 +81,8 @@ cluster_profile <- function(k) {
     labs(x = 'Depth [m]', y = 'Concentration [indv./m3]')+
     coord_flip()+
     scale_x_reverse(expand = c(0,0))+
-    scale_y_continuous(position = 'right') +
+    scale_y_continuous(position = 'right',
+                       labels = abs) +
     theme_pubr()
 
   return(ret_plot)
@@ -104,7 +116,8 @@ diff_profile <- function(k) {
     coord_flip()+
     scale_x_reverse(expand = c(0,0)) +
     scale_y_continuous(expand = c(0,0),
-                       position = 'right') +
+                       position = 'right',
+                       labels = abs) +
     theme_pubr()
   
   return(ret_plot)
@@ -183,59 +196,4 @@ ggarrange(cluster_1_profile +
             xlim(600,0),
           nrow = 2, ncol = 4,
           widths = c(1,.9,.9,.9))
-```
-
-
-Next, to better understand the magnitude of DVM within morphotype groups, weighted mean depths were calucated using a bin-constrained bootstrap approach (bc_boot). By using the bcBoot method, confidence intervals can be constructed around the estimates of WMD. The size of the confidence interval represents both the spread of the MG throughout the water column and the accuracy of the estimate, given the available data. i.e. a wider confidence interval indicates that the distribution of the MG throughout the water column is larger or the data available are more sparse. If the nighttime and daytime WMD confidence intervals do not overlap, we can conclude that the morphogroup has a clear signal of DVM.
-
-```{r, fig.width=10, fig.height=5}
-boot_wmd <- readRDS('../data/04_wmd-all-merged.rds')
-
-day_summary <- boot_wmd$day |> lapply(quantile, probs = c(0.025,0.5,0.975))
-night_summary <- boot_wmd$night |> lapply(quantile, probs = c(0.025,0.5,0.975))
-
-wmd_df <- data.frame(cluster = rep(1:4, 2),
-                     tod = rep(c('day','night'),each = 4),
-                     low = rep(NA, 8),
-                     mid = rep(NA, 8),
-                     high = rep(NA, 8))
-
-for(i in 1:4) {
-  
-  wmd_df$low[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['2.5%']]
-  wmd_df$mid[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['50%']]
-  wmd_df$high[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['97.5%']]
-  
-  
-  wmd_df$low[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['2.5%']]
-  wmd_df$mid[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['50%']]
-  wmd_df$high[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['97.5%']]
-  
-}
-
-
-ggplot(wmd_df) +
-  geom_point(aes(x = cluster,
-                 y = mid,
-                 color = tod),
-             position = position_dodge(width = .5),
-             size = 2) +
-  geom_errorbar(aes(x = cluster,
-                    ymin = low,
-                    ymax = high,
-                    color = tod),
-                width = .25,
-                position = position_dodge(width = .5),
-                size = 1) +
-  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
-  scale_y_reverse(limits = c(600,0)) +
-  labs(y = 'Depth [m]', x = 'Morphogroup Cluster', col = "")+
-  theme_pubr()
-  
 ```

@@ -11,22 +11,22 @@ website:
         text: Home
       - text: Main Analyses
         menu:
+        - href: main_00_CTD-UVP-map.qmd
+          text: Sampling Region
         - href: main_01_ctd_interp.qmd
           text: Physical Backdrop
         - href: main_02_PC-Clusters.qmd
           text: PCA-Morphogroup clustering
-        - href: main_03_PC-model.qmd
-          text: PC-Environment Model
         - href: main_03_Vert-Distrib.qmd
           text: Vertical Profiles of MGs
-        - href: main_04_DVM-amplitude-seasonal.qmd
-          text: DVM Seasonality by Season
-        - href: main_04_DVM-amplitude.qmd
-          text: DVM Seasonality by Cruise
-        - href: main_05_model-seasonal.qmd
-          text: Environ Model by Seasons
-        - href: main_05_model.qmd
-          text: Environ Model by Cruise
+        - href: main_04_WMD-by-morphogroup.qmd
+          text: Weight Mean Depth of Morphogroups
+        - href: main_05_all-copepod-occupancy.qmd
+          text: All Copepod Occupancy Model
+        - href: main_06_cluster-occurence.qmd
+          text: Occupancy by Morphogroup
+        - href: main_07_environmental-effect-model.qmd
+          text: Environmental Effects on Occupancy
         
       - text: Supplemental
         menu:
@@ -36,10 +36,9 @@ website:
           text: Extended PCA/Clustering Plots
         - href: supp_03_cluster-conc.qmd
           text: Integrated Abundancy by Morphogroup
-        - href: supp_04_wmd-by-cruise.qmd
-          text: Cruise specific WMD
-        - href: supp_04_wmd-by-season.qmd
-          text: Seasonal Specific WMD
+        - href: supp_04_all-copepod-occurence.qmd
+          text: All Copepod Occupancy
+
     tools:
       - icon: github
         href: https://github.com/TheAlexBarth/DMV_BATS

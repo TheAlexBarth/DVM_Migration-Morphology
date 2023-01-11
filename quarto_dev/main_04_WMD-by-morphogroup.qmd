@@ -1,0 +1,76 @@
+---
+title: Weighted Mean Depth of Morphogroups
+bibliography: references.bib
+---
+
+## Methodology
+
+Weighted mean depth is a commonly used metric to describe zooplankton populations and vertical distributions. Zooplankton populations can often be found in bimodal patterns throughout the water column, with a subsurface peak and a deeper mesopelagic peak [see here](./main_03_Vert-Distrib.html). The WMD of a distribution effectively provides a center of mass for the zooplankton in the water column. However, interpreting the WMD often requires context as the depth itself may not be informative. WMD can be particularly useful for DVM studies, as it can show the differences in daytime and nighttime distributions [Ohman & Romagnan 2016](https://onlinelibrary.wiley.com/doi/abs/10.1002/lno.10251). Additionally, by calculating the average WMD across multiple samples, the variability (or standard deviation) in WMD can be informative to the overall spread of the zooplankton distribution throughout the water column.
+
+\n\n
+
+In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (1180m,1200m\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
+\n\n 
+Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.
+
+## Key Figures and Takeaways
+
+Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs. This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. Interestingly, the average daytime WMD for morphogroups 1 and 2 is deeper than morphogroups 3 and 4. The daytime WMD confidence intervals between MGs 1 & 2 are non-overlapping with MG3 and nearly non-overlapping with MG4. This suggests that the larger copepods contained in MG1 and MG2 are clearly occupying deeper areas of the water column, supporting H1 as larger copepods will have a larger DVM signal. However, with this data we are not able to detect any clear difference in DVM signal based on transparency as the daytime WMD intervals are nearly completely overlapping between MG1 and MG2 and between MG3 and MG4.
+\n\n
+
+
+```{r, fig.width=10, fig.height=5}
+library(ggplot2)
+library(ggpubr)
+source('../r/tools.R')
+
+boot_wmd <- readRDS('../data/03_wmd-all-merged.rds')
+
+day_summary <- boot_wmd$day |> lapply(quantile, probs = c(0.025,0.5,0.975))
+night_summary <- boot_wmd$night |> lapply(quantile, probs = c(0.025,0.5,0.975))
+
+wmd_df <- data.frame(cluster = rep(1:4, 2),
+                     tod = rep(c('day','night'),each = 4),
+                     low = rep(NA, 8),
+                     mid = rep(NA, 8),
+                     high = rep(NA, 8))
+
+for(i in 1:4) {
+  
+  wmd_df$low[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['97.5%']]
+  
+  
+  wmd_df$low[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['97.5%']]
+  
+}
+
+
+ggplot(wmd_df) +
+  geom_point(aes(x = cluster,
+                 y = mid,
+                 color = tod),
+             position = position_dodge(width = .5),
+             size = 2) +
+  geom_errorbar(aes(x = cluster,
+                    ymin = low,
+                    ymax = high,
+                    color = tod),
+                width = .25,
+                position = position_dodge(width = .5),
+                size = 1) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_y_reverse(limits = c(600,0)) +
+  labs(y = 'Depth [m]', x = 'Morphogroup Cluster', col = "")+
+  theme_pubr()
+  
+```

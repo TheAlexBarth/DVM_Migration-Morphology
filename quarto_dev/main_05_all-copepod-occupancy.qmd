@@ -1,0 +1,14 @@
+---
+title: Copepod Occurence Model
+---
+
+## The Challenge
+
+A key challenge with the UVP, and other in-situ imaging tools, is the low sampling volume can make it challenging to accurately report organisms with occur at low abundances. This is a particularly large challenge in an oligotrophic system such as the Sargasso Sea [Barth & Stone 2022](https://thealexbarth.github.io/Oligotrophic_in-situ_net_comparison/main_analysis_03.html). Bisson et al. (2022) note that at low sampling volumes...
+
+
+## Methodology
+
+
+## Key Figures and Take aways
+
