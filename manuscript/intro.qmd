@@ -1,0 +1,8 @@
+# Introduction
+
+-   Diel Vertical Migration Importance and Background
+-   Challenges of
+-   Application of in-situ imaging
+-   Hypotheses:
+
+In this study, we investigate the applicability of in-situ imaging data to study DVM behavior. We aim to test two hypotheses. First, (H1) Overall copepod morphology, including size and transparency, will impact DVM behavior. It is predicted that copepods which are more visually detectable, e.g. larger and darker, will have to migrate larger distances. Second, (H2) DVM behavior will vary based on environmental conditions related to the risks and rewards of occupying surface waters. Specifically, increased prey availability will increase a copepod's likelihood to travel to surface waters, while increased light availability will force copepods to deeper sections of the water column. To test these hypotheses we build on novel statistical tools to describe morphology of objects sampled by in situ imaging [@trudnowska2021, @vilgrain2021]. Additionally we evaluate multiple approaches to describing DVM using in situ imaging data and how to estimate the impact of environmental factors on DVM behavior.

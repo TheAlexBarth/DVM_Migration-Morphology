@@ -99,7 +99,7 @@ The morphogroups defined by clustering in the PC-morphology space do not lend th
 To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 (p < 0.001 following Bonferroni correction for all groups, Supplemental 2). On PC2, cluster 2 and cluster 4 were not significantly different (p = 1), while all other groups were significantly different from one another (p < 0.001). 
 
 
-```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
+```{r}
 FSA::dunnTest(PC1 ~ as.factor(cluster),
               data = cluster_res,
               method = 'bonferroni')$res |> 

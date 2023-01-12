@@ -1,0 +1,250 @@
+---
+title: Environmental Influences on Morphogroup Occupancy
+---
+
+## Methodology
+
+To assess how environmental variations by cruise influenced water column day/night occupancy, several relevant metrics were included. First, we included depth of the the chlorophyll-a maximum ($dcm\_d$) which should have a positive effect on occupancy in near-by depth-bins. $dmc\_d$ was calculated using fluorometry data from the CTD aboard the R/V Atlantic Explorer. Next, the integrated small (<450$\mu$m) particle abundance from 0m-250m was calculated from UVP casts. The small particle abundance has been shown as a useful proxy for prey availability, with implications for DVM (Gastauer et al. 2022). In this study system, if the average particle abundance was higher near the surface, it hypothetically should have a positive impact on occupancy near the surface as it is more beneficial for an individual copepod to be there. Additionally, two metrics for light were included in the model, photosynthetically available radiation ($par$) and the diffuse attenuation coefficient ($1/k_{490}$). An increase in light availability should decrease the near-surface daytime occupancy. These four environmental parameters were modelling with a logistic regression to determine their effect on the occurrence probability, or occupancy $\psi$
+\n\n
+These environmental variables were included in a site-occupancy model for each morphogroup. Three separate models were ran in the epipelagic, upper mesopelagic, and lower mesopelagic to account for variability in detection probability. The models were ran for each depth-bin and time of day. The full model is described below:
+
+Similar vague prior were used for all parameters described above. Additionally, weak normal priors (mean = 0, sd = 1/10) were used for all environmental slope variables and a $Beta(1,1)$ prior was used for the intercept $\beta_0$
+
+$$
+Y_{ij,db,tod,mg} \sim Bernoilli(p_{ij,tod,mg}*z_{i,db,tod,mg})
+$$
+
+$$
+z_{i,db,tod,mg} \sim Binomial(\psi_{i,db,tod,mg})
+$$
+$$
+logit(\psi_{i,db,tod,mg}) \sim \beta_{0_{db,tod,mg}} + \beta_{dcm\_d_{db,tod,mg}} * dcm\_d_i + \beta_{prey_{db,tod,mg}} * prey_i + \beta_{par_{db,tod,mg}} * par_i + \beta_{\frac{1}{k_{490}}_{db,tod,mg}} * \frac{1}{k_{490}}_{db,tod,mg}
+$$
+
+
+$$
+logit(p_{ij,tod,mg}) \sim \alpha_0 + \alpha_{vs,tod,mg} * vs_{ij}
+$$
+
+
+## Key Figures and Take Aways
+
+```{r, fig.height=10, fig.width=7, out.height='100%', out.width='100%'}
+###
+# Plotting output for environmental output ####
+###
+
+rm(list = ls())
+library(ggplot2)
+library(ggpubr)
+library(EcotaxaTools)
+library(wiqid)
+source('../R/tools.R')
+
+db_list <- readRDS('../data/06_dblist.rds')
+epi_mod <- readRDS('../data/06_occ-model-output_epi_large.rds')
+tmeso_mod <- readRDS('../data/06_occ-model-output_tmeso_large.rds')
+bmeso_mod <- readRDS('../data/06_occ-model-output_bmeso_large.rds')
+environ_summary <- readRDS('../data/06_enviornmental-summary.rds')
+
+
+# |- Extracting the parameters ------------------------
+
+# to make the slope interpretable as the effect of 1 unit increase of that variable
+# I need to match a value of 1 to the scaled value of the variable
+
+# conv_to_plogis <- function(x, var) {
+#   1/(1+exp(-x * standardize2match(1,var)))
+# }
+
+
+
+# function to extract the features
+feature_extract <- function(model, tod, min_d, max_d, db) {
+  
+  b_dcm_hdi <- model[[tod]]$sims.list$b_dcm |> 
+    apply(2,hdi)
+  b_dcm_mean <- model[[tod]]$sims.list$b_dcm |> 
+    apply(2,mean)
+  b_prey_hdi <- model[[tod]]$sims.list$b_prey |> 
+    hdi()
+  b_prey_mean <- model[[tod]]$sims.list$b_prey |> 
+    apply(2,mean)
+  b_par_hdi <- model[[tod]]$sims.list$b_par |> 
+    hdi()
+  b_par_mean <- model[[tod]]$sims.list$b_par |> 
+    apply(2,mean)
+  b_dac_hdi <- model[[tod]]$sims.list$b_dac |> 
+    hdi()
+  b_dac_mean <- model[[tod]]$sims.list$b_dac |> 
+    apply(2,mean)
+  
+  db_out <- db_decode(1:length(b_dac_mean), tod, min_d, max_d, db = db)
+  
+  out_df <- data.frame(
+    db = db_out,
+    dcm_low = b_dcm_hdi[1,],
+    dcm_high = b_dcm_hdi[2,],
+    dcm = b_dcm_mean,
+    prey_low = b_prey_hdi[1,],
+    prey_high = b_prey_hdi[2,],
+    prey = b_prey_mean,
+    dac_low = b_dac_hdi[1,],
+    dac_high = b_dac_hdi[2,],
+    dac = b_dac_mean,
+    par_low = b_par_hdi[1,],
+    par_high = b_par_hdi[2,],
+    par = b_par_mean
+  )
+  
+  return(out_df |> bin_format())
+}
+
+epi_list <- vector('list',4)
+tmeso_list <- vector('list',4)
+bmeso_list <- vector('list',4)
+for(i in 1:4) {
+  for(tod in c('day','night')) {
+    epi_list[[i]][[tod]] <- feature_extract(epi_mod[[i]], tod, 0, 200, db_list[[i]])
+    tmeso_list[[i]][[tod]] <- feature_extract(tmeso_mod[[i]], tod, 200, 600, db_list[[i]])
+    bmeso_list[[i]][[tod]] <- feature_extract(bmeso_mod[[i]], tod, 600, 1200, db_list[[i]])
+  }
+}
+
+# mash into one big data frame 
+
+names(epi_list) <- 1:4
+epi_df <- epi_list |> 
+  lapply(list_to_tib,'tod') |> 
+  list_to_tib('cluster')
+names(tmeso_list) <- 1:4
+tmeso_df <- tmeso_list |> 
+  lapply(list_to_tib,'tod') |> 
+  list_to_tib('cluster')
+names(bmeso_list) <- 1:4
+bmeso_df <- bmeso_list |> 
+  lapply(list_to_tib,'tod') |> 
+  list_to_tib('cluster')
+
+feature_df <- do.call(rbind, list(epi_df, tmeso_df, bmeso_df))
+
+
+####
+# Plotting Effects #######
+####
+
+dcm_plot <- ggplot(feature_df) + 
+  geom_ribbon(aes(x = mp,
+                  ymin = dcm_low,
+                  ymax = dcm_high,
+                  fill = tod),
+              alpha = 0.5) +
+  geom_line(aes(x = mp,
+                  y = dcm,
+                  color = tod)) +
+  geom_hline(yintercept = 0) +
+  facet_grid(~cluster+tod) +
+  scale_x_reverse() +
+  scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  coord_flip()+
+  theme_pubr() +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  theme(legend.position = 'none')
+
+prey_plot <- ggplot(feature_df) + 
+  geom_ribbon(aes(x = mp,
+                  ymin = prey_low,
+                  ymax = prey_high,
+                  fill = tod),
+              alpha = 0.5) +
+  geom_line(aes(x = mp,
+                y = prey,
+                color = tod)) +
+  geom_hline(yintercept = 0) +
+  facet_grid(~cluster+tod) +
+  scale_x_reverse() +
+  scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  coord_flip()+
+  theme_pubr() +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  theme(legend.position = 'none')
+
+par_plot <- ggplot(feature_df) + 
+  geom_ribbon(aes(x = mp,
+                  ymin = par_low,
+                  ymax = par_high,
+                  fill = tod),
+              alpha = 0.5) +
+  geom_line(aes(x = mp,
+                y = par,
+                color = tod)) +
+  geom_hline(yintercept = 0) +
+  facet_grid(~cluster+tod) +
+  scale_x_reverse() +
+  scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  coord_flip()+
+  theme_pubr() +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  theme(legend.position = 'none')
+
+dac_plot <- ggplot(feature_df) + 
+  geom_ribbon(aes(x = mp,
+                  ymin = dac_low,
+                  ymax = dac_high,
+                  fill = tod),
+              alpha = 0.5) +
+  geom_line(aes(x = mp,
+                y = dac,
+                color = tod)) +
+  geom_hline(yintercept = 0) +
+  facet_grid(~cluster+tod) +
+  scale_x_reverse() +
+  scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  coord_flip()+
+  theme_pubr() +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  theme(legend.position = 'none')
+
+
+
+#| column: page-outset
+
+ggarrange(dcm_plot + theme(axis.title.x = element_blank(),
+                           axis.line.x = element_blank(),
+                           axis.ticks.x = element_blank(),
+                           axis.text.x = element_blank()),
+          prey_plot+ theme(axis.title.x = element_blank(),
+                           axis.line.x = element_blank(),
+                           axis.ticks.x = element_blank(),
+                           axis.text.x = element_blank(),
+                           strip.background = element_blank(),
+                           strip.text = element_blank()),
+          par_plot+ theme(axis.title.x = element_blank(),
+                          axis.line.x = element_blank(),
+                          axis.ticks.x = element_blank(),
+                          axis.text.x = element_blank(),
+                          strip.background = element_blank(),
+                          strip.text = element_blank()),
+          dac_plot+ theme(strip.background = element_blank(),
+                          strip.text = element_blank()),
+          nrow = 4)
+
+
+
+
+```
+There was no clear effect of any of the environmental parameters on the occurrence probability for any morphogroup, in any depth-bin, in any time of day. The posterior credible intervals for the slope of each parameter on the log odds of $\psi$ typically ranged from -10 to 15. That change in log odds corresponds to an increase in occurrence probability of 0.00005% to 99% for each one unit increase of the environmental parameter, which is effectively meaningless. There are several reasons why we do not detect any influence of environmental parameters on occupancy. First, the environmental variables had to be aggregated over several days to match with the treatment of a full cruise as a "site". It is likely that grouping all casts on a cruise together as 'surveys' of the same 'site' is too broad. While the application of site-occupancy models to imaging data shows potential, it would benefit from intentional study design. Notably, defining smaller "sites" with replicate casts at each location. The feasibility of this may be limited on ship-based studies, however recent advancements in in situ imaging allow for plankton cameras to be deployable on autonomous platforms. If platforms create multiple profiles at a single location, this technique may be of great use to characterize rare organisms. Additionally it may be that the variability of environmental parameters investigated is simply too small in this study. For example, we observed a range of $\frac{1}{k_{490}}$ between 21.5m and 47.5m. Comparatively, Ohman & Romagnan 2016 observed a range from nearly 1m to 30m - with significant implications for DVM amplitude. Thus the range of conditions may simply not be large enough to warrant large variability in DVM behavior.
+
+Full for the posterior distribution of all parameters can be seen here:
+```{r}
+library(DT)
+
+feature_df |> datatable()
+```
+
+
+

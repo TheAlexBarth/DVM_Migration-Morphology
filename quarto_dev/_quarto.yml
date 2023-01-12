@@ -20,7 +20,7 @@ website:
         - href: main_03_Vert-Distrib.qmd
           text: Vertical Profiles of MGs
         - href: main_04_WMD-by-morphogroup.qmd
-          text: Weight Mean Depth of Morphogroups
+          text: Weighted Mean Depth of Morphogroups
         - href: main_05_all-copepod-occupancy.qmd
           text: All Copepod Occupancy Model
         - href: main_06_cluster-occurence.qmd

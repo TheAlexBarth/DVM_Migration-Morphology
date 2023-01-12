@@ -1,12 +1,13 @@
 ---
 title: |
-  Migrator Morphology: Mesozooplankton 
+  In situ imaging reveals how morphology influences Copepod DVM.
 format:
   pdf:
    number-sections: true
 date: now
 date-format: "DD MMM YYYY"
-bibliography: bibliography.bib
+bibliography: references.bib
+csl: limnology-and-oceanography.csl
 execute:
   echo: false
   warning: false
@@ -14,8 +15,27 @@ author:
   - name: Alex Barth
     orcid: 
     affiliations:
-      - name: University of South Carolina
+      - name: Biological Sciences Deptartment, University of South Carolina
   - name: Joshua Stone
     affiliations:
-      - name: 
+      - name: Biological Sciences Department, University of South Carolina
 ---
+
+```{r}
+#| child: ./intro.qmd
+```
+
+```{r}
+#| child: ./methods.qmd
+```
+
+```{r}
+#| child: ./results.qmd
+```
+
+```{r}
+#| child: ./discussion.qmd
+```
+
+
+## References{#sec-references}

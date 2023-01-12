@@ -1,14 +1,17 @@
 ---
 title: Methods
+bibliography: references.bib
 ---
 
 # 2. Methods
 
-# 2.1 Data Collection
+## 2.1 Data Collection
+
+Data were collected aboard the R/V Atlantic Explorer in collaboration with the Bermuda Atlantic Time-series Study (BATS).
 
 ## 2.2 Identification of morphogroups classification
 
-To identify
+To test the hypothesis of morphological influences on DVM magnitude, we first characterize copepods into distinct morphological-groups (referred to as morphogroups). The UVP automatically measures and collects several morphologically relevant
 
 ### 2.2.1 PCA
 
@@ -38,4 +41,4 @@ To test the variability of detection probability with depth and time of day, occ
 
 #### 2.4.2 Environmental Data Formatting
 
-Several metrics were used to evaluate environmental drivers of variability. @Ohman2016 showed a clear relationship between the diffuse attenuation coefficient and diel vertical migration magnitude. Photosynthetically available radiation (PAR) and the diffuse attenuation coefficient (1/k490) were calculated using data from the Aqua MODIS **insert more satellite detail**. Data from the Aqua MODIS were obtained in 4km resolution over a grid which encompassed the entire study area (MAP 1) over daily intervals. PAR and diffuse attenuation coefficient values were averaged over the entire study area for each day. Average values were then matched to specific UVP/CTD casts which occurred on the given day. For a few cases (34 total days), AquaMODIS coverage was not available for the exact date of a corresponding CTD cast. In these instances, the nearest available date was used, with a maximum of 3-days difference. All environmental factors were averaged over a cruise, separating day/night. These cruise-average environmental variables were then able to be used as site covariates in an occupancy model.
+Several metrics were used to evaluate environmental drivers of variability. @ohman2016 showed a clear relationship between the diffuse attenuation coefficient and diel vertical migration magnitude. Photosynthetically available radiation (PAR) and the diffuse attenuation coefficient (1/k490) were calculated using data from the Aqua MODIS **insert more satellite detail**. Data from the Aqua MODIS were obtained in 4km resolution over a grid which encompassed the entire study area (MAP 1) over daily intervals. PAR and diffuse attenuation coefficient values were averaged over the entire study area for each day. Average values were then matched to specific UVP/CTD casts which occurred on the given day. For a few cases (34 total days), AquaMODIS coverage was not available for the exact date of a corresponding CTD cast. In these instances, the nearest available date was used, with a maximum of 3-days difference. All environmental factors were averaged over a cruise, separating day/night. These cruise-average environmental variables were then able to be used as site covariates in an occupancy model. test [@gastauer2022].
