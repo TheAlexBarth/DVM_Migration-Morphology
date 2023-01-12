@@ -59,7 +59,7 @@ cc_df$db <- cc_df$db |> factor(levels=unique(cc_df$db))
 
 #trim no-sampled regions
 cc_df <- cc_df[-which(is.na(cc_df$vol_sampled)),]
-
+saveRDS(cc_df, './data/04_count_data.RDS')
 
 
 # |- Full Column Model ---------------

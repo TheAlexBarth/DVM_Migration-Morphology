@@ -1,5 +1,5 @@
 ---
-title: Copepod Occurence Model
+title: Copepod Occupancy Model - General Detection Probability
 ---
 
 ## The Challenge
@@ -10,19 +10,155 @@ A key challenge with the UVP, and other in-situ imaging tools, is the low sampli
 
 Site-occupancy models are an approach popularized in terrestrial and conservation biology, often with modelling rare species distribution. A powerful aspect of these class of models is the ability to separately estimate the occurrence probability (occupancy) and the detection probability (how likely it is to observe an organism in a site given it is actually there). Clearly, application of site-occupancy models to in-situ imaging data is attractive as the detection of zooplankton is a function of volume sampled while the zooplankton's occupancy of a given depth, time, or region are a function of environmental or biological factors. Here, we employ site-occupancy models to attempt to model the occupancy of copepods, and then the four morphogroups, throughout the water column at daytime and nighttime. These models can also be used to test the hypotheses regarding DVM signal, as they predict that there will be differences in daytime and nighttime occupancy at the surface.
 \n\n
-At a basic level, the site-occupancy model is a hierarchical model with two main components. The biological component is a binomial process $z \sim Binomial(\psi)$, where $z$ is if the site is occupied given probability $\psi$. Then there is the observation process $Y \sim Bernoulli(p*z)$, where Y is the event of observing an organism. A requirement to adequately estimate $p$, is replicate "surveys" over a given "site". To apply this model to our system, we treat each profile as a "survey" to the "site" of a cruise. This approach is fundamentally similar to the pool-cast approach, commonly used in imaging studies, were all casts in a region are treated a joint observations of a larger water mass.
-
-First to evaluate the overall efficacy of site-occupancy approach, we modeled occurrence of all copepods (regardless of morphogroup) in each depth-bin following 
-$$
-Y_{i,db_j,tod_k} \sim Bernoilli(p*z_{i,db_j,tod_k})
-$$
-$$
-z \sim Binomial(\psi_{db_j,tod_k})
-$$
-$$
-logit(p_i) \sim a_0 + a_{vs} * vs_{i}
-$$
+At a basic level, the site-occupancy model is a bayesian hierarchical model with two main components. The biological component, $z_i \sim Bernoulli(\psi)$, where $z_i$ is the event that site $i$ is occupied, with probability $\psi$. Then there is the observation process, $Y_{ij} \sim Bernoulli(p_{ij}*z_{i})$, where $Y_{ij}$ is the event of observing an organism at site $i$, during survey $j$. The observation process thus is a bernoulli process, with the probability a function of both the detection probability $p_{ij}$ and the occurrence probability $z_{i}$. A requirement to adequately estimate $p_{ij}$, is replicate "surveys", $j$, over a given "site", $i$. To apply this model to our system, we treat each profile as a "survey" to the "site" of a cruise in the BATS region. This approach is fundamentally similar to the pool-cast approach, commonly used in imaging studies, where all casts in a region are treated a joint observations of a larger water mass.
+\n\n
+First to evaluate the overall efficacy of site-occupancy approach, we modeled occurrence of all copepods (regardless of morphogroup) in each depth-bin following a simple model. This model was ran for each depth-bin (20m intervals from 0-1200m) and each time of day (day or night). The occupancy ($\psi$), was assumed to be a unique, independent probability for each depth bin while the detection probability was modelling using a logistic regression to include the effect of volume sampled ($vs$). If the site occupancy model is effective in this system, it would be expected that there would be a positive effect of volume sampled on the detection probability. The models were ran three separate times, to estimate detection probability differences between the epipelagic (0-200m), uppermeso pelagic (200-600m), and lower mesopelagic (600-1200m).
+\n\n
 
 
-## Key Figures and Take aways
+$$
+Y_{ij,db,tod} \sim Bernoilli(p_{ij}*z_{i,db,tod})
+$$
 
+$$
+z_{i,db,tod} \sim Binomial(\psi_{db,tod})
+$$
+
+$$
+logit(p_{ij}) \sim a_0 + a_{vs} * vs_{ij}
+$$
+The model was ran using [JAGS](https://mcmc-jags.sourceforge.io/) with the r package [`jagsUI`](https://cran.r-project.org/web/packages/jagsUI/jagsUI.pdf). Vague priors were assumed for all parameters. A $Beta(1,1)$ distribution was used as the prior for fixed values ($a_0$, $\psi$), while a weak normal prior (mean = 0, sd = 1/10) was used as the prior for slope parameters ($a_{vs}$). The algorithm was ran with 3 chains for 10,000 iterations and a thinning rate of 2. All data used to inform the parameters (volume sampled) were standardized prior to inclusion.
+\n
+To visualize the effect of volume sampled on the detection probability, the posterior distribution for $a_{vs}$ in each model was multiples by range of values from 0 - 1050L, which was the range of actual volume sampled by the UVP in a 20m depth bin, with an average sampling volume of 526.2L. The occupancy results from this model can be seen in [Supplemental Information 4](./supp_04_all-copepod-occurrence.qmd)
+
+## Key Figures and Take Aways
+
+The detection probability clearly increases with increasing volume sampled. This indicates that the site-occupancy model approach is useful, as it can account for the imperfect detection of organisms. It should be noted that the detection probability is very low for all regions of the water column. This is a function of the low overall abundance of copepods in the system. If the true abundance is very low, it is unlikely to capture a copepod in a given cast. Interestingly, the detection probability is much higher for nighttime, epipelagic casts. This is likely because of the increased nighttime concentrations near the surface [Fig 3](./main_03_Vert-Distrib.html).
+
+```{r}
+rm(list = ls())
+library(wiqid)
+library(ggpubr)
+library(ggplot2)
+library(EcotaxaTools)
+source('../R/tools.R')
+
+
+full_col_mod_epi <- readRDS('../data/04_full-col-model-euphotic.rds')
+full_col_mod_tmeso <- readRDS('../data/04_full-col-model-top-meso.rds')
+full_col_mod_bmeso <- readRDS('../data/04_full-col-model-bot-meso.rds')
+count_data <- readRDS('../data/04_count_data.rds')
+####
+# Detection Probability ########
+####
+
+# |- Volume Sampled Slope ----------
+
+# vs range 2.2 to 1288.1
+vs_range <- seq(0,1050, length = 100)
+vs_rangeS <- standardize2match(vs_range, count_data$vol_sampled)
+
+vol_range_sims <- function(tod, model) {
+  
+
+  out_data <- data.frame(
+    mean = rep(NA, length(vs_range)),
+    low = rep(NA, length(vs_range)),
+    high = rep(NA, length(vs_range)),
+    vs = vs_range
+  )
+
+  
+  for(i in 1:length(vs_range)) {
+    temp_vs <- with(model[[tod]]$sims.list,
+                    a0 + a_vs * vs_rangeS[i])
+    p_temp <- plogis(temp_vs)
+    out_data[i, 1:3] <- c(mean(p_temp), hdi(p_temp))
+  }
+  
+  return(out_data)
+}
+
+day_pred_epi <- vol_range_sims('day', full_col_mod_epi)
+night_pred_epi <- vol_range_sims('night', full_col_mod_epi)
+
+# |- Epipelagic Plot --------------------------------------
+epi_vs_plot <- ggplot() + 
+  geom_line(data = day_pred_epi,
+            aes(x = vs, y = mean,
+                col = 'day')) +
+  geom_ribbon(data = day_pred_epi,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'day'), alpha = .25) + 
+  geom_line(data = night_pred_epi,
+            aes(x = vs, y = mean, col = 'night')) +
+  geom_ribbon(data = night_pred_epi,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'night'), alpha = .25)+
+  scale_fill_manual(values = dn_cols[c('day','night')]) + 
+  scale_color_manual(values = dn_cols[c('day','night')]) +
+  scale_y_continuous(limits = c(0,1)) +
+  labs(y = 'Detection Probability', x = 'Volume Sampled', fill = "") +
+  guides(color = 'none')+
+  theme_pubr()
+  
+
+
+
+
+# |- tmesopelagic Plot --------------------------------------
+day_pred_tmeso <- vol_range_sims('day', full_col_mod_tmeso)
+night_pred_tmeso <- vol_range_sims('night', full_col_mod_tmeso)
+
+
+tmeso_vs_plot <- ggplot() + 
+  geom_line(data = day_pred_tmeso,
+            aes(x = vs, y = mean,
+                col = 'day')) +
+  geom_ribbon(data = day_pred_tmeso,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'day'), alpha = .25) + 
+  geom_line(data = night_pred_tmeso,
+            aes(x = vs, y = mean, col = 'night')) +
+  geom_ribbon(data = night_pred_tmeso,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'night'), alpha = .25)+
+  scale_fill_manual(values = dn_cols[c('day','night')]) + 
+  scale_color_manual(values = dn_cols[c('day','night')]) +
+  scale_y_continuous(limits = c(0,1)) +
+  labs(y = '', x = 'Volume Sampled', fill = "") +
+  guides(color = 'none')+
+  theme_pubr()
+
+
+# |- Bot Mesopelagic Plot --------------------------------------------
+
+day_pred_bmeso <- vol_range_sims('day', full_col_mod_bmeso)
+night_pred_bmeso <- vol_range_sims('night', full_col_mod_bmeso)
+
+
+bmeso_vs_plot <- ggplot() + 
+  geom_line(data = day_pred_bmeso,
+            aes(x = vs, y = mean,
+                col = 'day')) +
+  geom_ribbon(data = day_pred_bmeso,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'day'), alpha = .25) + 
+  geom_line(data = night_pred_bmeso,
+            aes(x = vs, y = mean, col = 'night')) +
+  geom_ribbon(data = night_pred_bmeso,
+              aes(x = vs, ymin = low, ymax = high,
+                  fill = 'night'), alpha = .25)+
+  scale_fill_manual(values = dn_cols[c('day','night')]) + 
+  scale_color_manual(values = dn_cols[c('day','night')]) +
+  scale_y_continuous(limits = c(0,1)) +
+  labs(y = '', x = 'Volume Sampled', fill = "") +
+  guides(color = 'none')+
+  theme_pubr()
+
+ggarrange(epi_vs_plot, tmeso_vs_plot, bmeso_vs_plot,
+          nrow = 1, common.legend = T, 
+          labels = c('Epipelagic','Upper Meso','Lower Meso'),
+          hjust = -0.75)
+
+```

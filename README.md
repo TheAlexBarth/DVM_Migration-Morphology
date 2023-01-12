@@ -7,6 +7,7 @@ All files are stored as RDS which provide the smallest single file structure for
 These files are placed on git large file storage. There is no big difference either way. To access raw data, contact Josh Stone (stone@sc.edu). To access formatted data in a non-R friendly format, contact Alex Barth (abarth1014@gmail.com).
 
 Files and general workflow:
+Several of these files rely on a data structure created in a prior file. All data are created but to run from the raw data, follow this sequence.
 
 -   mgmt_00_modis-data-import: imports raw modis data and formats as a list
 -   mgmt_00_proile-org: imports raw data and filters/formats as needed

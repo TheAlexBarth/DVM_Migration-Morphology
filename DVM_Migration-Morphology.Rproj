@@ -12,4 +12,4 @@ Encoding: UTF-8
 RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
-ZoteroLibraries: "My Library"
+ZoteroLibraries: "DVM_Morphology"

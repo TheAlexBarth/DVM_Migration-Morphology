@@ -1,26 +1,24 @@
 ---
 title: Methods
 ---
-  
+
 # 2. Methods
 
 # 2.1 Data Collection
 
-
 ## 2.2 Identification of morphogroups classification
 
-To identify 
-
+To identify
 
 ### 2.2.1 PCA
 
 ### 2.2.2 K-mean clustering
+
 To select the optimal number of clusters, clusters were added until addition centers did not increase the overall explanatory power $\frac{WithinSS}{TotalSS}$ by more than 10%.
 
 ## 2.3 Investigating Vertical Structure
 
 Copepods in this system show a clear diel vertical migration. However, it is not clear the maximum depths at which migrations are often done.
-
 
 ## 2.4 Quantifying DVM variability across morphogroups
 
@@ -28,19 +26,16 @@ Copepods in this system show a clear diel vertical migration. However, it is not
 
 One challenge from the UVP is the fact that the low sampling volume can lead to inaccurate estimates of true concentration **site bisson**. This problem is compounded when organisms are scarce. In the Sargasso sea, copepod abundances are particularly low **site**. When investigating specific morphotypes, abundances are even more scare as copepod observations are split categorically into new groups. Therefore estimates of copepod abundances, and their response to environmental drivers, are difficult to adequately measure with the UVP. This particular challenge however, can be addressed with an application of site-occupancy models. These models are a hierarchical Bayesian model which allows for the estimation of true occupancy (e.g. the organism of interest actually is occurring in the observed area) and the detection probability. Site-occupancy models have been increasingly popular in terrestrial systems **cite** and offer great potential for analyses of in-situ images with low sampling volumes.
 
-Site occupancy models use a hierarchical model structure to model both the probability a location is occupied by the organism of interest and the probability the organism is detected by researchers. Both the occurrence probability (psi) and detection probability (p) can be separately estimated. To best utilize these models, "sites" must be measured in replicates, or across multiple "surveys." Thus, occupancy probability can be measured in context of covariates across sites while detection probability can be measured in context of covariates across both sites and surveys. This approach is increasingly popular in terrestrial ecology and management work, however has not be implemented in marine ecology. **notes about differences between marines systems that limit this approach**. For this study, we treat each cruise as a "site" and profile during a cruise as a replicate "survey" to that site. By treating each profile as a survey, it effectively pools profiles across one large area, similar to what is done in many UVP studies. However, this approach assumes that observation differences among casts on a single cruise are driven by detection probability rather than occurrence probability. 
+Site occupancy models use a hierarchical model structure to model both the probability a location is occupied by the organism of interest and the probability the organism is detected by researchers. Both the occurrence probability (psi) and detection probability (p) can be separately estimated. To best utilize these models, "sites" must be measured in replicates, or across multiple "surveys." Thus, occupancy probability can be measured in context of covariates across sites while detection probability can be measured in context of covariates across both sites and surveys. This approach is increasingly popular in terrestrial ecology and management work, however has not be implemented in marine ecology. **notes about differences between marines systems that limit this approach**. For this study, we treat each cruise as a "site" and profile during a cruise as a replicate "survey" to that site. By treating each profile as a survey, it effectively pools profiles across one large area, similar to what is done in many UVP studies. However, this approach assumes that observation differences among casts on a single cruise are driven by detection probability rather than occurrence probability.
 
-The model 
+The model
 
 #### 2.4.1 Detetction Probability Estimation
 
 It is clear that volume sampled will have a direct effect on the detection probability. However, it was not clear if detection probability would vary with depth or time of day. Ideally, detection probability should not vary based on time of day. However, **Barth&Stone(2022)** displayed UVP avoidance behavior of large, mobile zooplankton. It was hypothesized this avoidance is driven by avoidance of the CTD rosette. If copepods are visually detecting the CTD rosette,
 
-
-To test the variability of detection probability with depth and time of day, occupancy models were ran for each. 
+To test the variability of detection probability with depth and time of day, occupancy models were ran for each.
 
 #### 2.4.2 Environmental Data Formatting
 
-Several metrics were used to evaluate environmental drivers of variability. @Ohman2016 showed a clear relationship between the diffuse attenuation coefficient and diel vertical migration magnitude.
-Photosynthetically available radiation (PAR) and the diffuse attenuation coefficient (1/k490) were calculated using data from the Aqua MODIS **insert more satellite detail**. Data from the Aqua MODIS were obtained in 4km resolution over a grid which encompassed the entire study area (MAP 1) over daily intervals. PAR and diffuse attenuation coefficient values were averaged over the entire study area for each day. Average values were then matched to specific UVP/CTD casts which occurred on the given day. For a few cases (34 total days), AquaMODIS coverage was not available for the exact date of a corresponding CTD cast. In these instances, the nearest available date was used, with a maximum of 3-days difference. All environmental factors were averaged over a cruise, separating day/night. These cruise-average environmental variables were then able to be used as site covariates in an occupancy model.
-
+Several metrics were used to evaluate environmental drivers of variability. @Ohman2016 showed a clear relationship between the diffuse attenuation coefficient and diel vertical migration magnitude. Photosynthetically available radiation (PAR) and the diffuse attenuation coefficient (1/k490) were calculated using data from the Aqua MODIS **insert more satellite detail**. Data from the Aqua MODIS were obtained in 4km resolution over a grid which encompassed the entire study area (MAP 1) over daily intervals. PAR and diffuse attenuation coefficient values were averaged over the entire study area for each day. Average values were then matched to specific UVP/CTD casts which occurred on the given day. For a few cases (34 total days), AquaMODIS coverage was not available for the exact date of a corresponding CTD cast. In these instances, the nearest available date was used, with a maximum of 3-days difference. All environmental factors were averaged over a cruise, separating day/night. These cruise-average environmental variables were then able to be used as site covariates in an occupancy model.

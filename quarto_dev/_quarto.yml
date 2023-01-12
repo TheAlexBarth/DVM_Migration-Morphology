@@ -36,7 +36,7 @@ website:
           text: Extended PCA/Clustering Plots
         - href: supp_03_cluster-conc.qmd
           text: Integrated Abundancy by Morphogroup
-        - href: supp_04_all-copepod-occurence.qmd
+        - href: supp_04_all-copepod-occurrence.qmd
           text: All Copepod Occupancy
 
     tools:
