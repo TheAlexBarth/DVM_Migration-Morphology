@@ -24,9 +24,9 @@ trim_to_cope <- function(uvp_data) {
     names()
   
   if(length(drop_casts) > 0) {
-    uvp_data$par_files <- uvp_data$par_files[which(names(uvp_data$par_files) != drop_casts)]
-    uvp_data$zoo_files <- uvp_data$zoo_files[which(names(uvp_data$zoo_files) != drop_casts)]
-    uvp_data$meta <- uvp_data$meta[which(uvp_data$meta$profileid != drop_casts),]
+    uvp_data$par_files <- uvp_data$par_files[which(!(names(uvp_data$par_files) %in% drop_casts))]
+    uvp_data$zoo_files <- uvp_data$zoo_files[which(!(names(uvp_data$zoo_files) %in% drop_casts))]
+    uvp_data$meta <- uvp_data$meta[which(!(uvp_data$meta$profileid%in%drop_casts)),]
   }
   # restore class structure
   uvp_data <- as_ecopart_obj(uvp_data)
@@ -53,9 +53,9 @@ trim_to_crust <- function(uvp_data) {
     names()
   
   if(length(drop_casts) > 0) {
-    uvp_data$par_files <- uvp_data$par_files[which(names(uvp_data$par_files) != drop_casts)]
-    uvp_data$zoo_files <- uvp_data$zoo_files[which(names(uvp_data$zoo_files) != drop_casts)]
-    uvp_data$meta <- uvp_data$meta[which(uvp_data$meta$profileid != drop_casts),]
+    uvp_data$par_files <- uvp_data$par_files[which(!(names(uvp_data$par_files) %in% drop_casts))]
+    uvp_data$zoo_files <- uvp_data$zoo_files[which(!(names(uvp_data$zoo_files) %in% drop_casts))]
+    uvp_data$meta <- uvp_data$meta[which(!(uvp_data$meta$profileid%in%drop_casts)),]
   }
   # restore class structure
   uvp_data <- as_ecopart_obj(uvp_data)
