@@ -12,12 +12,12 @@ Site-occupancy models are an approach popularized in terrestrial and conservatio
 \n\n
 At a basic level, the site-occupancy model is a bayesian hierarchical model with two main components. The biological component, $z_i \sim Bernoulli(\psi)$, where $z_i$ is the event that site $i$ is occupied, with probability $\psi$. Then there is the observation process, $Y_{ij} \sim Bernoulli(p_{ij}*z_{i})$, where $Y_{ij}$ is the event of observing an organism at site $i$, during survey $j$. The observation process thus is a bernoulli process, with the probability a function of both the detection probability $p_{ij}$ and the occurrence probability $z_{i}$. A requirement to adequately estimate $p_{ij}$, is replicate "surveys", $j$, over a given "site", $i$. To apply this model to our system, we treat each profile as a "survey" to the "site" of a cruise in the BATS region. This approach is fundamentally similar to the pool-cast approach, commonly used in imaging studies, where all casts in a region are treated a joint observations of a larger water mass.
 \n\n
-First to evaluate the overall efficacy of site-occupancy approach, we modeled occurrence of all copepods (regardless of morphogroup) in each depth-bin following a simple model. This model was ran for each depth-bin (20m intervals from 0-1200m) and each time of day (day or night). The occupancy ($\psi$), was assumed to be a unique, independent probability for each depth bin while the detection probability was modelling using a logistic regression to include the effect of volume sampled ($vs$). If the site occupancy model is effective in this system, it would be expected that there would be a positive effect of volume sampled on the detection probability. The models were ran three separate times, to estimate detection probability differences between the epipelagic (0-200m), uppermeso pelagic (200-600m), and lower mesopelagic (600-1200m).
+First to evaluate the overall efficacy of site-occupancy approach, we modeled occurrence of all copepods (regardless of morphogroup) in each depth-bin following a simple model. This model was ran for each depth-bin (20m intervals from 0-1200m) and each time of day (day or night). The occupancy ($\psi$), was assumed to be a unique, independent probability for each depth bin while the detection probability was modelling using a logistic regression to include the effect of volume sampled ($vs$). If the site occupancy model is effective in this system, it would be expected that there would be a positive effect of volume sampled on the detection probability. The models were ran three separate times, to estimate detection probability differences between the epipelagic (0-200m), uppermeso pelagic (200-600m), and lower mesopelagic (600-1200m). Detection probability was likely to differ between these regions due to differences in UVP descent speed and thus sampling volume through the water column as described in **Barth&Stone(2022)** 
 \n\n
 
 
 $$
-Y_{ij,db,tod} \sim Bernoilli(p_{ij}*z_{i,db,tod})
+Y_{ij,db,tod} \sim Bernoilli(p_{ij,tod}*z_{i,db,tod})
 $$
 
 $$
@@ -25,7 +25,7 @@ z_{i,db,tod} \sim Binomial(\psi_{db,tod})
 $$
 
 $$
-logit(p_{ij}) \sim a_0 + a_{vs} * vs_{ij}
+logit(p_{ij,tod}) \sim a_0 + a_{vs,tod} * vs_{ij}
 $$
 The model was ran using [JAGS](https://mcmc-jags.sourceforge.io/) with the r package [`jagsUI`](https://cran.r-project.org/web/packages/jagsUI/jagsUI.pdf). Vague priors were assumed for all parameters. A $Beta(1,1)$ distribution was used as the prior for fixed values ($a_0$, $\psi$), while a weak normal prior (mean = 0, sd = 1/10) was used as the prior for slope parameters ($a_{vs}$). The algorithm was ran with 3 chains for 10,000 iterations and a thinning rate of 2. All data used to inform the parameters (volume sampled) were standardized prior to inclusion.
 \n
