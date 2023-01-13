@@ -5,9 +5,11 @@ bibliography: references.bib
 
 # 2. Methods
 
-## 2.1 Data Collection
+## 2.1 In situ detection of copepods
 
-Data were collected aboard the R/V Atlantic Explorer in collaboration with the Bermuda Atlantic Time-series Study (BATS).
+Data were collected aboard the R/V Atlantic Explorer in collaboration with the Bermuda Atlantic Time-series Study (BATS **cite debbie**). In situ images of plankton were acquired using an Underwater Vision Profiler (UVP5-DEEP, sn: 209, Hydroptic, [@picheral2010]). The original sampling methodology and specification are detailed in [@barth2022]. The UVP was attached to the CTD rosette and recorded images of large particles (\>600$\mu$m Equivalent Spherical Diameter, ESD) however, living particles are not reliably identifiable below 1mm. The UVP sampled during down-casts of all profiles. The UVP was equipped for monthly cruises into the Sargasso Sea from June 2019 - Aug
+
+All ROIs larger than
 
 ## 2.2 Identification of morphogroups classification
 
