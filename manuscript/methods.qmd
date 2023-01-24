@@ -5,15 +5,48 @@ bibliography: references.bib
 
 # 2. Methods
 
-## 2.1 In situ detection of copepods
+## 2.1 CTD profiles and UVP imaging of copepods
 
-Data were collected aboard the R/V Atlantic Explorer in collaboration with the Bermuda Atlantic Time-series Study (BATS **cite debbie**). In situ images of plankton were acquired using an Underwater Vision Profiler (UVP5-DEEP, sn: 209, Hydroptic, [@picheral2010]). The original sampling methodology and specification are detailed in [@barth2022]. The UVP was attached to the CTD rosette and recorded images of large particles (\>600$\mu$m Equivalent Spherical Diameter, ESD) however, living particles are not reliably identifiable below 1mm. The UVP sampled during down-casts of all profiles. The UVP was equipped for monthly cruises into the Sargasso Sea from June 2019 - Aug
+Data were collected aboard the R/V Atlantic Explorer in collaboration with the Bermuda Atlantic Time-series Study (BATS **cite debbie**). In situ images of plankton were acquired using an Underwater Vision Profiler (UVP5-DEEP, sn: 209, Hydroptic, [@picheral2010]). The original sampling methodology and insturment specification followed details described in [@barth2022]. A brief summary of new and relevant sampling methodology are described below. The UVP was attached to the CTD rosette aboard the R/V Atlantic Explorer. The UVP was equipped for monthly cruises into the Sargasso Sea from June 2019 - Aug 2019 and October 2020 - December 2021. A typical monthly cruise included ***XX*** profiles with descents typically to 1200m. Full cast details are available in Supporting Information ***XX***. Only profiles within the BATS region were included (Figure 1). Generally, as described in analyses below, it was assumed that profiles within the BATS region during a cruise sampled a similar water mass. While mesoscale features are known to drive variability in this region, there were no major variations within a cruise (Supplemental Figure 1). The CTD collected continuous environmental parameters on down-casts, including temperature (Dual SBE-03f, Sea Bird Scientific), conductivity (Dual SBE04, Sea Bird Scientific), dissolved oxygen (SBE43, Sea Bird Scientific) and fluorescence (Chelsea Instruments). Because the purpose of this study was to investigate day/night differences in copepod vertical distributions, it was important that there were day and night casts during each cruise. It would be ideal to investigate each profile, without pooling the entire region by cruise, however, the small sampling volume of the UVP and low abundance of plankton in this region create the need to pool or average profiles [@barth2022]. Profiles were assigned to be day or night based on locally calculated nautical dawn and nautical dusk times using the R package `suncalc 0.5.1`.
 
-All ROIs larger than
+```{r, fig.height=3.5, fig.width=3.5, fig.align='center', fig.cap='Figure 1. Map of CTD and UVP profiles used in the study. Day and night points from all cruises are shown. Bermuda is shown in green.'}
+library('ggplot2')
+library('rnaturalearth')
+library('rnaturalearthdata')
+
+# |- get spatial data ----------
+world <- ne_countries(scale = 'medium', returnclass = 'sf')
+
+# |- read in data -----------------
+cast_loc <- readRDS('../data/01_ctd-locations.rds')
+
+all_cast_map <- ggplot()+
+  geom_sf(data = world, fill = 'green')+
+  geom_point(aes(x = -cast_loc$lon, y = cast_loc$lat,
+                 shape = cast_loc$tod, col = cast_loc$tod),
+             position = position_jitter(width = .05, height = 0.05))+
+  coord_sf(xlim = c(-65,-62), ylim = c(30,33))+
+  theme_bw()+
+  labs(x = "",y = "", shape = "", color = "")+
+  scale_color_manual(values = c('beige','black'))+
+  theme(panel.background = element_rect(fill = 'cornflowerblue'),
+        panel.grid = element_line(color = 'lightgrey', linetype = 'dotted'),
+        axis.text.x = element_text(angle = 45, hjust = c(1,1)),
+        legend.position = c(0.9,.2),
+        legend.background = element_blank(),
+        legend.box.background = element_rect(fill = 'lightgrey'),
+        legend.key = element_rect(fill = 'lightgrey'),
+        plot.background = element_blank())
+
+print(all_cast_map)
+
+```
+
+The UVP sampled during down-casts of all profiles at a rate of \~15Hz. The UVP records counts of small particles (\>184$\mu$m Equivalent Spherical Diameter, ESD) and images of large particles (\>600\$\\mu\$m ESD). However, living particles are not reliably identifiable below 0.9 mm \[\@barth2022\]. All recorded images were processed using Zooprocess [@gorsky2010], which provides several metrics related to size, grey value, and shape complexity. These features were then used to automatically sort images using the Ecotaxa application [@picheral]. While automatic classification increases the overall speed of identification [@irisson2022], all images were manually verified by the same trained taxonomist. To reduce annotation bias, images were validated according to a strict guide available (**INSERT GUIDE AVAILABILITY**). In total, 294913 images were recorded. Of these, 85.2% were images of debris, marine-snow, or artefacts, while 14.8% were identified as living. In the present study, only copepods were investigated. The smallest observed and identified copepod was 0.940 mm ESD and the largest was 5.904 mm ESD. Across all casts, copepods were the most common observed organism at 58.7% of all identified, living particles. In total, there were 4151 individual copepods investigated in this study.
 
 ## 2.2 Identification of morphogroups classification
 
-To test the hypothesis of morphological influences on DVM magnitude, we first characterize copepods into distinct morphological-groups (referred to as morphogroups). The UVP automatically measures and collects several morphologically relevant
+To test the hypothesis of morphological influences on DVM magnitude, we first characterize copepods into distinct morphological-groups (referred to as morphogroups). The UVP automatically measures and collects several morphologically relevant parameters. 23 parameters were selected to be included in a Principle Components Analysis (PCA)
 
 ### 2.2.1 PCA
 
