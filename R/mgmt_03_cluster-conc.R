@@ -9,7 +9,7 @@ library(EcotaxaTools)
 source('./R/tools.R')
 
 cluster_cope <- readRDS('./data/02_cluster-copepods.rds')
-uvp_data <- readRDS('./data/01_uvp-trim-final.rds') |> 
+uvp_data <- readRDS('./data/01_uvp-trim-final_large.rds') |> 
   trim_to_cope()
 
 ####

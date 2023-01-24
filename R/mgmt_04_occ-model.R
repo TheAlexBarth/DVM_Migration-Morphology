@@ -13,7 +13,7 @@ library(wiqid)
 library(tidyr)
 source('./R/tools.R')
 
-uvp_data <- readRDS('./data/01_uvp-trim-final.rds') |> 
+uvp_data <- readRDS('./data/01_uvp-trim-final_large.rds') |> 
   trim_to_cope()
 
 uvp_data$meta$cruise_id <- paste0(uvp_data$meta$stationid, 

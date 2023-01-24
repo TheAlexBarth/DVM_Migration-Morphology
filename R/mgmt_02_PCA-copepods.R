@@ -13,7 +13,7 @@ source('./R/tools.R')
 
 # |- Import and clean data ---------------------------------
 
-uvp_data <- readRDS('./data/01_uvp-trim-final.rds')
+uvp_data <- readRDS('./data/01_uvp-trim-final_large.rds')
 
 
 # # What's the relative abundance of copepods across multicelluar zoops
@@ -31,8 +31,8 @@ uvp_data <- readRDS('./data/01_uvp-trim-final.rds')
 # rel_cope$all_casts[order(rel_cope$all_casts$rel_abundance, decreasing = T),]
 # # we see copepods to be 60% of all observed taxa, 14.2% living misc, 
 # # and 6%ish of Eumalacostraca, Ostracods, Chaetognaths
-
-crust_data <- trim_to_crust(uvp_data)
+# 
+# crust_data <- trim_to_crust(uvp_data)
 uvp_data <- trim_to_cope(uvp_data)
 
 # |- Pair weights to each observation --------------------
@@ -44,7 +44,7 @@ max_vol <- (1/.0311) * 1.1
 
 #get the sampled volumes for each cast-bin wise
 sampled_vols <- get_ecopart_vol(uvp_data)
-crust_vols <- get_ecopart_vol(crust_data)
+# crust_vols <- get_ecopart_vol(crust_data)
 
 # wrap in an if to safety check - should never be an issue unless files are whack
 if(all(names(sampled_vols) == names(uvp_data$zoo_files))) {
@@ -66,32 +66,32 @@ if(all(names(sampled_vols) == names(uvp_data$zoo_files))) {
   }
 }
 
-# wrap in an if to safety check - should never be an issue unless files are whack
-if(all(names(crust_vols) == names(crust_data$zoo_files))) {
-  
-  for(i in 1:length(crust_data$zoo_files)) {
-    #round observed depth to volume sampled depths
-    obs_depths <- crust_data$zoo_files[[i]]$depth_including_offset |> 
-      sapply(nearest, crust_vols[[i]]$depth)
-    
-    #index to the sampled volumes
-    d_idx <- match(obs_depths, crust_vols[[i]]$depth)
-    
-    # get volumed sampled in each location
-    v_sampled <- crust_vols[[i]]$vol_sampled[d_idx]
-    v_sampled[which(v_sampled < max_vol)] <- max_vol #replace less than max_vol
-    
-    # assign weights based on volume sampled
-    crust_data$zoo_files[[i]]['weight'] <- 1/v_sampled
-  }
-}
+# # wrap in an if to safety check - should never be an issue unless files are whack
+# if(all(names(crust_vols) == names(crust_data$zoo_files))) {
+#   
+#   for(i in 1:length(crust_data$zoo_files)) {
+#     #round observed depth to volume sampled depths
+#     obs_depths <- crust_data$zoo_files[[i]]$depth_including_offset |> 
+#       sapply(nearest, crust_vols[[i]]$depth)
+#     
+#     #index to the sampled volumes
+#     d_idx <- match(obs_depths, crust_vols[[i]]$depth)
+#     
+#     # get volumed sampled in each location
+#     v_sampled <- crust_vols[[i]]$vol_sampled[d_idx]
+#     v_sampled[which(v_sampled < max_vol)] <- max_vol #replace less than max_vol
+#     
+#     # assign weights based on volume sampled
+#     crust_data$zoo_files[[i]]['weight'] <- 1/v_sampled
+#   }
+# }
 
 # |- Format into a long df ------------------------
 all_copes <- uvp_data$zoo_files |> 
   list_to_tib('profileid')
 
-all_crust <- crust_data$zoo_files |> 
-  list_to_tib('profileid')
+# all_crust <- crust_data$zoo_files |> 
+#   list_to_tib('profileid')
 
 ###
 # PCA ####
@@ -138,7 +138,7 @@ cope_pca <- PCA(cope_features, scale.unit = TRUE,
 
 
 # |- Loading scores visualize ---------------------------------
-# cope_pca$var$coord[order(cope_pca$var$coord[,2], decreasing = T),]
+# cope_pca$var$coord[order(cope_pca$var$coord[,1], decreasing = T),]
 # dim.1 is characterized by size and and anti-correlatedd with circularity:: size
 # dim.2 is positive with skewed grey values and anti- with darker values:: transparency
 # dim.3 is positive with complexity and anti- with elongation:: appendage visibility

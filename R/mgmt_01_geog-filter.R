@@ -67,4 +67,4 @@ trim_uvp$zoo_files <- uvp_data$zoo_files[which(names(uvp_data$zoo_files) %in% tr
 trim_uvp <- trim_uvp |> as_ecopart_obj()
 
 saveRDS(trim_ctd, './Data/01_ctd-trim-final.rds')
-saveRDS(trim_uvp, './Data/01_uvp-trim-final.rds')
+saveRDS(trim_uvp, './Data/01_uvp-trim-final_large.rds')
