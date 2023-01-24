@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.175">
+<meta name="generator" content="quarto-1.2.313">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -144,10 +144,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-main-analyses" role="button" data-bs-toggle="dropdown" aria-expanded="false">Main Analyses</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-main-analyses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Main Analyses</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-main-analyses">    
         <li>
     <a class="dropdown-item" href="./main_00_CTD-UVP-map.html">
@@ -167,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
         <li>
     <a class="dropdown-item" href="./main_04_WMD-by-morphogroup.html">
- <span class="dropdown-text">Weight Mean Depth of Morphogroups</span></a>
+ <span class="dropdown-text">Weighted Mean Depth of Morphogroups</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./main_05_all-copepod-occupancy.html">
@@ -184,7 +187,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-supplemental" role="button" data-bs-toggle="dropdown" aria-expanded="false">Supplemental</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-supplemental" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Supplemental</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-supplemental">    
         <li>
     <a class="dropdown-item" href="./supp_01_ctd-by-cruise.html">
@@ -207,12 +212,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/TheAlexBarth/DMV_BATS"><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://thealexbarth.github.io/#about"><i class="bi bi-house-fill" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -238,6 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -360,7 +366,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -447,103 +470,120 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Weighted Mean Depth of Morphogroups</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methodology</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Weighted mean depth is a commonly used metric to describe zooplankton populations and vertical distributions. Zooplankton populations can often be found in bimodal patterns throughout the water column, with a subsurface peak and a deeper mesopelagic peak <span class="co">[</span><span class="ot">see here</span><span class="co">](./main_03_Vert-Distrib.html)</span>. The WMD of a distribution effectively provides a center of mass for the zooplankton in the water column. However, interpreting the WMD often requires context as the depth itself may not be informative. WMD can be particularly useful for DVM studies, as it can show the differences in daytime and nighttime distributions <span class="co">[</span><span class="ot">Ohman &amp; Romagnan 2016</span><span class="co">](https://onlinelibrary.wiley.com/doi/abs/10.1002/lno.10251)</span>. Additionally, by calculating the average WMD across multiple samples, the variability (or standard deviation) in WMD can be informative to the overall spread of the zooplankton distribution throughout the water column.</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>\n\n</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (1180m,1200m\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>\n\n </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Figures and Takeaways</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs. This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. Interestingly, the average daytime WMD for morphogroups 1 and 2 is deeper than morphogroups 3 and 4. The daytime WMD confidence intervals between MGs 1 &amp; 2 are non-overlapping with MG3 and nearly non-overlapping with MG4. This suggests that the larger copepods contained in MG1 and MG2 are clearly occupying deeper areas of the water column, supporting H1 as larger copepods will have a larger DVM signal. However, with this data we are not able to detect any clear difference in DVM signal based on transparency as the daytime WMD intervals are nearly completely overlapping between MG1 and MG2 and between MG3 and MG4.</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>\n\n</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methodology</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Weighted mean depth is a commonly used metric to describe zooplankton populations and vertical distributions. Zooplankton populations can often be found in bimodal patterns throughout the water column, with a subsurface peak and a deeper mesopelagic peak <span class="co">[</span><span class="ot">see here</span><span class="co">](./main_03_Vert-Distrib.html)</span>. The WMD of a distribution effectively provides a center of mass for the zooplankton in the water column. However, interpreting the WMD often requires context as the depth itself may not be informative. WMD can be particularly useful for DVM studies, as it can show the differences in daytime and nighttime distributions <span class="co">[</span><span class="ot">Ohman &amp; Romagnan 2016</span><span class="co">](https://onlinelibrary.wiley.com/doi/abs/10.1002/lno.10251)</span>. Additionally, by calculating the average WMD across multiple samples, the variability (or standard deviation) in WMD can be informative to the overall spread of the zooplankton distribution throughout the water column.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>\n\n</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (1180m,1200m\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>\n\n </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Figures and Takeaways</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs. This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. Interestingly, the average daytime WMD for morphogroups 1 and 2 is deeper than morphogroups 3 and 4. The daytime WMD confidence intervals between MGs 1 &amp; 2 are non-overlapping with MG3 and nearly non-overlapping with MG4. This suggests that the larger copepods contained in MG1 and MG2 are clearly occupying deeper areas of the water column, supporting H1 as larger copepods will have a larger DVM signal. However, with this data we are not able to detect any clear difference in DVM signal based on transparency as the daytime WMD intervals are nearly completely overlapping between MG1 and MG2 and between MG3 and MG4.</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>\n\n</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=10, fig.height=5}</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'../r/tools.R'</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>boot_wmd <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/03_wmd-all-merged.rds'</span>)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>day_summary <span class="ot">&lt;-</span> boot_wmd<span class="sc">$</span>day <span class="sc">|&gt;</span> <span class="fu">lapply</span>(quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>night_summary <span class="ot">&lt;-</span> boot_wmd<span class="sc">$</span>night <span class="sc">|&gt;</span> <span class="fu">lapply</span>(quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>wmd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cluster =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>),</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tod =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">'day'</span>,<span class="st">'night'</span>),<span class="at">each =</span> <span class="dv">4</span>),</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">low =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>))</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>low[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'2.5%'</span>]]</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>mid[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'50%'</span>]]</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>high[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'97.5%'</span>]]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=10, fig.height=5}</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">'../r/tools.R'</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>boot_wmd <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/03_wmd-all-merged.rds'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>day_summary <span class="ot">&lt;-</span> boot_wmd<span class="sc">$</span>day <span class="sc">|&gt;</span> <span class="fu">lapply</span>(quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>night_summary <span class="ot">&lt;-</span> boot_wmd<span class="sc">$</span>night <span class="sc">|&gt;</span> <span class="fu">lapply</span>(quantile, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>wmd_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cluster =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tod =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">'day'</span>,<span class="st">'night'</span>),<span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                     <span class="at">low =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mid =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">high =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">8</span>))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>low[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'2.5%'</span>]]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>mid[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'50%'</span>]]</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>high[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'day'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> day_summary[[i]][[<span class="st">'97.5%'</span>]]</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>low[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'2.5%'</span>]]</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>mid[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'50%'</span>]]</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>high[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'97.5%'</span>]]</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>low[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'2.5%'</span>]]</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>mid[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'50%'</span>]]</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  wmd_df<span class="sc">$</span>high[<span class="fu">which</span>(wmd_df<span class="sc">$</span>tod <span class="sc">==</span> <span class="st">'night'</span> <span class="sc">&amp;</span> </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                     wmd_df<span class="sc">$</span>cluster <span class="sc">==</span> i)] <span class="ot">&lt;-</span> night_summary[[i]][[<span class="st">'97.5%'</span>]]</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wmd_df) <span class="sc">+</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> cluster,</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mid,</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> tod),</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">5</span>),</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x =</span> cluster,</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymin =</span> low,</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> high,</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> tod),</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">25</span>,</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">5</span>),</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(dn_cols[<span class="st">'day'</span>],dn_cols[<span class="st">'night'</span>])) <span class="sc">+</span></span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">600</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">'Depth [m]'</span>, <span class="at">x =</span> <span class="st">'Morphogroup Cluster'</span>, <span class="at">col =</span> <span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wmd_df) <span class="sc">+</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> cluster,</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mid,</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> tod),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">5</span>),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x =</span> cluster,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymin =</span> low,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> high,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> tod),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">25</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">5</span>),</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(dn_cols[<span class="st">'day'</span>],dn_cols[<span class="st">'night'</span>])) <span class="sc">+</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">600</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">'Depth [m]'</span>, <span class="at">x =</span> <span class="st">'Morphogroup Cluster'</span>, <span class="at">col =</span> <span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

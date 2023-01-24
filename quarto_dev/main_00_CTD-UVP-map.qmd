@@ -40,7 +40,7 @@ print(all_cast_map)
 ```{r}
 library(DT)
 library(dplyr)
-uvp_data <- readRDS('../data/01_uvp-trim-final.rds')
+uvp_data <- readRDS('../data/01_uvp-trim-final_large.rds')
 
 # get max_d
 par_max_d <- function(par_df) {

@@ -1,6 +1,5 @@
 ---
 title: Weighted Mean Depth of Morphogroups
-bibliography: references.bib
 ---
 
 ## Methodology

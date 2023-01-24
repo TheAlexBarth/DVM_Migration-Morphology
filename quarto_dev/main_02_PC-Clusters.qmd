@@ -138,7 +138,7 @@ Additionally, to exemplify morphogroup differences along original parameters, we
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
 
-uvp_data <- readRDS('../data/01_uvp-trim-final.rds') |> 
+uvp_data <- readRDS('../data/01_uvp-trim-final_large.rds') |> 
   trim_to_cope()
 
 ####
