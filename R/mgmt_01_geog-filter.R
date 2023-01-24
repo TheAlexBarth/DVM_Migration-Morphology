@@ -26,7 +26,7 @@ for(i in 1:nrow(ctd_loc)){
 }
 
 
-# |- All cast map ---------------------
+# # |- All cast map ---------------------
 # all_cast_map <- ggplot()+
 #   geom_sf(data = world, fill = 'green')+
 #   geom_point(aes(x = -ctd_loc$lon, y = ctd_loc$lat,
@@ -42,8 +42,7 @@ for(i in 1:nrow(ctd_loc)){
 #   theme(panel.background = element_rect(fill = 'cornflowerblue'),
 #         axis.text.x = element_text(angle = 45, hjust = c(1,1)),
 #         legend.position = 'bottom')
-#   
-# saveRDS(all_cast_map,'./output/supp_map_01_all-casts.rds')
+
 
 # |- Removing casts outside range ------------------------
 drop_casts <- which(
