@@ -12,7 +12,8 @@ Then to better visualize day/night differences, the proportional difference in e
 
 ## Figures & Take-aways:
 
-First, it is clear the smaller-sized morphogroups (3 & 4) are in higher average abundances in all areas of the water column. This is again expected as smaller zooplankton dominate in this system. For all morphogroups, nighttime abundances are higher in the surface (0-200m) compared to the daytime surface abundances. Overall abundances are lowest around 300m with a daytime abundance dominated region around the upper-to-mid mesopelagic (400-600m). This pattern shows a clear DVM occurring in all morphogroups between around 150m-600m. Below 600m, there is no trend in day/night differences and the variation in proportional differences seems to be random noise. This is expected as it would be nearly impossible for regular migrations of individual copepods to move below 600m on a daily basis.\n\n
+First, it is clear the smaller-sized morphogroups (morphogroup 2) occurred in higher abundances. This is again expected as smaller zooplankton dominate in this system. Interestingly, this logic would predict that morphogroup 1 would be more abundant than morphogroup 3. However, the opposite is true in this data set. One possibility is that smaller, transparent copepods are likely to not be adequately identified by annotators.
+Morphogroup 4 is the least abundant and this is consistent across seasons. For all morphogroups, nighttime abundances are higher in the surface (0-200m) compared to the daytime surface abundances. Overall abundances are lowest around 300m with a daytime abundance dominated region around the upper-to-mid mesopelagic (400-600m). This pattern shows a clear DVM occurring in all morphogroups between around 150m-600m. Below 600m, there is no trend in day/night differences and the variation in proportional differences seems to be random noise. This is expected as it would be nearly impossible for regular migrations of individual copepods to move below 600m on a daily basis.\n\n
 It is also clear that the variability between casts is extremely large. Often the standard deviation of depth-bin abundance is much larger than the average abundance. This is in part driven by high variability between [cruises which occurred in different seasons](./supp_03_cluster-conc.html) getting averaged together. However, there is also large variability between individual casts, which can be driven by the small sampling volume of the UVP as described by [Barth & Stone 2022](https://www.frontiersin.org/articles/10.3389/fmars.2022.898057/full). This variation driven by the sampling variability led to the need for new analysis methods on in-situ imaging data [used in this paper](./main_05_all-copepod-occupancy.html).
 
 ```{r}
@@ -82,7 +83,8 @@ cluster_profile <- function(k) {
     coord_flip()+
     scale_x_reverse(expand = c(0,0))+
     scale_y_continuous(position = 'right',
-                       labels = abs) +
+                       labels = abs,
+                       limits = c(-3.25,3.25)) +
     theme_pubr()
 
   return(ret_plot)
@@ -117,8 +119,10 @@ diff_profile <- function(k) {
     scale_x_reverse(expand = c(0,0)) +
     scale_y_continuous(expand = c(0,0),
                        position = 'right',
-                       labels = abs) +
-    theme_pubr()
+                       labels = abs,
+                       limits = c(-.0225, .0399)) +
+    theme_pubr()+
+    theme()
   
   return(ret_plot)
 }
@@ -133,7 +137,7 @@ diff_4_profile <- diff_profile(4)
 
 ```{r, out.width='100%', fig.width=10}
 
-#| column: page-inset
+#| column: page-outset
 
 ggarrange(cluster_1_profile,
           cluster_2_profile + 

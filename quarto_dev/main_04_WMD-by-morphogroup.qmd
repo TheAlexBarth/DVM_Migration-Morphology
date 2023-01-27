@@ -8,13 +8,13 @@ Weighted mean depth is a commonly used metric to describe zooplankton population
 
 \n\n
 
-In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (1180m,1200m\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
+In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (580,600\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
 \n\n 
 Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.
 
 ## Key Figures and Takeaways
 
-Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs. This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. Interestingly, the average daytime WMD for morphogroups 1 and 2 is deeper than morphogroups 3 and 4. The daytime WMD confidence intervals between MGs 1 & 2 are non-overlapping with MG3 and nearly non-overlapping with MG4. This suggests that the larger copepods contained in MG1 and MG2 are clearly occupying deeper areas of the water column, supporting H1 as larger copepods will have a larger DVM signal. However, with this data we are not able to detect any clear difference in DVM signal based on transparency as the daytime WMD intervals are nearly completely overlapping between MG1 and MG2 and between MG3 and MG4.
+Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs (non-overlapping CI). This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. The average daytime WMD is clearly deeper for morphogroup 3 and 2 compared to morphogroup 4. This result is surprising. The hypothesis that visual risk drives DVM predicts that darker copepods (morphogroup 3) need to migrate further. However, it would also be expected that morphogroup 4 (larger copepods) would need to migrate further than morphogroup 2 (smaller copepods). One possibility is that the few observations of morphogroup 4 resulted in a falsely-small confidence interval for WMD. 
 \n\n
 
 
@@ -73,3 +73,10 @@ ggplot(wmd_df) +
   theme_pubr()
   
 ```
+
+
+
+```{r}
+DT::datatable(wmd_df)
+```
+

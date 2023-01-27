@@ -149,7 +149,8 @@ dcm_plot <- ggplot(feature_df) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   coord_flip()+
   theme_pubr() +
-  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)",
+       subtitle = 'DCM Depth') +
   theme(legend.position = 'none')
 
 prey_plot <- ggplot(feature_df) + 
@@ -168,7 +169,8 @@ prey_plot <- ggplot(feature_df) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   coord_flip()+
   theme_pubr() +
-  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)",
+       subtitle = 'Prey') +
   theme(legend.position = 'none')
 
 par_plot <- ggplot(feature_df) + 
@@ -187,7 +189,8 @@ par_plot <- ggplot(feature_df) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   coord_flip()+
   theme_pubr() +
-  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)",
+       subtitle = 'PAR') +
   theme(legend.position = 'none')
 
 dac_plot <- ggplot(feature_df) + 
@@ -206,27 +209,19 @@ dac_plot <- ggplot(feature_df) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   coord_flip()+
   theme_pubr() +
-  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)") +
+  labs(x = 'Depth [m]', y = "Effect on LogOdds(occupancy)",
+       subtitle = '1/k490') +
   theme(legend.position = 'none')
 
 
 
 #| column: page-outset
 
-ggarrange(dcm_plot + theme(axis.title.x = element_blank(),
-                           axis.line.x = element_blank(),
-                           axis.ticks.x = element_blank(),
-                           axis.text.x = element_blank()),
-          prey_plot+ theme(axis.title.x = element_blank(),
-                           axis.line.x = element_blank(),
-                           axis.ticks.x = element_blank(),
-                           axis.text.x = element_blank(),
+ggarrange(dcm_plot,
+          prey_plot+ theme(
                            strip.background = element_blank(),
                            strip.text = element_blank()),
-          par_plot+ theme(axis.title.x = element_blank(),
-                          axis.line.x = element_blank(),
-                          axis.ticks.x = element_blank(),
-                          axis.text.x = element_blank(),
+          par_plot+ theme(
                           strip.background = element_blank(),
                           strip.text = element_blank()),
           dac_plot+ theme(strip.background = element_blank(),

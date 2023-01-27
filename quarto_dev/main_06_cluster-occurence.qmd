@@ -21,7 +21,7 @@ $$
 The same priors were used in this model as described previously. All model conditions and MCMC simulation methods were consistent as well.
 
 # Key Figures and Takeaways:
-```{r}
+```{r, fig.width=10}
 
 rm(list = ls())
 library(ggplot2)
@@ -106,7 +106,8 @@ ribbon_plot <- function(cluster) {
     coord_flip()+
     theme_pubr() +
     labs(x = 'Depth [m]', y = "Occupancy") +
-    theme(legend.position = 'none')
+    theme(legend.position = 'none',
+          axis.text.x = element_text(angle=45, hjust = 1, vjust = 1))
   return(out_plot)
 }
 
@@ -137,6 +138,8 @@ for(i in 1:4) {
   # point_occupancy[[i]] <- point_plot(i)
 }
 
+#| column: page-outset
+
 ggarrange(ribbon_occupancy[[1]],
           ribbon_occupancy[[2]] + theme(axis.title.y = element_blank(),
                                         axis.text.y = element_blank()),
@@ -154,7 +157,7 @@ ggarrange(ribbon_occupancy[[1]],
 
 ```
 
-Generally, across all morphogroups, it can be seen that the credible intervals (95% high density interval of the posterior distribution) for copepod occupancy are very wide. Often ranging from 25% to 100%. However, there are some clear trends consistent with DVM hypotheses. Notably, there is an increased nighttime occupancy for all morphogroups from the 40m to 140m. For depth bins in those regions, the mean posterior occupancy ranges from 73% to 92%, indicating there is a high likelihood all morphogroups will be found in that region at night. There is lower daytime occupancy over that same region, however this varies by morphogroup. For Morphogroup 1, the mean posterior occupancy ranges from 52% (at 80-100m) to 73% (at 60-80m). Morphogroup 2, the mean posterior occupancy ranges from 60% to 80%. For morphogroups 3 and 4, the posterior mean occupancy is similar to the nighttime estimates. This finding suggests that the larger morphogroups (1 & 2) will are less likely to be found near the surface during the daytime as compared to the smaller morphogroups. Yet again, we detect no clear difference between the darker morphogroup and the lighter morphogroup.
+Generally, across all morphogroups, it can be seen that the credible intervals (95% high density interval of the posterior distribution) for copepod occupancy are very wide. Often ranging from 25% to 100%. However, there are some clear trends consistent with DVM hypotheses. Notably, there is an increased nighttime occupancy for all morphogroups from the 40m to 140m. For depth bins in those regions, the mean posterior occupancy ranged from 71% to 88%, indicating there is a high likelihood all morphogroups will be found in that region at night. There is lower daytime occupancy over that same region, however this varies by morphogroup. Notably, morphogroup 4 has a 54% mean posterior daytime occupancy from 40m-140m. This indicates a decreased likely of the larger morphogroup 4 copepods in that area during daytime. All other morphogroups have higher posterior daytime occupancy rates in the epipelagic. Generally throughout the rest of the water column, the posterior estimates of occupancy are consistent, except for a decline around 225-300m which is consistent with the abundance profiles. Overall, morphogroup 4 had a wider credible interval around the posterior occupancy estimate which is likely due to it's rarity.
 
 \n\n
 A possilbe reason for the wide range of occupancy variables is the fact we have yet to account for environmental influences on occupancy across different cruises (sites). This is investigated in [Figure 7](./main_07_environmental-effect-model.html)

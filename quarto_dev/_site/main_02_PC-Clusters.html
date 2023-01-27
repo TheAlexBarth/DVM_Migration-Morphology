@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -153,13 +153,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html">Home</a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-main-analyses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Main Analyses</span>
-    </a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-main-analyses" role="button" data-bs-toggle="dropdown" aria-expanded="false">Main Analyses</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-main-analyses">    
         <li>
     <a class="dropdown-item" href="./main_00_CTD-UVP-map.html">
@@ -196,9 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-supplemental" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Supplemental</span>
-    </a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-supplemental" role="button" data-bs-toggle="dropdown" aria-expanded="false">Supplemental</a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-supplemental">    
         <li>
     <a class="dropdown-item" href="./supp_01_ctd-by-cruise.html">
@@ -221,12 +216,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/TheAlexBarth/DMV_BATS"><i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+ </a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://thealexbarth.github.io/#about"><i class="bi bi-house-fill" role="img">
 </i> 
- <span class="menu-text"></span></a>
+ </a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -252,7 +247,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
-  
     
   </div>
   
@@ -273,6 +267,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cluster_res <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cluster-copepods.rds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<section id="methodology" class="level1">
+<h1>Methodology</h1>
 <p>A PCA was run on the morphological features for each vignette. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check <a href="./supp_02_pc-extended-info.html">supplemental information 2</a>. The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al.&nbsp;(2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only include the first two axis for definition of morphogroups. A k-means cluster analysis was used to identify morphogroups within the first two PC-space. Four clusters were determined to be the optimal number of groups as it captured 65% of the variability in the morphospace and additional clusters added less than 10% explanatory power. Individual observations were assigned to morphogroups based on the k-means analysis, which was conducted using 1000 random starts. The analysis converged on consistent results across iterations.</p>
 <div class="cell">
 <details>
@@ -353,8 +349,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="morphogroup-definition-separation" class="level2">
 <h2 class="anchored" data-anchor-id="morphogroup-definition-separation">Morphogroup definition separation</h2>
-<p>The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by larger and more transparent copepods. Cluster 2 follows large values of PC1 and low values of PC2, which can be interpreted as containing both large-sized and darker copepods. Cluster 3 was best described by low values of PC1, interpreted as correlating to smaller-sized individuals. Finally, cluster 4 contains individuals with moderate PC1 scores and low PC2 scores, indicating darker, medium-to-small sized copepods.</p>
-<p>To assure that these clusters were not trivial, each morphogroup’s scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 (p &lt; 0.001 following Bonferroni correction for all groups, Supplemental 2). On PC2, cluster 2 and cluster 4 were not significantly different (p = 1), while all other groups were significantly different from one another (p &lt; 0.001).</p>
+<p>The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by moderate sized and more transparent. Cluster 2 follows the smallest values on PC1 indicating that it is primarily composed of smaller copepods. Cluster 3 was best described by low values of PC2, interpreted as correlating to darker individuals. Finally, cluster 4 contains individuals with high PC1 scores and thus the larger copepods.</p>
+<p>To assure that these clusters were not trivial, each morphogroup’s scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 and PC2 (p &lt; 0.001 following Bonferroni correction for all groups).</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -365,8 +361,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-27dabfeb74b82730cc22" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-27dabfeb74b82730cc22">{"x":{"filter":"none","vertical":false,"caption":"<caption>PC1 Dunn multiple comprison test with bonferroni correction<\/caption>","data":[["1","2","3","4","5","6"],["1 - 2","1 - 3","2 - 3","1 - 4","2 - 4","3 - 4"],[-19.7901454875891,-25.9973845910449,-13.6522966201479,14.6096841270324,44.0380944892399,39.7261073593945],[3.61995361556093e-87,5.30110146011429e-149,1.95614986986466e-42,2.4364496381146e-48,0,0],[2.17197216933656e-86,3.18066087606857e-148,1.17368992191879e-41,1.46186978286876e-47,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Comparison<\/th>\n      <th>Z<\/th>\n      <th>P.unadj<\/th>\n      <th>P.adj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7d32a45613c97ee5fa08" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7d32a45613c97ee5fa08">{"x":{"filter":"none","vertical":false,"caption":"<caption>PC1 Dunn multiple comprison test with bonferroni correction<\/caption>","data":[["1","2","3","4","5","6"],["1 - 2","1 - 3","2 - 3","1 - 4","2 - 4","3 - 4"],[14.6096841270324,-19.7901454875891,-44.0380944892399,-25.9973845910449,-39.7261073593945,-13.6522966201479],[2.4364496381146e-48,3.61995361556093e-87,0,5.30110146011429e-149,0,1.95614986986466e-42],[1.46186978286876e-47,2.17197216933656e-86,0,3.18066087606857e-148,0,1.17368992191879e-41]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Comparison<\/th>\n      <th>Z<\/th>\n      <th>P.unadj<\/th>\n      <th>P.adj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <details>
 <summary>Code</summary>
@@ -387,8 +383,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-607b63cb62a2c8e25a5e" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-607b63cb62a2c8e25a5e">{"x":{"filter":"none","vertical":false,"caption":"<caption>PC2 Dunn multiple comprison test with bonferroni correction<\/caption>","data":[["1","2","3","4","5","6"],["1 - 2","1 - 3","2 - 3","1 - 4","2 - 4","3 - 4"],[45.4712705738996,9.05035350020255,-24.2388861670434,30.7680973585431,-19.7682620934687,12.8762163662436],[0,1.42506243053935e-19,8.66088005462629e-130,7.00390991164355e-208,5.58675223744988e-87,6.12661984501778e-38],[0,8.5503745832361e-19,5.19652803277578e-129,4.20234594698613e-207,3.35205134246993e-86,3.67597190701067e-37]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Comparison<\/th>\n      <th>Z<\/th>\n      <th>P.unadj<\/th>\n      <th>P.adj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9b1a1b174fd9a2500056" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9b1a1b174fd9a2500056">{"x":{"filter":"none","vertical":false,"caption":"<caption>PC2 Dunn multiple comprison test with bonferroni correction<\/caption>","data":[["1","2","3","4","5","6"],["1 - 2","1 - 3","2 - 3","1 - 4","2 - 4","3 - 4"],[30.7680973585431,45.4712705738996,19.7682620934687,9.05035350020255,-12.8762163662436,-24.2388861670434],[7.00390991164355e-208,0,5.58675223744988e-87,1.42506243053935e-19,6.12661984501778e-38,8.66088005462629e-130],[4.20234594698613e-207,0,3.35205134246993e-86,8.5503745832361e-19,3.67597190701067e-37,5.19652803277578e-129]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Comparison<\/th>\n      <th>Z<\/th>\n      <th>P.unadj<\/th>\n      <th>P.adj<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <details>
 <summary>Code</summary>
@@ -407,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="main_02_PC-Clusters_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency. This clearly shows that morphogroups 1 &amp; 2 are larger while 3 &amp; 4 are smaller. Additionally morphogroups 2 &amp; 4 are darker while 1 &amp; 3 are smaller. Thus, the hypothesis that size and color will influence DVM signal would predict morphogroup 2 to have the largest DVM signal and morphogroup 3 to have the smallest DVM signal.</p>
+<p>Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -456,6 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- -->
 
 </section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -499,24 +496,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -603,42 +583,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -658,167 +620,169 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>cluster_res <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cluster-copepods.rds'</span>)</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>A PCA was run on the morphological features for each vignette. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check <span class="co">[</span><span class="ot">supplemental information 2</span><span class="co">](./supp_02_pc-extended-info.html)</span>. The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only include the first two axis for definition of morphogroups. A k-means cluster analysis was used to identify morphogroups within the first two PC-space. Four clusters were determined to be the optimal number of groups as it captured 65% of the variability in the morphospace and additional clusters added less than 10% explanatory power. Individual observations were assigned to morphogroups based on the k-means analysis, which was conducted using 1000 random starts. The analysis converged on consistent results across iterations.\n\n</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu"># Methodology</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>A PCA was run on the morphological features for each vignette. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check <span class="co">[</span><span class="ot">supplemental information 2</span><span class="co">](./supp_02_pc-extended-info.html)</span>. The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only include the first two axis for definition of morphogroups. A k-means cluster analysis was used to identify morphogroups within the first two PC-space. Four clusters were determined to be the optimal number of groups as it captured 65% of the variability in the morphospace and additional clusters added less than 10% explanatory power. Individual observations were assigned to morphogroups based on the k-means analysis, which was conducted using 1000 random starts. The analysis converged on consistent results across iterations.\n\n</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># |- make a circle for plotting variable contributions -------------------</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>curl <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>pi,pi, <span class="at">length =</span> <span class="dv">50</span>)</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>circ <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sin</span>(curl), <span class="at">y =</span> <span class="fu">cos</span>(curl))</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Extract variable contributions ----------------------------</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>pc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc1 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">1</span>],</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc2 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">2</span>],</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc3 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">3</span>],</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc4 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">4</span>],</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">row.names</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim the pcs to only have those with </span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># |- make a circle for plotting variable contributions -------------------</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>curl <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>pi,pi, <span class="at">length =</span> <span class="dv">50</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>circ <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sin</span>(curl), <span class="at">y =</span> <span class="fu">cos</span>(curl))</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Extract variable contributions ----------------------------</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>pc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc1 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">1</span>],</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc2 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">2</span>],</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc3 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">3</span>],</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc4 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">4</span>],</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">row.names</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>pc1_pc2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc1, <span class="at">y =</span> pc2, <span class="at">label =</span> vars),</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc1<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc2<span class="sc">*</span><span class="fl">0.9</span>),</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC1'</span>,<span class="at">y =</span> <span class="st">'PC2'</span>)<span class="sc">+</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>cluster_pc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res)<span class="sc">+</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> PC1,</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> PC2,</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> <span class="fu">as.factor</span>(cluster)),</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="st">'transparent'</span>),</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">'right'</span>,</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(cluster_pc_plot, pc1_pc2)</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim the pcs to only have those with </span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>pc1_pc2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc1, <span class="at">y =</span> pc2, <span class="at">label =</span> vars),</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc1<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc2<span class="sc">*</span><span class="fl">0.9</span>),</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC1'</span>,<span class="at">y =</span> <span class="st">'PC2'</span>)<span class="sc">+</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>cluster_pc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res)<span class="sc">+</span></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> PC1,</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> PC2,</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> <span class="fu">as.factor</span>(cluster)),</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="st">'transparent'</span>),</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">'right'</span>,</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="co"># To generate figure plot:</span></span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot()+</span></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_point(data = cluster_res, aes(x = PC1*.1,</span></span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      y = PC2*.1,</span></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      col = as.factor(cluster),</span></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      shape = as.factor(cluster)),</span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="co">#              size = 1.5) +</span></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_hline(yintercept = 0, color = 'black', size =1, linetype = 'dotted')+</span></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_vline(xintercept = 0, color = 'black', size =1, linetype = 'dotted')+</span></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_pubclean()+</span></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_color_manual(values = gg_cbb_col(4))+</span></span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_text(data = pc_df, aes(x = pc1, y = pc2, label = vars),</span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = position_jitter(), color = 'red') +</span></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_segment(data = pc_df,</span></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="co">#                aes(x = 0, y = 0, xend = pc1*.9, yend = pc2*.9),</span></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="co">#                arrow = arrow(length = unit(1/2, 'picas')), color = "red") +</span></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = 'PC1',y = 'PC2', color='Morphogroup', shape= 'Morphogroup')+</span></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_pubr()+</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(legend.position = 'right',</span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.line = element_blank(),</span></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co">#         panel.background = element_blank(),</span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="co">#         panel.grid = element_blank(),</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.text = element_blank(),</span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.ticks = element_blank())</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(cluster_pc_plot, pc1_pc2)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="co"># To generate figure plot:</span></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot()+</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_point(data = cluster_res, aes(x = PC1*.1,</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      y = PC2*.1,</span></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      col = as.factor(cluster),</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="co">#                                      shape = as.factor(cluster)),</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="co">#              size = 1.5) +</span></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_hline(yintercept = 0, color = 'black', size =1, linetype = 'dotted')+</span></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_vline(xintercept = 0, color = 'black', size =1, linetype = 'dotted')+</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_pubclean()+</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_color_manual(values = gg_cbb_col(4))+</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_text(data = pc_df, aes(x = pc1, y = pc2, label = vars),</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="co">#             position = position_jitter(), color = 'red') +</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_segment(data = pc_df,</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="co">#                aes(x = 0, y = 0, xend = pc1*.9, yend = pc2*.9),</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="co">#                arrow = arrow(length = unit(1/2, 'picas')), color = "red") +</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(x = 'PC1',y = 'PC2', color='Morphogroup', shape= 'Morphogroup')+</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_pubr()+</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(legend.position = 'right',</span></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.line = element_blank(),</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="co">#         panel.background = element_blank(),</span></span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="co">#         panel.grid = element_blank(),</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.text = element_blank(),</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="co">#         axis.ticks = element_blank())</span></span>
 <span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>\n\n</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Morphogroup definition separation</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>\n\n</span>
 <span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by larger and more transparent copepods. Cluster 2 follows large values of PC1 and low values of PC2, which can be interpreted as containing both large-sized and darker copepods. Cluster 3 was best described by low values of PC1, interpreted as correlating to smaller-sized individuals. Finally, cluster 4 contains individuals with moderate PC1 scores and low PC2 scores, indicating darker, medium-to-small sized copepods.</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Morphogroup definition separation</span></span>
 <span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 (p &lt; 0.001 following Bonferroni correction for all groups, Supplemental 2). On PC2, cluster 2 and cluster 4 were not significantly different (p = 1), while all other groups were significantly different from one another (p &lt; 0.001). </span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by moderate sized and more transparent. Cluster 2 follows the smallest values on PC1 indicating that it is primarily composed of smaller copepods. Cluster 3 was best described by low values of PC2, interpreted as correlating to darker individuals. Finally, cluster 4 contains individuals with high PC1 scores and thus the larger copepods.</span>
 <span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>FSA<span class="sc">::</span><span class="fu">dunnTest</span>(PC1 <span class="sc">~</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> cluster_res,</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">'bonferroni'</span>)<span class="sc">$</span>res <span class="sc">|&gt;</span> </span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">caption =</span> <span class="st">'PC1 Dunn multiple comprison test with bonferroni correction'</span>)</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>pc1_dist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res) <span class="sc">+</span></span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> PC1,</span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'PC1 - Size: Small-to-Large'</span>) <span class="sc">+</span> </span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>() <span class="sc">+</span></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>FSA<span class="sc">::</span><span class="fu">dunnTest</span>(PC2 <span class="sc">~</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> cluster_res,</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">'bonferroni'</span>)<span class="sc">$</span>res <span class="sc">|&gt;</span> </span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">caption =</span> <span class="st">'PC2 Dunn multiple comprison test with bonferroni correction'</span>)</span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>pc2_dist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res) <span class="sc">+</span></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> PC2,</span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'PC2 - Trans: dark-to-light'</span>) <span class="sc">+</span> </span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(pc1_dist, pc2_dist, <span class="at">nrow=</span><span class="dv">1</span>)</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 and PC2 (p &lt; 0.001 following Bonferroni correction for all groups).</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>FSA<span class="sc">::</span><span class="fu">dunnTest</span>(PC1 <span class="sc">~</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> cluster_res,</span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">'bonferroni'</span>)<span class="sc">$</span>res <span class="sc">|&gt;</span> </span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">caption =</span> <span class="st">'PC1 Dunn multiple comprison test with bonferroni correction'</span>)</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>pc1_dist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res) <span class="sc">+</span></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> PC1,</span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'PC1 - Size: Small-to-Large'</span>) <span class="sc">+</span> </span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>() <span class="sc">+</span></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>FSA<span class="sc">::</span><span class="fu">dunnTest</span>(PC2 <span class="sc">~</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> cluster_res,</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">'bonferroni'</span>)<span class="sc">$</span>res <span class="sc">|&gt;</span> </span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>(<span class="at">caption =</span> <span class="st">'PC2 Dunn multiple comprison test with bonferroni correction'</span>)</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>pc2_dist <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cluster_res) <span class="sc">+</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> PC2,</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'PC2 - Trans: dark-to-light'</span>) <span class="sc">+</span> </span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
 <span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(pc1_dist, pc2_dist, <span class="at">nrow=</span><span class="dv">1</span>)</span>
 <span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency. This clearly shows that morphogroups 1 &amp; 2 are larger while 3 &amp; 4 are smaller. Additionally morphogroups 2 &amp; 4 are darker while 1 &amp; 3 are smaller. Thus, the hypothesis that size and color will influence DVM signal would predict morphogroup 2 to have the largest DVM signal and morphogroup 3 to have the smallest DVM signal.</span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency.</span>
 <span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>uvp_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/01_uvp-trim-final_large.rds'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trim_to_cope</span>()</span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="do">####</span></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Clusters to individuals ########</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>uvp_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/01_uvp-trim-final_large.rds'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trim_to_cope</span>()</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="do">####</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(uvp_data<span class="sc">$</span>zoo_files)) {</span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>(cluster_res<span class="sc">$</span>orig_id <span class="sc">%in%</span> uvp_data<span class="sc">$</span>zoo_files[[i]]<span class="sc">$</span>orig_id)</span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>  uvp_data<span class="sc">$</span>zoo_files[[i]]<span class="sc">$</span>cluster <span class="ot">&lt;-</span> cluster_res<span class="sc">$</span>cluster[idx]</span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>all_copes <span class="ot">&lt;-</span> uvp_data<span class="sc">$</span>zoo_files <span class="sc">|&gt;</span> </span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_to_tib</span>(<span class="st">'profileid'</span>)</span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to mm</span></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>all_copes<span class="sc">$</span>feret <span class="ot">&lt;-</span> all_copes<span class="sc">$</span>feret <span class="sc">*</span> <span class="fu">unique</span>(uvp_data<span class="sc">$</span>meta<span class="sc">$</span>acq_pixel)</span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>feret_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_copes) <span class="sc">+</span> </span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> feret,</span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'Feret Diam [mm]'</span>) <span class="sc">+</span> </span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>meanGrey_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_copes) <span class="sc">+</span> </span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> mean,</span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'Mean Grey Value'</span>) <span class="sc">+</span> </span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(feret_plot, meanGrey_plot, <span class="at">rnow =</span> <span class="dv">1</span>)</span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Clusters to individuals ########</span></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="do">####</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(uvp_data<span class="sc">$</span>zoo_files)) {</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="fu">which</span>(cluster_res<span class="sc">$</span>orig_id <span class="sc">%in%</span> uvp_data<span class="sc">$</span>zoo_files[[i]]<span class="sc">$</span>orig_id)</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>  uvp_data<span class="sc">$</span>zoo_files[[i]]<span class="sc">$</span>cluster <span class="ot">&lt;-</span> cluster_res<span class="sc">$</span>cluster[idx]</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>all_copes <span class="ot">&lt;-</span> uvp_data<span class="sc">$</span>zoo_files <span class="sc">|&gt;</span> </span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_to_tib</span>(<span class="st">'profileid'</span>)</span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to mm</span></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>all_copes<span class="sc">$</span>feret <span class="ot">&lt;-</span> all_copes<span class="sc">$</span>feret <span class="sc">*</span> <span class="fu">unique</span>(uvp_data<span class="sc">$</span>meta<span class="sc">$</span>acq_pixel)</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>feret_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_copes) <span class="sc">+</span> </span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> feret,</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'Feret Diam [mm]'</span>) <span class="sc">+</span> </span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>meanGrey_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_copes) <span class="sc">+</span> </span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(cluster),</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> mean,</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">as.factor</span>(cluster))) <span class="sc">+</span>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">gg_cbb_col</span>(<span class="dv">4</span>))<span class="sc">+</span></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Morphogroup"</span>, <span class="at">y =</span> <span class="st">'Mean Grey Value'</span>) <span class="sc">+</span> </span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubr</span>()<span class="sc">+</span></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'none'</span>)</span>
 <span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(feret_plot, meanGrey_plot, <span class="at">rnow =</span> <span class="dv">1</span>)</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

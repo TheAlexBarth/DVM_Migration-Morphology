@@ -14,6 +14,8 @@ pca_results <- readRDS('../data/02_cope-pca-res.rds')
 cluster_res <- readRDS('../data/02_cluster-copepods.rds')
 ```
 
+# Methodology
+
 A PCA was run on the morphological features for each vignette. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check [supplemental information 2](./supp_02_pc-extended-info.html). The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only include the first two axis for definition of morphogroups. A k-means cluster analysis was used to identify morphogroups within the first two PC-space. Four clusters were determined to be the optimal number of groups as it captured 65% of the variability in the morphospace and additional clusters added less than 10% explanatory power. Individual observations were assigned to morphogroups based on the k-means analysis, which was conducted using 1000 random starts. The analysis converged on consistent results across iterations.\n\n
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
@@ -94,9 +96,9 @@ ggarrange(cluster_pc_plot, pc1_pc2)
 
 ## Morphogroup definition separation
 
-The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by larger and more transparent copepods. Cluster 2 follows large values of PC1 and low values of PC2, which can be interpreted as containing both large-sized and darker copepods. Cluster 3 was best described by low values of PC1, interpreted as correlating to smaller-sized individuals. Finally, cluster 4 contains individuals with moderate PC1 scores and low PC2 scores, indicating darker, medium-to-small sized copepods.
+The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by moderate sized and more transparent. Cluster 2 follows the smallest values on PC1 indicating that it is primarily composed of smaller copepods. Cluster 3 was best described by low values of PC2, interpreted as correlating to darker individuals. Finally, cluster 4 contains individuals with high PC1 scores and thus the larger copepods.
 
-To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 (p < 0.001 following Bonferroni correction for all groups, Supplemental 2). On PC2, cluster 2 and cluster 4 were not significantly different (p = 1), while all other groups were significantly different from one another (p < 0.001). 
+To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 and PC2 (p < 0.001 following Bonferroni correction for all groups).
 
 
 ```{r}
@@ -134,7 +136,7 @@ ggarrange(pc1_dist, pc2_dist, nrow=1)
 ```
 
 
-Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency. This clearly shows that morphogroups 1 & 2 are larger while 3 & 4 are smaller. Additionally morphogroups 2 & 4 are darker while 1 & 3 are smaller. Thus, the hypothesis that size and color will influence DVM signal would predict morphogroup 2 to have the largest DVM signal and morphogroup 3 to have the smallest DVM signal.
+Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency.
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
 

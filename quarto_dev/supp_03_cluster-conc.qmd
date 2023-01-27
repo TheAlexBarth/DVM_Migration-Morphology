@@ -76,6 +76,6 @@ ggarrange(intg_plot_early,
                             axis.line.y = element_blank(),
                             axis.ticks.y = element_blank()),
           common.legend = TRUE,
-          widths = c(0.18,.82),
+          widths = c(0.25,.75),
           nrow = 1)
 ```
