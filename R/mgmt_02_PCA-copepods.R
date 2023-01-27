@@ -169,7 +169,7 @@ main_pcs <- cope_pca$ind$coord[,c(1,2)]
 # Explains ~65% of variability, adding k is >10% variability
 
 # |- Actual clustering ----
-set.seed(110722)
+set.seed(012623)
 cope_cluster <- kmeans(main_pcs, centers = 4, iter.max = 100, nstart = 1000)
 
 # |- Bringing it all together ----
