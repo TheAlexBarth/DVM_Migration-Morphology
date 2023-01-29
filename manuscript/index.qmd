@@ -4,6 +4,7 @@ title: |
 format:
   pdf:
    number-sections: true
+   linestretch: 2
 date: now
 date-format: "DD MMM YYYY"
 bibliography: references.bib
