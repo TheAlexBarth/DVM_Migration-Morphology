@@ -8,11 +8,152 @@ title: Results
 
 The PCA revealed four major axis of variability (Figure 2a). The first axis (PC1, 34.23% of variability) was largely explained by along a gradient of increasing values related to size, such as perimeter (loading score = 0.927) and feret diameter (loading score = 0.910). The second axis (PC2, 27.24% of variability) can be interpreted as decreasing values corresponding with metrics relating to darker copepods, such as mean grey value (loading score = -0.920). As noted in the methods, PC3 and PC4 were both related to the orientation of the copepod and the appendage visibility respectively (Supplemental Information 2). As a result, these axis were not included in k-means clustering analysis.
 
-The k-means clustering analysis yielded 4 morphogroups which represent over 64% of the total variation in the two-component morphospace. Morphogroup 1 primarily includes small-to-medium, transparent individuals with moderate PC1 scores and high PC2 scores (Figure 2b,2c). Morphogroup 2 is best described by the smallest copepods, with low values on PC1 (Figure 2b, 2c). Morphogroup 3 is associated with moderate-to-big values of PC1 and negative values of PC2. Thus, morphogroup 3 largely contains darker, medium-to-large copepods (Figure 2b,2c). Finally, morphogroup 4 constituents are the largest copepods, spanning a wide range of shade values (Figure 2b, 2c). To verify that the morphogroups were not arbitrary, a Dunn's pairwise comparison test was used with a Bonferrioni correction. It was found that all groups were significantly different from one another (p \< 0.001) along both principle components. To illustrate the difference along morphological parameters, morphogroups were plotted against mean feret diameter and mean grey value (Figure 2d). From these figures, it is evident that the morphogroups were different along morphologically specific parameters. \*\*\*POSSIBLE MORE ON MORPHOGROUP DISTINCTIONS\*\*\*.
+The k-means clustering analysis yielded 4 morphogroups which represent over 64% of the total variation in the two-component morphospace. Morphogroup 1 primarily includes small-to-medium, transparent individuals with moderate PC1 scores and high PC2 scores (Figure 2b,2c). Morphogroup 2 is best described by the smallest copepods, with low values on PC1 (Figure 2b, 2c). Morphogroup 3 is associated with moderate-to-big values of PC1 and negative values of PC2. Thus, morphogroup 3 largely contains darker, medium-to-large copepods (Figure 2b,2c). Finally, morphogroup 4 constituents are the largest copepods, spanning a wide range of shade values (Figure 2b, 2c). 
 
-```{r, fig.cap = 'Figure 2. A.'}
+```{r, fig.cap = '(A) Morphogroups shown in the space of the first two principle components. PC1 accounts for 34.23% of total variation in copepod morphology while PC2 accounts for 27.24%. Morphological metrics with high loading score are shown. (B) Representative examples of copepods from each morphogroup. 2mm scale bar shown in bottom right.', fig.width=7, fig.height=6,fig.align='center'}
 # Figure 2
+
+rm(list = ls())
+library(DT)
+library(EcotaxaTools)
+library(ggplot2)
+library(ggpubr)
+library(egg)
+library(patchwork)
+source('../R/tools.R')
+
+pca_results <- readRDS('../data/02_cope-pca-res.rds')
+cluster_res <- readRDS('../data/02_cluster-copepods.rds')
+
+# |- make a circle for plotting variable contributions -------------------
+curl <- seq(-pi,pi, length = 50)
+circ <- data.frame(x = sin(curl), y = cos(curl))
+
+# |- Extract variable contributions ----------------------------
+pc_df <- data.frame(
+  pc1 = pca_results$var$coord[,1],
+  pc2 = pca_results$var$coord[,2],
+  pc3 = pca_results$var$coord[,3],
+  pc4 = pca_results$var$coord[,4],
+  vars = row.names(pca_results$var$coord)
+)
+
+# |- rename major component loading variables to intuitive names ----------
+var_swap <- c(`major` = 'Major Axis',
+              `feret` = 'Feret Diameter',
+              `mean` = 'Mean Grey',
+              `stddev` = 'Grey Stdev.',
+              `circ.` = 'Circularity')
+
+for(key in names(var_swap)) {
+  pc_df$vars[pc_df$vars == key] <- var_swap[[key]]
+}
+# To generate figure plot:
+panel_a <- ggplot()+
+  geom_point(data = cluster_res, aes(x = PC1*.1,
+                                     y = PC2*.1,
+                                     col = as.factor(cluster),
+                                     shape = as.factor(cluster)),
+             size = 1.5) +
+  geom_hline(yintercept = 0, color = 'black', size =1, linetype = 'dotted')+
+  geom_vline(xintercept = 0, color = 'black', size =1, linetype = 'dotted')+
+  theme_pubclean()+
+  scale_color_manual(values = gg_cbb_col(4))+
+  geom_text(data = pc_df[which(pc_df$vars %in% var_swap),],
+            aes(x = pc1*1.1, y = pc2*.9, label = vars),
+            color = 'black',
+            size = 3) +
+  geom_segment(data = pc_df,
+               aes(x = 0, y = 0, xend = pc1*.8, yend = pc2*.8),
+               size = .75,
+               arrow = arrow(length = unit(1/2, 'picas')), color = "black") +
+  labs(x = 'PC1',y = 'PC2', color='Morphogroup', shape= 'Morphogroup')+
+  theme_pubr()+
+  theme(legend.position = c(.925,.15),
+        axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.background = element_blank())
+
+
+# load image panel
+b_fig <- jpeg::readJPEG('../media/figure2_panelb.jpg')
+panel_b <- ggplot() +
+  background_image(b_fig)
+
+img_panel <- set_panel_size(panel_b, 
+                             width = unit(7, 'in'),
+                             height = unit(1.8, 'in'))
+
+
+
+test <- (panel_a / img_panel)+
+  plot_layout(ncol=1, heights = c(2, 1)) + plot_annotation(tag_levels = 'A')
+
+test
+
 ```
+
+To verify that the morphogroups were not arbitrary, a Dunn's pairwise comparison test was used with a Bonferrioni correction. It was found that all groups were significantly different from one another (p \< 0.001) along both principle components. To illustrate the difference along morphological parameters, morphogroups were plotted against mean feret diameter and mean grey value (Figure 2d). From these figures, it is evident that the morphogroups were different along morphologically specific parameters.
+
+```{r, fig.cap = 'Distribution of morphogroups across (A) PC1, (B) PC2, (C) Feret Diameter, and (D) Mean Grey Value. Morphogroups were significantly different from another along PC1 and PC2 (Dunn test for multiple comparison, p < 0.001).', fig.width=3.5, fig.height = 5, fig.align='center'}
+
+panel_c <- ggplot(cluster_res) +
+  geom_boxplot(aes(x = as.factor(cluster),
+                   y = PC1,
+                   fill = as.factor(cluster))) +
+  scale_fill_manual(values = gg_cbb_col(4))+
+  labs(x = "", y = 'PC1 Small-to-Large') + 
+  theme_pubr() +
+  theme(legend.position = 'none')
+
+panel_d <- ggplot(cluster_res) +
+  geom_boxplot(aes(x = as.factor(cluster),
+                   y = PC2,
+                   fill = as.factor(cluster))) +
+  scale_fill_manual(values = gg_cbb_col(4))+
+  labs(x = "", y = 'PC2 Light-to-Dark') + 
+  theme_pubr()+
+  theme(legend.position = 'none')
+
+
+uvp_data <- readRDS('../data/01_uvp-trim-final_large.rds') |> 
+  trim_to_cope()
+
+for(i in 1:length(uvp_data$zoo_files)) {
+  idx <- which(cluster_res$orig_id %in% uvp_data$zoo_files[[i]]$orig_id)
+  uvp_data$zoo_files[[i]]$cluster <- cluster_res$cluster[idx]
+}
+
+all_copes <- uvp_data$zoo_files |> 
+  list_to_tib('profileid')
+
+
+panel_e <- ggplot(all_copes) + 
+  geom_boxplot(aes(x = as.factor(cluster),
+                   y = feret,
+                   fill = as.factor(cluster))) +  scale_fill_manual(values = gg_cbb_col(4))+
+  labs(x = "Morphogroup", y = 'Feret Diam [mm]') + 
+  theme_pubr()+
+  theme(legend.position = 'none')
+
+panel_f <- ggplot(all_copes) + 
+  geom_boxplot(aes(x = as.factor(cluster),
+                   y = mean,
+                   fill = as.factor(cluster))) +  scale_fill_manual(values = gg_cbb_col(4))+
+  labs(x = "Morphogroup", y = 'Mean Grey Value') + 
+  theme_pubr()+
+  theme(legend.position = 'none')
+
+
+
+panel_c + panel_d + panel_e + panel_f + 
+  plot_layout(ncol = 2, nrow = 2, width = c(1,1,1,1)) +
+  plot_annotation(tag_levels = 'A')
+```
+
 
 ## Morphogroup average concentration and vertical distribution
 
