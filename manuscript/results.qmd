@@ -161,8 +161,136 @@ Across all cruises, the overall integrated (0-1200m) abundance of morphogroups f
 
 The overall patterns of abundance are reflected in the average vertical profile of each morphogroup (Figure 3a). Average abundance throughout the water column was higher in morphogroup 2 and morphogroup 3 and lowest in morphogroup 4. All morphogroups displayed a nighttime peak in average abundance in the epipelagic (0 - 200m) (Figure 3a). While all morphogroups had some concentration of copepods near the surface during the daytime, the proportional difference clearly showed nighttime abundances were higher, on average (Figure 3b). Additionally, copepod average abundances were low around around 200m-400m. Then from about 400m-600m, the average abundance of all morphogroups increased for daytime bins, but not nighttime. Below 600m, day/night differences were more stochastic, which is consistent with a reasonable exception for DVM to not extend this deep into the water column. It should be noted that the standard deviation in each depth bin's abundance is quite large (Figure 3a). This result indicated large variability between both intra- and inter-cruise profiles.
 
-```{r, fig.cap='Figure 3'}
+```{r, fig.cap='Figure 3', fig.width = 6.5, fig.height = 4.5, fig.align='center'}
+library(grid)
 # Figure 3 Vertical profiles
+cluster_cope <- readRDS('../data/03_cluster-conc.rds')
+
+cast_times <- list(day = uvp_data$meta$profileid[which(uvp_data$meta$tod == 'day')],
+                   night = uvp_data$meta$profileid[which(uvp_data$meta$tod == 'night')])
+
+avg_cope <- cluster_cope |> 
+  average_casts(cast_times) |> 
+  lapply(bin_format)
+
+
+###
+# Create cluster profiles ####
+###
+
+# |- Concentration Profile --------------------------------------------
+
+cluster_profile <- function(k) {
+  ret_plot <- ggplot()+
+    geom_rect(data = avg_cope$day[avg_cope$day$group == k,],
+              aes(xmin = min_d, xmax = max_d,
+                  ymin = 0, ymax = -mean),
+              fill = dn_cols['day']) +
+    geom_errorbar(data = avg_cope$day[avg_cope$day$group == k,],
+                  aes(x = mp, ymin = -mean, ymax = -(mean+sd)),
+                  alpha = .25) +
+    geom_rect(data = avg_cope$night[avg_cope$night$group == k,],
+              aes(xmin = min_d, xmax = max_d,
+                  ymin = 0, ymax = mean),
+              fill = dn_cols['night']) +
+    geom_errorbar(data = avg_cope$night[avg_cope$night$group == k,],
+                  aes(x = mp, ymin = mean, ymax = (mean+sd)),
+                  alpha = .25)+
+    labs(x = 'Depth [m]', y = '[indv./m3]')+
+    coord_flip()+
+    scale_x_reverse(expand = c(0,0))+
+    scale_y_continuous(position = 'right',
+                       labels = abs,
+                       limits = c(-3.25,3.25)) +
+    theme_pubr()
+
+  return(ret_plot)
+}
+
+cluster_1_profile <- cluster_profile(1)
+cluster_2_profile <- cluster_profile(2)
+cluster_3_profile <- cluster_profile(3)
+cluster_4_profile <- cluster_profile(4)
+
+# |- Proportional Difference ----------------------------------------
+
+# calculate the proportional difference between night and day profiles
+# this approach calculates the bin-specific night-day difference
+# 
+
+diff_profile <- function(k) {
+  ni_conc <- avg_cope$night$mean[which(avg_cope$night$group == k)]
+  day_conc <- avg_cope$day$mean[which(avg_cope$day$group == k)]
+  
+  diel_diff <- (ni_conc - day_conc) / sum(c(ni_conc, day_conc))
+  
+  mp <- avg_cope$night$mp[which(avg_cope$night$group == k)]
+  
+  ret_plot <- ggplot() + 
+    geom_point(aes(x = mp, y = diel_diff),
+               size = 1.5, color = 'black')+
+    geom_line(aes(x = mp, y=diel_diff)) +
+    labs(x = 'Depth [m]', y = 'Prop. Diff.') +
+    geom_hline(yintercept = 0) +
+    coord_flip()+
+    scale_x_reverse(expand = c(0,0)) +
+    scale_y_continuous(expand = c(0,0),
+                       position = 'right',
+                       labels = abs,
+                       limits = c(-.0225, .0399)) +
+    theme_pubr()+
+    theme()
+  
+  return(ret_plot)
+}
+
+diff_1_profile <- diff_profile(1)
+diff_2_profile <- diff_profile(2)
+diff_3_profile <- diff_profile(3)
+diff_4_profile <- diff_profile(4)
+
+drop_y <- theme(axis.text.y = element_blank(),
+                  axis.title.y = element_blank())
+drop_x <- theme(axis.title.x = element_blank())
+
+transify_background <- theme(
+         panel.background = element_rect(fill='transparent'),
+         plot.background = element_rect(fill='transparent', color=NA),
+         panel.grid.major = element_blank(),
+         panel.grid.minor = element_blank(),
+         legend.background = element_rect(fill='transparent'),
+         legend.box.background = element_rect(fill='transparent')
+      )
+
+profile_plots <- list(cluster_1_profile +transify_background,
+                      cluster_2_profile + drop_y + 
+                        transify_background,
+                      cluster_3_profile + drop_y + 
+                        transify_background,
+                      cluster_4_profile + drop_y + 
+                        transify_background) |> 
+  lapply(set_panel_size,
+         width = unit(1.15, 'in'),
+         height = unit(1.5, 'in'))
+
+
+diff_plots <- list(diff_1_profile + transify_background,
+                      diff_2_profile + drop_y +
+                        transify_background,
+                      diff_3_profile + drop_y + 
+                        transify_background,
+                      diff_4_profile + drop_y + 
+                        transify_background) |> 
+  lapply(set_panel_size,
+         width = unit(1.15, 'in'),
+         height = unit(1.5, 'in'))
+
+
+(wrap_plots(profile_plots, nrow = 1) / wrap_plots(diff_plots, nrow = 1)) + 
+  plot_layout(nrow = 2) +
+  plot_annotation(tag_levels = 'A')
+
+
 ```
 
 ## Weighted mean depth analysis
