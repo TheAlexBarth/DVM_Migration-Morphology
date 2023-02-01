@@ -297,8 +297,58 @@ diff_plots <- list(diff_1_profile + transify_background,
 
 The WMD of all morphogroups indicated a clear signal of DVM. The daytime 95% confidence intervals (CIs) were consistently non-overlapping and deeper than the nighttime 95% CIs (Figure 4). The mean, nighttime bootstrapped WMD for all four morphogroups was around 150-200m. This is consistent with the peak in average abundance which occurred around 150m (Figure 3a). Generally, the daytime WMD 95% CIs were overlapping, spanning the upper mesopelagic. The exception to that observation is morphogroup 4, whose daytime WMD 95% CI is clearly shallower (non-overlapping) than the daytime WMD of morphogroups 2 and morphogroup 3. However, this difference, while statistically clear, may be an artifact of the sparseness of morphogroup 4 at depth (Figure 3a). As such, the WMD approach to investigate DVM patterns reveals clear overall migration, but no group-wise trends.
 
-```{r, fig.cap='Figure 4.'}
+```{r, fig.cap='', fig.width=3.5, fig.height=3.5}
 # Figure 4 Weighted mean depth
+
+boot_wmd <- readRDS('../data/03_wmd-all-merged.rds')
+
+day_summary <- boot_wmd$day |> lapply(quantile, probs = c(0.025,0.5,0.975))
+night_summary <- boot_wmd$night |> lapply(quantile, probs = c(0.025,0.5,0.975))
+
+wmd_df <- data.frame(cluster = rep(1:4, 2),
+                     tod = rep(c('day','night'),each = 4),
+                     low = rep(NA, 8),
+                     mid = rep(NA, 8),
+                     high = rep(NA, 8))
+
+for(i in 1:4) {
+  
+  wmd_df$low[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'day' & 
+                     wmd_df$cluster == i)] <- day_summary[[i]][['97.5%']]
+  
+  
+  wmd_df$low[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['2.5%']]
+  wmd_df$mid[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['50%']]
+  wmd_df$high[which(wmd_df$tod == 'night' & 
+                     wmd_df$cluster == i)] <- night_summary[[i]][['97.5%']]
+  
+}
+
+
+ggplot(wmd_df) +
+  geom_point(aes(x = cluster,
+                 y = mid,
+                 color = tod),
+             position = position_dodge(width = .5),
+             size = 2) +
+  geom_errorbar(aes(x = cluster,
+                    ymin = low,
+                    ymax = high,
+                    color = tod),
+                width = .25,
+                position = position_dodge(width = .5),
+                size = 1) +
+  scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+  scale_y_reverse(limits = c(600,0)) +
+  labs(y = 'Weighted Mean Depth [m]', x = 'Morphogroup', col = "")+
+  theme_pubr()
+  
 ```
 
 ## Occupancy models
