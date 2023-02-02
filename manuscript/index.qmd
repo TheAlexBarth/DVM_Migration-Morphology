@@ -1,6 +1,6 @@
 ---
 title: |
-  In situ imaging reveals how morphology influences Copepod DVM.
+  Applicability of in situ imaging to investigate copepod DVM patterns and morphology
 format:
   pdf:
    number-sections: true

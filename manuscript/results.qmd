@@ -6,11 +6,11 @@ title: Results
 
 ## Morphogroup classification
 
-The PCA revealed four major axis of variability (Figure 2a). The first axis (PC1, 34.23% of variability) was largely explained by along a gradient of increasing values related to size, such as perimeter (loading score = 0.927) and feret diameter (loading score = 0.910). The second axis (PC2, 27.24% of variability) can be interpreted as decreasing values corresponding with metrics relating to darker copepods, such as mean grey value (loading score = -0.920). As noted in the methods, PC3 and PC4 were both related to the orientation of the copepod and the appendage visibility respectively (Supplemental Information 2). As a result, these axis were not included in k-means clustering analysis.
+The PCA revealed four major axis of variability (Figure 2). The first axis (PC1, 34.23% of variability) was largely explained by along a gradient of increasing values related to size, such as perimeter (loading score = 0.927) and feret diameter (loading score = 0.910). 
 
-The k-means clustering analysis yielded 4 morphogroups which represent over 64% of the total variation in the two-component morphospace. Morphogroup 1 primarily includes small-to-medium, transparent individuals with moderate PC1 scores and high PC2 scores (Figure 2b,2c). Morphogroup 2 is best described by the smallest copepods, with low values on PC1 (Figure 2b, 2c). Morphogroup 3 is associated with moderate-to-big values of PC1 and negative values of PC2. Thus, morphogroup 3 largely contains darker, medium-to-large copepods (Figure 2b,2c). Finally, morphogroup 4 constituents are the largest copepods, spanning a wide range of shade values (Figure 2b, 2c).
+The second axis (PC2, 27.24% of variability) can be interpreted primarily by a spectrum of transparent to dark/shaded individuals. PC2 was largely anticorrelated with mean grey value (higher values indicate a more transparent individual) (loading score = -0.920). As noted in the methods, PC3 and PC4 were both related to the orientation of the copepod and the appendage visibility respectively (Supplemental 3). As a result, these axis were not included in k-means clustering analysis.
 
-```{r, fig.cap = '(A) Morphogroups shown in the space of the first two principle components. PC1 accounts for 34.23% of total variation in copepod morphology while PC2 accounts for 27.24%. Morphological metrics with high loading score are shown. (B) Representative examples of copepods from each morphogroup. 2mm scale bar shown in bottom right.', fig.width=7, fig.height=6,fig.align='center'}
+```{r, fig.cap = 'Morphogroups shown in the 2-component morphospace. PC1 represents 34.23% of total variability, PC2 represents 27.24%. Representative images from morphogroups 1-4 as identified by k-means clustering are shown in numerical order at bottom of the plot. Colored borders correspond to morphospace. 2mm scale bar is present in the bottom right.', fig.width=7, fig.height=6,fig.align='center'}
 # Figure 2
 
 rm(list = ls())
@@ -89,16 +89,16 @@ img_panel <- set_panel_size(panel_b,
 
 
 
-test <- (panel_a / img_panel)+
-  plot_layout(ncol=1, heights = c(2, 1)) + plot_annotation(tag_levels = 'A')
-
-test
+(panel_a / img_panel)+
+  plot_layout(ncol=1, heights = c(2, 1))
 
 ```
 
-To verify that the morphogroups were not arbitrary, a Dunn's pairwise comparison test was used with a Bonferrioni correction. It was found that all groups were significantly different from one another (p \< 0.001) along both principle components. To illustrate the difference along morphological parameters, morphogroups were plotted against mean feret diameter and mean grey value (Figure 2d). From these figures, it is evident that the morphogroups were different along morphologically specific parameters.
+The k-means clustering analysis yielded 4 morphogroups which represent over 64% of the total variation in the two-component morphospace (Figure 2). Morphogroup 1 primarily includes small-to-medium, dark individuals with moderate PC1 scores and high PC2 scores (Figure 2, Figure 3B,D). Morphogroup 2 is best described by the smallest copepods, with low values on PC1 (Figure 2, Figure 3A,C). Morphogroup 3 is associated with moderate-to-big values of PC1 and negative values of PC2. Thus, morphogroup 3 largely contains more transparent, medium-to-large copepods (Figure 2, 3A,D). Finally, morphogroup 4 constituents are the largest copepods, spanning a wide range of shade values (Figure 2, Figure 3A,B,D).
 
-```{r, fig.cap = 'Distribution of morphogroups across (A) PC1, (B) PC2, (C) Feret Diameter, and (D) Mean Grey Value. Morphogroups were significantly different from another along PC1 and PC2 (Dunn test for multiple comparison, p < 0.001).', fig.width=3.5, fig.height = 4, fig.align='center'}
+To verify that the morphogroups were not arbitrary, a Dunn's pairwise comparison test was used with a Bonferrioni correction. It was found that all groups were significantly different from one another (p \< 0.001) along both principle components (Figure 3). To illustrate the difference along morphological parameters, morphogroups were plotted against mean feret diameter and mean grey value (Figure 3C,D). From these figures, it is evident that the morphogroups were different along morphologically specific parameters.
+
+```{r, fig.cap = 'Distribution of morphogroups across (A) PC1, (B) PC2, (C) Feret Diameter, and (D) Mean Grey Value. Morphogroups were significantly different from another along PC1 and PC2 (Dunn test for multiple comparison, p < 0.001).', fig.width=3.5, fig.height = 4.5, fig.align='center'}
 
 panel_c <- ggplot(cluster_res) +
   geom_boxplot(aes(x = as.factor(cluster),
@@ -151,16 +151,19 @@ panel_f <- ggplot(all_copes) +
 
 panel_c + panel_d + panel_e + panel_f + 
   plot_layout(ncol = 2, nrow = 2, width = c(1,1,1,1)) +
-  plot_annotation(tag_levels = 'A')
+  plot_annotation(tag_levels = 'a', tag_prefix = '(', tag_suffix = ')')  &
+  theme(plot.tag.position = c(.25,1.05))
+
 ```
 
 ## Morphogroup average concentration and vertical distribution
 
-Across all cruises, the overall integrated (0-1200m) abundance of morphogroups followed a similar pattern. Abundance was higher during the spring-summer months and lowest during the fall and winter (Supporting Information 3). Generally, the largest copepods (morphogroup 4) were less abundant in all cruises. Similarly, smaller copepods were more abundant (morphogroup 2), which is consistent with the notion this system is dominated by smaller individuals. Interestingly, morphogroup 3 tended to be more abundant than morphogroup 1 despite the presumption that morphogroup 3 consists of larger copepods. In some cruises, morphogroup 3 was the most abundant category (Supporting Information 3).
+Across all cruises, the overall integrated (0-1200m) abundance of morphogroups followed a similar pattern. Abundance was higher during the spring-summer months and lowest during the fall and winter (Supplemental 4). Generally, the largest copepods (morphogroup 4) were less abundant in all cruises. The darker copepods (morphogroup 1) were also in lower abundance at some times of the year (Supplemental 4). The smaller copepods were more abundant (morphogroup 2), which is consistent with the notion this system is dominated by smaller individuals. Interestingly, morphogroup 3 tended to be more abundant than morphogroup 1 despite the presumption that morphogroup 3 consists of larger copepods. In some cruises, morphogroup 3 was the most abundant category (Supplemental 4).
 
-The overall patterns of abundance are reflected in the average vertical profile of each morphogroup (Figure 3a). Average abundance throughout the water column was higher in morphogroup 2 and morphogroup 3 and lowest in morphogroup 4. All morphogroups displayed a nighttime peak in average abundance in the epipelagic (0 - 200m) (Figure 3a). While all morphogroups had some concentration of copepods near the surface during the daytime, the proportional difference clearly showed nighttime abundances were higher, on average (Figure 3b). Additionally, copepod average abundances were low around around 200m-400m. Then from about 400m-600m, the average abundance of all morphogroups increased for daytime bins, but not nighttime. Below 600m, day/night differences were more stochastic, which is consistent with a reasonable exception for DVM to not extend this deep into the water column. It should be noted that the standard deviation in each depth bin's abundance is quite large (Figure 3a). This result indicated large variability between both intra- and inter-cruise profiles.
+By morphogroup, the overall patterns of average abundance are reflected in each average vertical profile (Figure 4A-D). Average abundance throughout the water column was higher in morphogroup 2 and morphogroup 3 then lowest in morphogroup 4. All morphogroups displayed a nighttime peak in average abundance near the lower epipelagic (100 - 200m) (Figure 4A-D). While all morphogroups had some concentration of copepods near the surface during the daytime, the proportional difference clearly showed nighttime abundances were higher, on average (Figure 4E-F). Additionally, copepod average abundances were low around around 200m-400m. Then from about 400m-600m, the average abundance of all morphogroups increased for daytime bins, but not nighttime. Below 600m, day/night differences were more stochastic, which is consistent with a reasonable exception for DVM to not extend this deep into the water column. It should be noted that the standard deviation in each depth bin's abundance is quite large (Figure 4A-D). The large variability both within and between cruises, likely drives the large variation in bin average abundance. 
 
-```{r, fig.cap='Figure 3', fig.width = 6.5, fig.height = 4, fig.align='center'}
+```{r, fig.cap='(A-D) Vertical profiles of average copepod concentration in 20m depth bins. Daytime concentrations are light-colored and shown left of the vertical axis, nighttime values are dark-colored and shown right of the vertical axis. (E-H) Proportional nighttime/daytime difference in 20m bins. A nighttime-dominated bin is right of the vertical axis, daytime-dominated left of the vertical axis. Vertically paired, panels correspond to an individual morphogroup; (A,E) Morphogroup 1, (B,F) Morphogroup 2, (C,G) Morphogroup 3, (D,H) Morphogroup 4', fig.width = 6.5, fig.height = 4.5, fig.align='center'}
+
 library(grid)
 # Figure 3 Vertical profiles
 cluster_cope <- readRDS('../data/03_cluster-conc.rds')
@@ -258,7 +261,8 @@ transify_background <- theme(
          panel.grid.major = element_blank(),
          panel.grid.minor = element_blank(),
          legend.background = element_rect(fill='transparent'),
-         legend.box.background = element_rect(fill='transparent')
+         legend.box.background = element_rect(fill='transparent'),
+         plot.tag.position = 'bottomright'
       )
 
 profile_plots <- list(cluster_1_profile +transify_background,
@@ -269,7 +273,7 @@ profile_plots <- list(cluster_1_profile +transify_background,
                       cluster_4_profile + drop_y + 
                         transify_background) |> 
   lapply(set_panel_size,
-         width = unit(1.5, 'in'),
+         width = unit(1.125, 'in'),
          height = unit(1.5, 'in'))
 
 
@@ -281,22 +285,23 @@ diff_plots <- list(diff_1_profile + transify_background,
                       diff_4_profile + drop_y + 
                         transify_background) |> 
   lapply(set_panel_size,
-         width = unit(1.5, 'in'),
+         width = unit(1.125, 'in'),
          height = unit(1.5, 'in'))
 
 
 (wrap_plots(profile_plots, nrow = 1) / wrap_plots(diff_plots, nrow = 1)) + 
   plot_layout(nrow = 2) +
-  plot_annotation(tag_levels = 'A')
+  plot_annotation(tag_levels = 'a', tag_prefix = '(', tag_suffix = ')')  &
+  theme(plot.tag.position = c(0.1,.925))
 
 
 ```
 
 ## Weighted mean depth analysis
 
-The WMD of all morphogroups indicated a clear signal of DVM. The daytime 95% confidence intervals (CIs) were consistently non-overlapping and deeper than the nighttime 95% CIs (Figure 4). The mean, nighttime bootstrapped WMD for all four morphogroups was around 150-200m. This is consistent with the peak in average abundance which occurred around 150m (Figure 3a). Generally, the daytime WMD 95% CIs were overlapping, spanning the upper mesopelagic. The exception to that observation is morphogroup 4, whose daytime WMD 95% CI is clearly shallower (non-overlapping) than the daytime WMD of morphogroups 2 and morphogroup 3. However, this difference, while statistically clear, may be an artifact of the sparseness of morphogroup 4 at depth (Figure 3a). As such, the WMD approach to investigate DVM patterns reveals clear overall migration, but no group-wise trends.
+The bin-constrained bootstrap estimates of WMD for all morphogroups indicated a clear signal of DVM (Figure 5). The daytime 95% confidence intervals (CIs) were consistently non-overlapping and deeper than the nighttime 95% CIs (Figure 5). The mean, nighttime bootstrapped WMD for all four morphogroups was around 150-200m. This is consistent with the peak in average abundance which occurred around 150m (Figure 4A-D). Generally, the daytime WMD 95% CIs were overlapping, spanning the upper mesopelagic. The exception to that observation is morphogroup 4, whose daytime WMD 95% CI is clearly shallower (non-overlapping) than the daytime WMD of morphogroups 2 and morphogroup 3. However, this difference, while statistically clear, may be an artifact of the sparseness of morphogroup 4 at depth (Figure 4D).
 
-```{r, fig.cap='', fig.width=3.5, fig.height=3.5}
+```{r, fig.cap='Weighted mean depth and 95% confidence intervals from bin-constrained bootstrapping approach. Values are displayed for each of the four morphogroups at both times of day.', fig.width=3.5, fig.height=3.5}
 # Figure 4 Weighted mean depth
 
 boot_wmd <- readRDS('../data/03_wmd-all-merged.rds')
@@ -351,11 +356,13 @@ ggplot(wmd_df) +
   
 ```
 
+\n\n
+
 ## Occupancy models
 
-The first occupancy model using all copepods validated the occupancy model approach. The posterior distribution for the effect of volume sampled ($\alpha_{vs}$) was multiplied across a range of possible sampling volumes (0-1,050 L). As predicted, there was a clear relationship between increasing volume sampled and an increase in detection probability (Figure 5). This increase was present for all regions of the water column, however it was most prominent in the nighttime epipelagic (0-250m). Overall, detection probability was lower in the daytime epipelagic and both times of day in the mesopelagic. The average volume sampled in a 20-m wide depth bin was 526.2 L. While this corresponds to an over 50% detection probability in the nighttime epipelagic, it corresponds to nearly 25% or below in all other times of day and water column regions. The higher detection probability in the nighttime epipelagic is likely a result of the increased concentration of copepods in that region of the water column. The occupancy (\$\\psi\$) estimates of all copepods showed pattern consistent with their vertical average abundance profiles. $\psi$ was high for both times of day in the epipelagic, with a decrease around 250m. The nighttime $\psi$ also was reduced from about 400m-600m deep (Supporting Information 4).
+The first occupancy model using all copepods validated the occupancy model approach. The detection probability could be estimated from the posterior distributions for parameters in the logistic regression ($\alpha_0$, $\alpha_{vs}$). To visualize the detection probability ($\p$), the posterior distributions for the parameters were multiplied across a range of possible sampling volumes (0-1,050 L). As expected, there was a clear relationship between increasing volume sampled and an increase in detection probability (Figure 6). This increase was present for all regions of the water column, however it was most prominent in the nighttime, shallower region (0-250m) (Figure 6A). Overall, detection probability was lower in the daytime shallow region and both times of day througout mesopelagic. The average volume sampled in a 20-m wide depth bin was 526.2 L. While this corresponds to an over 50% detection probability in the nighttime upper-region, it corresponds to nearly 25% or below in all other times of day and water column regions. The higher detection probability in the nighttime epipelagic is likely a result of the increased concentration of copepods in that region of the water column (Figure 4A-D). The occupancy ($\psi$) estimates of all copepods showed pattern consistent with their vertical average abundance profiles (Supplemental 5). $\psi$ was high for both times of day in the epipelagic, with a decrease around 250m. The nighttime $\psi$ also was reduced from about 400m-600m deep (Supplemental 5).
 
-```{r, fig.cap='Detection probability for all copepod occupancy model. The model was run for three separate water column regions; (A) 0-250m, (B) 250-600m, and (c) 600-1200m. Regions were based on the variability of UVP descent speed and abundance of organisms. Separate intercepts for the model were also based on the time of day.', fig.width = 3.5, fig.height=6.5}
+```{r, fig.cap='Detection probability across volume sampling range from the all-copepod occupancy model. The posterior distribution for model parameters were fit to an equally-spaced range of possible sampling volumes consistent with the UVP data. The model was run for three separate water column regions; (A) 0-250m, (B) 250-600m, and (c) 600-1200m. Regions were based on the variability of UVP descent speed and abundance of organisms. Separate intercepts for the model were also based on the time of day. Shaded region represents the 95% posterior credible interval', fig.width = 3.25, fig.height=7}
 # Figure 6 for detection probability
 
 library(wiqid)
@@ -472,21 +479,25 @@ bmeso_vs_plot <- ggplot() +
   guides(color = 'none')+
   theme_pubr()
 
-detect_plots <- list(epi_vs_plot + theme(axis.title.x = element_blank()),
+detect_plots <- list(epi_vs_plot + theme(axis.title.x = element_blank(),
+                                         legend.position = 'none'),
                      tmeso_vs_plot + theme(legend.position = 'none',
                                            axis.title.x = element_blank()),
-                     bmeso_vs_plot + theme(legend.position = 'none')) |> 
+                     bmeso_vs_plot + theme(legend.position = c(.75,.75))) |> 
   lapply(set_panel_size,
-         width = unit(3.5, 'in'),
-         height = unit(2, 'in'))
+         width = unit(2, 'in'),
+         height = unit(1.75, 'in'))
 
-wrap_plots(detect_plots) + plot_layout(nrow = 3, ncol = 1)+ plot_annotation(tag_levels = 'A')
+wrap_plots(detect_plots) + 
+  plot_layout(nrow = 3, ncol = 1)+
+  plot_annotation(tag_levels = 'a', tag_prefix = '(', tag_suffix = ')')  &
+  theme(plot.tag.position = c(0.075,1))
+
 ```
 
-The general occupancy model for copepods by morphogroup revealed some clear trends consistent with \
-DVM hypotheses. Generally, across all morphogroups, the credible intervals (95% high density interval of the posterior distribution) for copepod occupancy were very wide (Figure 6). The credible intervals often range from 25% to 100%. However, there is a notable increase in nighttime occupancy for all morphogroups from 40m to 140m. For depth bins in that region, the mean posterior occupancy ranged from 71% to 88%, indicating there is a high likelihood all morphogroups will be found in that region at night. There is lower daytime occupancy over that same region, however this varies by morphogroup. Morphogroup 4 has a 54% mean posterior daytime occupancy from 40m-140m. This indicates a decreased likely of the larger morphogroup 4 copepods in that area during daytime. All other morphogroups have higher posterior daytime occupancy rates in the epipelagic. Generally, throughout the rest of the water column, the posterior estimates of occupancy are high (Figure 6). Again there was a decline present around 225-300m, consistent with the average abundance profiles. Overall, morphogroup 4 had a wider credible interval around the posterior occupancy estimate which is likely due to it's rarity (Figure 6).
+The general occupancy model for copepods by morphogroup revealed some clear trends consistent with DVM hypotheses. Generally, across all morphogroups, the credible intervals (95% high density interval of the posterior distribution for $\psi$) for copepod occupancy were very wide (Figure 7). The credible intervals often range from 25% to 100%. However, there is a notable increase in nighttime $\psi$ for all morphogroups from 40m to 140m. For depth bins in that region, the mean posterior $\psi$ ranged from 71% to 88%, indicating there is a high likelihood all morphogroups will be found in that region at night. There is lower daytime $\psi$ over that same region, however this varies by morphogroup. Morphogroup 4 has a 54% mean posterior daytime $\psi$ from 40m-140m (Figure 7D). This indicates a decreased likely of the larger, morphogroup 4 copepods in that area during daytime. All other morphogroups have higher posterior daytime $\psi$ in the epipelagic. Generally, throughout the rest of the water column, the posterior estimates of $\psi$ are high (Figure 6). Again there was a decline present around 225-300m, consistent with the average abundance profiles. Overall, morphogroup 4 had a wider credible interval around the posterior $\psi$ estimate which is likely due to it's rarity (Figure 4D, Figure 7D, Supplemental 4).
 
-```{r, fig.cap="",fig.width=6.5, fig.height=6}
+```{r, fig.cap="Occupancy (occurrence probability, psi) of copepods from each morphogroup from basic occupancy model. Seperate intercepts were fit for each time of day and each 20m depth bin. Values shown between depth bins are linearly interpolated which results in jagged points. Center line is the posterior mean occupancy while shaded region is the 95% posterior credible interval.",fig.width=6.5, fig.height=5.75}
 
 
 db <- readRDS('../data/05_db-list.rds')
@@ -558,14 +569,15 @@ ribbon_plot <- function(cluster) {
               linewidth = 1,
               alpha = .75) +
     facet_wrap(~tod)+
-    scale_x_reverse() +
+    scale_x_reverse(expand = expansion(mult = c(0,.05))) +
     scale_fill_manual(values = c(dn_cols['day'],dn_cols['night'])) +
     scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+    scale_y_continuous(breaks = c(0,1),
+                       labels = c(0,1)) +
     coord_flip()+
     theme_pubr() +
     labs(x = 'Depth [m]', y = "Occupancy") +
     theme(legend.position = 'none',
-          axis.text.x = element_text(angle=45, hjust = 1, vjust = 1),
           strip.background = element_blank(), strip.text = element_blank())
   return(out_plot)
 }
@@ -579,14 +591,14 @@ for(i in 1:4) {
 
 #| column: page-outset
 
-ggarrange(ribbon_occupancy[[1]],
-          ribbon_occupancy[[2]] + theme(axis.title.y = element_blank(),
-                                        axis.text.y = element_blank()),
-          ribbon_occupancy[[3]] + theme(axis.title.y = element_blank(),
-                                        axis.text.y = element_blank()),
-          ribbon_occupancy[[4]] + theme(axis.title.y = element_blank(),
-                                        axis.text.y = element_blank()),
-          ncol = 4)
+# ggarrange(ribbon_occupancy[[1]],
+#           ribbon_occupancy[[2]] + theme(axis.title.y = element_blank(),
+#                                         axis.text.y = element_blank()),
+#           ribbon_occupancy[[3]] + theme(axis.title.y = element_blank(),
+#                                         axis.text.y = element_blank()),
+#           ribbon_occupancy[[4]] + theme(axis.title.y = element_blank(),
+#                                         axis.text.y = element_blank()),
+#           ncol = 4)
 
 axis_clean <- theme(axis.title.y = element_blank(),
                     axis.text.y = element_blank())
@@ -598,11 +610,14 @@ rib_wraps <- list(
   ribbon_occupancy[[4]] + axis_clean
 ) |> 
   lapply(set_panel_size,
-         width = unit(1, 'in'),
+         width = unit(.55, 'in'),
          height = unit(5, 'in'))
 
-wrap_plots(rib_wraps) + plot_layout(ncol = 4, nrow = 1)
+wrap_plots(rib_wraps) + plot_layout(ncol = 4, nrow = 1)+
+  plot_annotation(tag_levels = 'a', tag_prefix = '(', tag_suffix = ')')  &
+  theme(plot.tag.position = c(0.025,1))
+
 
 ```
 
-Finally to attempt to relate environmental impacts to DVM, the full environmental occupancy model was investigated. However, no discernible trends were revealed. There was no clear effect of any of the environmental parameters on the occurrence probability for any morphogroup, in any depth-bin, in any time of day. The posterior credible intervals for the slope of each parameter on the log odds of $\psi$ typically ranged from -10 to 15. That change in log odds corresponds to an increase in occurrence probability of 0.00005% to 99% for each one unit increase of the environmental parameter. For all environmental parameters, the slope on the LOG ODDS($\psi$) had a posterior mean near 0 (Supplemental Figure 6).
+Finally to attempt to relate environmental impacts to DVM, the full environmental occupancy model was investigated. However, no discernible trends were found. There was no clear effect of any of the environmental parameters on the occurrence probability for any morphogroup, in any depth-bin, in any time of day. The posterior credible intervals for the slope of each parameter on the log odds of $\psi$ typically ranged from -10 to 15. That change in log odds corresponds to an increase in occurrence probability of 0.00005% to 99% for each one unit increase of the environmental parameter. For all environmental parameters, the slope on the LOG ODDS($\psi$) had a posterior mean near 0 (Supplemental 6).
