@@ -38,7 +38,7 @@ title: Discussion
 
         -   Several studies have shown size a major factor
 
-        -    morphogroup 4 was scarce at depth, so it did not pull down the average.
+        -   morphogroup 4 was scarce at depth, so it did not pull down the average.
 
     -   This is indicative of a consistent problem of using the WMD to describe rare/poorly sampled organisms
 
@@ -50,12 +50,27 @@ title: Discussion
 
     -   Site-Occupancy modelling suggests a successful tool for in situ imaging of plankton
 
-    ```{=html}
     <!-- -->
-    ```
+
     -   Ultimately, our study provides weak support for the indication that size would increase DVM magnitude.
 
         -   While the WMD approach on the surface implies the opposite, this is likely a limitation of the approach. The occupancy model does suggest that morphogroup 4 has a larger DVM signal as it daytime $\psi$ is decreased near the surface. Additionally,
+        -   Contrary to predictions, there was no detectable effect of transparency on DVM signal
+            -   THere are a few reasons for this:
+
+                -   Multiple drivers of DVM
+
+                -   Grey value as recorded by the UVP may have many possible interpretations
+
+                    -   Egg sacs, gut contents may influence pigmentation - vilgrain
+
+                        -   These characteristics are much more individual-based and could lead to individual responses to DVM - pearre 2003
+
+            -   Additionally while well documented, predator avoidance may not always be the primary selective pressure on
+
+                -   UV pigmentation if costs of migration are too large and need to stay near the surface around the clock.
+
+                -   There may be a delicate balance between maximizing pigmentation and minimizing risk - Hansson 2004, hylander 2013,
 
     -   Unable to distinguish any environmental parameters
 
@@ -70,7 +85,16 @@ title: Discussion
 ## Occupancy models: promises and limitations
 
 -   Site-occupancy models have been successfully utilized in terrestrial and conservation biology.
--   They offer a very clear application to in situ imaging data as the detection probability is a clearly variabile parameter. Hypothetically use of these models could better elucidate environmental drivers of plankton community behavior. In our study, the definition of a "site" as a single cruise is likely a too-broad grouping. While this was known from prior studies of intracruise variability, it was the best application with the limitations of the current dataset. Replicate casts at the same station, or tighter intervals are truly what is needed to best define a "site".
+-   They offer a very clear application to in situ imaging data as the detection probability is a clearly variabile parameter.
+    -   The relationship to volume sampled clearly exemplifies that this approach does work. Also, this approach confirms this approach works. Some basic insights are available from our model
+
+        -   Avoidance of the UVP/CTD rosette is not visually driven
+
+            -   UVP light system design paper
+
+        -   volume sample is far too low to regularly detect plankton. This will increase the variability of estimates between casts and reduce the ability to detect environmental-relationships with copepod presence/absence.
+
+    -   Hypothetically use of these models could better elucidate environmental drivers of plankton community behavior. In our study, the definition of a "site" as a single cruise is likely a too-broad grouping. While this was known from prior studies of intracruise variability, it was the best application with the limitations of the current dataset. Replicate casts at the same station, or tighter intervals are truly what is needed to best define a "site".
 -   Additionally zooplankton aggregations are known to be extremely patchy **CITE** however, characterizing patchiness remains a challenge. Ohman suggests that in situ imaging can be utilized to investigate thin layer interactions. Site occupancy models might offer a useful statistical tool to do so.
 -   In the present study, we treat the data as presence absence. This was appropriate for our system given the scarcity of some morphogroups. However, these models can be theoretically expanded to use a poisson distribution which can rely on count data.
 
