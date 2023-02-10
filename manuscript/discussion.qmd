@@ -1,111 +1,32 @@
 ---
 title: Discussion
+bibliography: references.bib
 ---
 
 # Discussion
 
 ## Morphogroup delineation
 
--   This paper builds on methods outlined in previous morphology-related questions using UVP (Vilgrain, trundowski, sonnet)
+This study builds on methods for describing morpho-spaces and morphogroups from several previous imaging studies [@trudnowska2021; @vilgrain2021; @sonnet2022]. The PCA-defined morphospace with the present data aligns well with the prior applications of this approach. Interestingly, the morphospace defined with Arctic copepod images by @vilgrain2021 is extremely similar to the morphospace defined in this study using subtropic copepod images. The proportion of morphological variation explained by each of the four principle components are extremely close between these two studies. It is possible that this is an artifact of the similarity of input data. Given the UVP has a limited range of observable size classes [@picheral2010], only copepods above a certain size were fed into both PCAs. Nonetheless, it is striking that the two morphospaces are similar considering the vastly different community compositions between the Arctic ocean and subtropical gyres [@soviadan2022]. It could be that copepod size variation can be reduced to the two major dimensions described in @vilgrain2021 and this study. To confirm this, work should be done applying this morphospace approach across instruments and ocean regions. Using phytoplankton images @sonnet2022 displayed how a morphospace can be used to compare community changes across time. Comparisons of copepod morphospaces across temporal and spatial scales may offer a useful metric for answering biogeographic and ecological questions.
 
--   Interestingly, the results of our PCA yield very similar results to vilgrain.
+The k-means clustering analysis to define morphogroups within the morphospace was first done using marine snow imagery [@trudnowska2021]. Using the copepod data set in this study, the k-means clustering successfully identified four distinct morphogroups. Although these morphogroups were significantly different along both principle components and varied along major morphological axis, the morphogroups did not lend themselves to a clear test of H1. Ideally to test the hypothesis that both size and color independently influence DVM, at least two groups would be similarly size yet vary in grey value. Regardless the designated morphogroups still lent themselves to meaningful investigation.
 
-    -   The proportion of morphological variation explained by each of the four principle components are nearly replicated in our study. Possibly this is due to the limited range of input data to the PcA. Using only-copepods sampled by the same instrument there is only so much variation which can can be imaged. Nonetheless, it is impressive the two morphospaces are so similar, considering the vast different community composition in the oligotrophic compared to the artic ocean --- Sovidan (2022) **OTHER GOOD CITES HERE?**
+## Description of DVM
 
-    This finding warrants further investigation of the morphospace approach across regions and imaging platforms. Variations of the topology of the copepods in the morphospace may be an interesting metric in biogeographic studies.
+Weighted mean depth is a classic approach used in describing DVM of zooplankton [@ohman2002; @aarflot2019]. WMD was used with a net-collected dataset to characterize differences in DVM amplitude based on copepod size [@ohman2016]. With the in situ imagery data in this study, a modification of the WMD approach did successfully display a clear DVM signal. However, the results did not show a clear pattern of differences between morphogroups (Figure 5). This is likely a result of the sampling scheme which forced a binned bootstrapping approach. Had sampling volume been more consistent throughout the water column, it may have been feasible to calculate cast-specific WMD, then average values. This possibility may be approached with in situ imaging devices that can be deployed on gliders and floats [@ohman2019; @picheral2022]. Due to the nature of our dataset however, the binned bootstrapping of the WMD created extremely large confidence intervals for some groups. These wide intervals are likely the result of large intercast variation. The WMD analysis did suggest however, that the daytime depth of the largest copepods (morphogroup 4) was shallower than smaller copepods (morphogroups 2 & 3). Given the overwhelming support for large copepods occupying deeper waters during daytime [@ohman2016; @aarflot2019; @pinti2019], this contrary finding is probably artificial. The overall abundance of morphogroup 4 was low, particularly at depth (Figure 4; Supplemental 4). The lack of encounters with morphogroup 4 at deeper waters (200-600m) likely resulted in the average daytime WMD not being pulled deeper as it was for the other morphogroups who's overall abundances were higher. Overall, then WMD was not a suitable analysis to test the hypothesis that morphology would influence DVM (H1). The misleading result from this analysis is indicative of a problem of using WMD to describe the rare/poorly sampled organisms from in situ imagery datasets. Additionally, because the WMD approach required pooling of casts across multiple seasons, it reduced the ability to investigate seasonal trends or environmental influences. A large draw of in situ imaging is the high frequency and specificity of zooplankton observations, further suggesting that WMD is not a suitable analysis for these types of data.
 
-    -   Sonnet displayed how a morphospace can be used to investigate temporal changes in plankton communities. Similar questions should be investigated using larger copepod datasets and cross-instrument investigations.
+Alternatively, site-occupancy modelling suggested a successful tool for analysis of in situ zooplankton images. Given that many observations of copepods in this dataset were presence/absence, site-occupancy models were a suitable fit. Additionally, treating copepods as presence/absence circumvents challenges, although rare, that may arise from duplicate images [@barth2022]. As to the characterization of DVM, site-occupancy models showed promise. Notably, our morphogroup-specific analysis provided weak support for H1. Morphogroup 4 had a larger DVM signal than the other morphogroups as noted by the decreased daytime $\psi$ near the surface (Figure 7). However, contrary to the predictions of H1, there was no detectable effect of transparency/grey value on DVM signal. There are several possibilities for this results. First, it could be a limitation of lack of distinct morphogroups as described above. Specifically, morphogroup 4 spanned a wide range of grey values. Perhaps with a larger set of copepod images, this group could be split into two distinct groups based on grey-value. However, it could also be that grey-value as recorded by the UVP does not influence DVM in this system. Grey-value in UVP-imaged copepods can be indicative of many features beyond simply pigmentation, notably egg-sacs and gut contents [@vilgrain2021]. Such characteristics vary much more between individuals and can have varied influences on DVM [@pearrejr.2003]. Additionally, while well documented, predator avoidance may not always be the primary selective pressure on copepod traits. For example, if the costs of migration are too large for some copepods, they will remain near the surface. However, these copepods then are exposed to UV light and may increase pigmentation to reduce UV damage. Likely the relationship between color and DVM is the result of a delicate balance of minimizing multiple ecological and biological risks [@hansson2004; @hylander2014].
 
--   Trundowski first used the morphospace to k-means clustering approach.
-
--   Replicating this method with just copepods yielded successfully distinct morphogroups. However, these groups did not readily lend themselves to a clear set for testing our hypotheses. Ideally, at least two groups would be similarly sized
-
-    -   Other studies have directly using the continuous PCs to investigate morphological variation with spatiotemporal or environmental variation (vilgrain and sonnet). ===However, the unequal sampling of the UVP with depth prevented this approach. Other studies with larger records of copepods might be able to avoid the clustering approach by sub-sampling their datasets. But in an oligotrophic system, the paucity of individuals prohibits this approach. Regardless, the clustering approach in our paper still lent itself to meaningful investigation
-
-## Describing DVM with imaging data
-
--   Weighted mean depth is a classic approach used in plankton studies of DVM
-
-    -   ohman 2002
-    -   aarfloat 2017
-    -   Ohman and romagnan 2016 utilized WMD to characterize differences in DVM amplitude based on copepod size.
-
--   In the present study, we successfully utilize WMD to display DVM with imaging datasets. However, the results do not show a clear pattern across morphological groups.
-
-    -   The sampling scheme of the UVP forced a bootstrapping approach which likely results in too wide of bins
-
-    -   The WMD depth analyses suggested that larger copepod do not migrate as deep as smaller ones (Figure 5). However, this result is likely the approach, not reality
-
-        -   Several studies have shown size a major factor
-
-        -   morphogroup 4 was scarce at depth, so it did not pull down the average.
-
-    -   This is indicative of a consistent problem of using the WMD to describe rare/poorly sampled organisms
-
-        -   This system has sparse data so it requires pooling across all casts
-
-            -   WMD is likely not a useful tool for imaging studies.
-
-                -   A clear power of in situ imaging is the high frequency and specificity of the data and WMD smooths over all that but is not compatible with single casts. It could be compatible with a cruise-wide survey in a system with more organisms.
-
-    -   Site-Occupancy modelling suggests a successful tool for in situ imaging of plankton
-
-    <!-- -->
-
-    -   Ultimately, our study provides weak support for the indication that size would increase DVM magnitude.
-
-        -   While the WMD approach on the surface implies the opposite, this is likely a limitation of the approach. The occupancy model does suggest that morphogroup 4 has a larger DVM signal as it daytime $\psi$ is decreased near the surface. Additionally,
-        -   Contrary to predictions, there was no detectable effect of transparency on DVM signal
-            -   THere are a few reasons for this:
-
-                -   Multiple drivers of DVM
-
-                -   Grey value as recorded by the UVP may have many possible interpretations
-
-                    -   Egg sacs, gut contents may influence pigmentation - vilgrain
-
-                        -   These characteristics are much more individual-based and could lead to individual responses to DVM - pearre 2003
-
-            -   Additionally while well documented, predator avoidance may not always be the primary selective pressure on
-
-                -   UV pigmentation if costs of migration are too large and need to stay near the surface around the clock.
-
-                -   There may be a delicate balance between maximizing pigmentation and minimizing risk - Hansson 2004, hylander 2013,
-
-    -   Unable to distinguish any environmental parameters
-
-        -   Firstly, it may be that environmental parameters do not have a large influence on DVM in this system
-
-            -   Direct comparison to ohman's papers and variation in conditions
-
-        -   Additionally, for the structure of the site occupancy model, we had to pool casts across a cruise to create "sites"
-
-            -   Discussed below, these are likely too broad of groupings and thus clear effects could have been brushed over.
+Finally, the environmental metrics included in an occupancy model were not able to distinguish any clear effect. This then does not provide any support to the hypothesis that environmental conditions would influence DVM (H2). This lack of result could be either a limitation of the model and sampling scheme or a reflection of real patterns. As discussed below, the "sites" were defined post-hoc as all casts, from each time of day, on a given cruise. While environmental conditions were not extremely varied within cruises (Supplemental 2), treating a cruise as a single site may have been too broad and created too-high of encounter rates at a "site" to distinguish effects of environmental factors. However, it may also be that the recorded environmental conditions on in this study system did not vary enough to elicit differences in DVM behavior. For example, the diffuse attenuation coefficient ($\frac{1}{k_{490}}$) captured across all cruises ranged from 21.5m to 47.5m. Competitively, \@ohman2016 measured copepods collected from environments that had the $\frac{1}{k_{490}}$ range from nearly 1m to over 30m, with a reduction in DVM amplitude not occurring until around 20m. Subtropical gyres have been described to have the largest DVM amplitudes with lower seasonal variation [@bianchi2016]. Therefore, it is possible the lack of effect of environmental parameters in the analysis is reflective of actual conditions. It would be worthwhile for researchers to replicate this approach in different ocean ecosystems.
 
 ## Occupancy models: promises and limitations
 
--   Site-occupancy models have been successfully utilized in terrestrial and conservation biology.
--   They offer a very clear application to in situ imaging data as the detection probability is a clearly variabile parameter.
-    -   The relationship to volume sampled clearly exemplifies that this approach does work. Also, this approach confirms this approach works. Some basic insights are available from our model
+Site-occupancy models have been successfully utilized in terrestrial ecology and conservation biology [@royle2006; @kéry2010; @mackenzie2017]. In marine systems, studies focusing on eDNA have utilized site-occupancy models [@mcclenaghan2020; @hinz2022]. However, they have yet to be adapted specifically to pelagic plankton ecology. Here, we demonstrate a clear case for the application of site-occupancy models to in situ imagery data. First, using all copepods, regardless of morphogroup, the site-occupancy model revealed a clear relationship between volume sampled and detection probability. While the relationship between sampling volume and detection is intuitive, this model confirms it and quantifies the lack-of-detection. Additionally, the sampling volume detection relationship in the different regions of the ocean suggests there is no visual avoidance of the CTD rosette by copepods (Figure 6). Were there any visual-aided avoidance, it would be expected that the surface waters would have lower detection than the mesopelagic, which was not the case.
 
-        -   Avoidance of the UVP/CTD rosette is not visually driven
-
-            -   UVP light system design paper
-
-        -   volume sample is far too low to regularly detect plankton. This will increase the variability of estimates between casts and reduce the ability to detect environmental-relationships with copepod presence/absence.
-
-    -   Hypothetically use of these models could better elucidate environmental drivers of plankton community behavior. In our study, the definition of a "site" as a single cruise is likely a too-broad grouping. While this was known from prior studies of intracruise variability, it was the best application with the limitations of the current dataset. Replicate casts at the same station, or tighter intervals are truly what is needed to best define a "site".
--   Additionally zooplankton aggregations are known to be extremely patchy **CITE** however, characterizing patchiness remains a challenge. Ohman suggests that in situ imaging can be utilized to investigate thin layer interactions. Site occupancy models might offer a useful statistical tool to do so.
--   In the present study, we treat the data as presence absence. This was appropriate for our system given the scarcity of some morphogroups. However, these models can be theoretically expanded to use a poisson distribution which can rely on count data.
+The occupancy analyses in this study suggested extremely low detection probabilities (Figure 6). This is in part driven by the overall low abundances of copepods in this system (Figure 4, Supplemental 4). However, as previously discussed, it is also likely that the grouping of casts to define "sites" was too broad. Within a site, there may have been copepods at a given depth-bin yet some variations influencing occupancy variability between surveys (casts) would suggest lower detection probabilities. Zooplankton populations are known to be extremely patchy [@folt1999]. Such local-scale variability suggests that to fully utilize site-occupancy models, sampling schemes ought to be carefully designed. Ideally replicate casts in similar locations. While this may be challenging on ship-based operations, imaging devices attached to autonomous gliders and floats can conduct several casts per day [@ohman2019; @gastauer2022; @picheral2022]. Future studies should consider use of site-occupancy modelling for the description of sparsely-imaged zooplankton.
 
 # Conclusions
 
--   Overall, this paper displays the possibility of hypothesis-driven investigation with in situ imaging.
-    -   Minor support was found relating copepod size to DVM amplitude yet not with copepod transparency
--   Migration patterns across morphology remains an exciting question, size has clearly been shown to influence DVM behavior. However visual predation is a variable metric, related to the present community composition. Intuitively, transparency may influence visual risk however, our paper does not provide any support to this hypothesis.
-    -   It should be noted that visual detection in marine systems often follows a non-linear curve, at which
-    -   Greater insights
--   Sampling methodology and schemes must be created with potential hypotheses in mind. Occupancy modelling offers an intuitive application for ecologists using current in situ imaging tools
-    -   However, As in-situ imaging progresses, the scientific community will gain new insights.
-    -   However, these insights are limited by our ability to get robust statistical results.
-    -   Ocean imaging, particularly equipped to autonomous platforms, are attractive as they will increase overall ocean observation. However, their deployment is often opportunistic. While this is a great as piggybacking off current projects provides low-cost data, plankton ecologists must be mindful of overall study design when considering potential hypotheses.
+Overall, this paper displays the possibility of hypothesis-driven investigation with in situ imaging. Minor support was found relating copepod size to DVM amplitude yet not with copepod transparency Diel migration patterns across morphology remains an exciting question, size has clearly been shown to influence DVM behavior. However visual predation is a variable metric, related to the present community composition. Intuitively, transparency may influence visual risk however, our paper does not provide any support to this hypothesis. It may be that there are several contrasting pressures which influences copepod colors.
+
+As in situ imaging progresses in the field of plankton ecology, new observations and datasets are rapidly growing. However, gaining insights from these data are limited by our ability to analyze the data with robust statistical methods. Here we demonstrate a promising approach for analyzing in situ imaging data despite the low-detection of mesozooplankton with common instruments.

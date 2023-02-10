@@ -4,67 +4,10 @@ bibliography: references.bib
 
 # Introduction
 
--   Diel Vertical Migration Importance and Background
-    -   active method of biological carbon pump - steinberg&landry 2017
+Diel vertical migration (DVM) is a wide spread phenomena with large consequences in ocean ecosystems. DVM is the process of pelagic organisms moving up and down in the water column on a daily basis, often over a distance of dozens to hundreds of meters [@bianchi2016]. This large-scale event occurs across a range of taxonomic and functional groups, from plankton to fish [@brierley2014]. However, DVM is particularly notable in zooplankton communities, whose daily migrations contribute substantially to biogeochemical cycles [@steinberg2017; @archibald2019; @siegel2023]. Zooplankton communities, largely dominated by copepods [@turner2004], will feed in surface layers of the ocean then migrate deeper into the mesopelagic. Through excretion and respiration, copepods actively transport carbon to depth rather than sinking fluxes. Beyond carbon sequestration, @kelly2019 described zooplankton DVM is a major component of mesopelagic food webs, where productivity is often unfeasible. However, DVM can be extremely variable over temporal and spatial scales [@bianchi2016; @gastauer2022]. Thus it is important to understand the adaptive and environmental drivers of this behavior.
 
-    -   Sustaining mesopelagic foodwebs
+DVM has long been studied in marine systems [@bandara2021]. The predominant pattern for zooplankton DVM is the movement from deep waters at daytime to shallower waters at night [@hays2003; @bianchi2016]. However, reverse migrations have been documented [@ohman1990]. There have been several hypotheses as to the proximate and ultimate drivers of DVM. However, when evaluating the adaptive benefits of DVM, there is substantial support the predator-avoidance hypothesis [@bandara2021]. This hypothesis suggests that zooplankton evacuate the sunlit surface to evade visual predators. Then copepods ascend at night to graze on phytoplankton, who are restricted to the euphotic zone for productivity. The massive migration undertaken by these copepods is energetically expensive [@maas2018]. Therefore, the predator-avoidance hypothesis suggests that DVM is a result of an individual's visual risk exceeding the costs of its migration. However, a copepod's visual risk to a planktivorous fish varies greatly based on individual morphological features and surrounding environmental conditions [@aksnes1997]. Notably an individual copepod's size can increase visual detection risk. Several field-observations and simulation-based studies have suggested copepod size influences DVM magnitude [@hays1994; @aarflot2019; @pinti2019]. This size dependent relationship however also varies across environmental conditions which influence light availability [@ohman2016; @gastauer2022]. At a global scale, sun angle and consequentially seasonality also have been shown to influence DVM magnitude [@bianchi2016]. Given these observations about the variability of visual detection, it is presumable that a copepod's color and transparency will influence DVM. @hays1994 reported that pigmentation could explain DVM frequency once having accounted for size. However, fewer studies have investigated this at length. One barrier to better studying how copepod traits influence DVM behavior is the difficulty of sampling and accurately recording traits. Yet understanding how morphology and environmental conditions influence DVM is critical for predicting how DVM may vary over time or changing ocean conditions.
 
-        -   kelly 2019
+In situ imaging tools have great potential to address some of the barriers to describing copepod DVM. By directly observing a copepod in its natural state, new ecological insights into their behavior and traits can be resolved [@ohman2019b]. For example, @whitmore2021 used an in situ imaging device to describe a clear relationship of copepod abundance with a particulate field rather than chlorophyll-a. Such findings are facilitated by the fact imagery data records the exact position of a copepod in the water column. Additionally, a copepod's true appearance can be described compared to net-collected organisms whose guts are often evacuated and subjected to pigmentation loss in preservatives. Some studies have noted a DVM signal with copepods using in situ imagery data [@pan2018; @whitmore2021]. However, direct tests of DVM-related hypotheses with such data have not been investigated. One potential challenge is that in situ imaging devices have extremely low sampling volumes compared to nets [@lombard2019]. This low sampling volume creates difficulty for accurate quantification of large particles, plankton in particular, who are often times scarce [@bisson; @barth2022]. As such, many studies testing DVM-related hypotheses are restricted to acoustic data \[CITES\]. Nonetheless, the use
 
-    -   Described in a wide range of systems -
-
-        -   archibald 2019, Berhenfield 2019
-
-Diel vertical migration (DVM) is a wide spread phenomena with large consequences in ocean ecosystems. DVM is the process of pelagic organisms moving up and down in the water column on a daily basis, often over a distance of dozens to hundreds of meters [@bianchi2016]. This large-scale event occurs across a range of taxonomic and functional groups, from plankton to fish [@brierley2014]. However, DVM is particularly notable in zooplankton communities, whose daily migrations contribute substantially to biogeochemical cycles [@steinberg2017; @archibald2019; @siegel2023]. Zooplankton communities, largely dominated by copepods [@turner2004], will feed in surface layers of the ocean then migrate deeper into the mesopelagic. Through excretion and respiration, copepods actively transport carbon to depth rather than sinking fluxes. Beyond carbon sequestration, @kelly2019 described zooplankton DVM is a major component of mesopelagic food webs, where productivity is often unfeasible. However, DVM can be extremely variable over temporal and spatial scales [@ohman]
-
-DVM has long been studied in marine systems [@bandara2021]. The predominant pattern for zooplankton DVM is the movement from deep waters at daytime to shallower waters at night [@hays2003; @bianchi2016]. However, reverse migrations have been documented [@ohman1990]. There have been several hypotheses as to the proximate and ultimate drivers of DVM. However, when evaluating the adaptive benefits of DVM, there is substantial support the predator-avoidance hypothesis [@bandara2021]. This hypothesis suggests that zooplankton evacuate the sunlit surface to evade visual predators. Then copepods ascend at night to graze on phytoplankton, who are restricted to the euphotic zone for productivity.
-
--   Variability of DVM
-
-```{=html}
-<!-- -->
-```
--   
-    -   The predominant method for migration is nightime surface, daytime at depth
-
-        -   Although reverse migrations have been documented -- Ohman 1990.
-
-    -   While several hypotheses have been proposed for the adaptive drivers of DVM, the visual predator-evasion hypothesis has received the most support (bandara 2021)
-
-        -   The hypothesis suggests that visual risk is a major driving force
-
-        -   Visual risk for a copepod to a planktivorous predator
-
-        -   Size if often thought to be a major factor
-
-            -   Field-based (Ohman/romgan)((aarfloat)(hayes) support this size-based DVM
-
-            -   Simiulation (pinti 2019)
-
-        -   However, several factors beyond size alone can influence predator risk
-
-            -   Namely coloration/ shade value (aksnes???) - other visual ecology citations?
-
-            -   Hayes 1994 noted that in smaller copepods, caretnoid concentration explained residual variation in DVM signal
-
-            -   However, few other studies have investigated this, presumably due to the methodological constraints of acurately charactizing copepod color/transparency
-
-        -   Furthermore DVM variability can be driven by changing environmental conditions which affect light availability or favorability of different regions of the water column (Ohman 2016, Gastauer)
-
-            -   this has been documented at global scales - bianchi
-
-Application of in-situ imaging to study zooplankton
-
--   in situ imaging provides much promise to study function plankton ecology
-
-    -   Direct measurements of traits (Ohman sea of tenticles) 2019
-
--   Whitmore 2021 showed copepods have a clear relationship with a particulate field rather than primary production
-
-    -   They also show in this paper DVM behavior for large copepods but do not investigate at length
-
-    -   One challenge for in situ imaging is the small sampling volume and issues with detection (me 2022). This creates challenges for adequately quantifying changes in DVM in reliable ways.
-
-Hypotheses:
-
-In this study, we investigate the applicability of in-situ imaging data to study DVM behavior. We aim to test two hypotheses. First, (H1) Overall copepod morphology, including size and transparency, will impact DVM behavior. It is predicted that copepods which are more visually detectable, e.g. larger and darker, will have to migrate larger distances. Second, (H2) DVM behavior will vary based on environmental conditions related to the risks and rewards of occupying surface waters. Specifically, increased prey availability will increase a copepod's likelihood to travel to surface waters, while increased light availability will force copepods to deeper sections of the water column. To test these hypotheses we build on novel statistical tools to describe morphology of objects sampled by in situ imaging [@trudnowska2021; @vilgrain2021; @sonnet2022]. Additionally we evaluate multiple approaches to describing DVM using in situ imaging data and how to estimate the impact of environmental factors on DVM behavior.
+In this study, we investigate the applicability of in-situ imaging data to test DVM-related hypotheses. We aim to test two hypotheses. First, (H1) Overall copepod morphology, including size and transparency, will impact DVM behavior. It is predicted that copepods which are more visually detectable, e.g. larger and darker, will have larger diel migrations. Second, (H2) DVM behavior will vary based on environmental conditions related to the risks and rewards of occupying surface waters. Specifically, increased prey availability will increase a copepod's likelihood to travel to surface waters, while increased light availability will force copepods to deeper sections of the water column. To test these hypotheses we build on novel statistical tools to describe morphology of objects sampled by in situ imaging [@trudnowska2021; @vilgrain2021; @sonnet2022]. Additionally we evaluate multiple approaches to describing DVM using in situ imaging data and how to estimate the impact of environmental factors on DVM behavior.
