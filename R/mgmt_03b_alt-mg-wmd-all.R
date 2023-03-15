@@ -102,7 +102,7 @@ pc2_lg_wmd_boots <- pc2_bin_lg |>
 
 # Save All Data ######################
 saveRDS(list(
-  pc1 = pc1_bins,
+  pc1 = pc1_wmd_boots,
   pc2_sm = pc2_sm_wmd_boots,
   pc2_mid = pc2_mid_wmd_boots,
   pc2_lg = pc2_lg_wmd_boots

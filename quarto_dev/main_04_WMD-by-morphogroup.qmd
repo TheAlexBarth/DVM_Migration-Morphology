@@ -8,7 +8,7 @@ Weighted mean depth is a commonly used metric to describe zooplankton population
 
 \n\n
 
-In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (580,600\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
+In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. Morphogroups were defined on PC1 (size) as the 25% quantile, 25-75% quantile, and the 75% quantile. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (580,600\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
 \n\n 
 Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.
 
@@ -18,65 +18,120 @@ Shown in the figure below, it can be seen that all morphogroups have distinct da
 \n\n
 
 
-```{r, fig.width=10, fig.height=5}
+```{r}
+rm(list = ls())
 library(ggplot2)
 library(ggpubr)
 source('../r/tools.R')
 
-boot_wmd <- readRDS('../data/03_wmd-all-merged.rds')
+boot_wmd <- readRDS('../data/03b_alt-mg-wmd-bins.rds')
 
-day_summary <- boot_wmd$day |> lapply(quantile, probs = c(0.025,0.5,0.975))
-night_summary <- boot_wmd$night |> lapply(quantile, probs = c(0.025,0.5,0.975))
 
-wmd_df <- data.frame(cluster = rep(1:4, 2),
-                     tod = rep(c('day','night'),each = 4),
-                     low = rep(NA, 8),
-                     mid = rep(NA, 8),
-                     high = rep(NA, 8))
+# |- Summarize DF -----------------------
 
-for(i in 1:4) {
+summarize_wmd <- function(wmd_group) {
   
-  wmd_df$low[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['2.5%']]
-  wmd_df$mid[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['50%']]
-  wmd_df$high[which(wmd_df$tod == 'day' & 
-                     wmd_df$cluster == i)] <- day_summary[[i]][['97.5%']]
+  day_summary <- wmd_group$day |> 
+    lapply(quantile, probs = c(0.025,0.5,.975))
   
+  night_summary <- wmd_group$night |> 
+    lapply(quantile, probs = c(0.025,0.5,0.975))
   
-  wmd_df$low[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['2.5%']]
-  wmd_df$mid[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['50%']]
-  wmd_df$high[which(wmd_df$tod == 'night' & 
-                     wmd_df$cluster == i)] <- night_summary[[i]][['97.5%']]
+  wmd_df <- data.frame(group = rep(c('low','mid','high'), each = 2),
+                       tod = rep(c('day','night'), times = 3),
+                       lbound = rep(NA,6),
+                       median = rep(NA,6),
+                       hbound = rep(NA,6))
   
+  for(group in c('low','mid','high')) {
+    wmd_df[['lbound']][which(wmd_df[['tod']] == 'day' &
+                               wmd_df[['group']] == group)] <- day_summary[[group]][['2.5%']]
+    wmd_df[['median']][which(wmd_df[['tod']] == 'day' &
+                               wmd_df[['group']] == group)] <- day_summary[[group]][['50%']]
+    wmd_df[['hbound']][which(wmd_df[['tod']] == 'day' &
+                               wmd_df[['group']] == group)] <- day_summary[[group]][['97.5%']]
+    
+    wmd_df[['lbound']][which(wmd_df[['tod']] == 'night' &
+                               wmd_df[['group']] == group)] <- night_summary[[group]][['2.5%']]
+    wmd_df[['median']][which(wmd_df[['tod']] == 'night' &
+                               wmd_df[['group']] == group)] <- night_summary[[group]][['50%']]
+    wmd_df[['hbound']][which(wmd_df[['tod']] == 'night' &
+                               wmd_df[['group']] == group)] <- night_summary[[group]][['97.5%']]
+  }
+  wmd_df$group <- factor(wmd_df$group, levels = c('low','mid','high'))
+  return(wmd_df)
 }
 
+pc1_wmd_df <- boot_wmd$pc1 |> summarize_wmd()
 
-ggplot(wmd_df) +
-  geom_point(aes(x = cluster,
-                 y = mid,
+
+
+ggplot(pc1_wmd_df) +
+  geom_point(aes(x = group,
+                 y = median,
                  color = tod),
              position = position_dodge(width = .5),
              size = 2) +
-  geom_errorbar(aes(x = cluster,
-                    ymin = low,
-                    ymax = high,
+  geom_errorbar(aes(x = group,
+                    ymin = lbound,
+                    ymax = hbound,
                     color = tod),
                 width = .25,
                 position = position_dodge(width = .5),
                 size = 1) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   scale_y_reverse(limits = c(600,0)) +
-  labs(y = 'Depth [m]', x = 'Morphogroup Cluster', col = "")+
+  labs(y = 'Depth [m]', x = 'PC1 Level Groups', col = "")+
   theme_pubr()
   
+DT::datatable(pc1_wmd_df)
+
 ```
 
 
 
+Observe for PC2 breaks by PC1 group
+
 ```{r}
-DT::datatable(wmd_df)
+
+small_pc2 <- boot_wmd$pc2_sm |> summarize_wmd()
+mid_pc2 <- boot_wmd$pc2_mid |> summarize_wmd()
+lg_pc2 <- boot_wmd$pc2_lg |> summarize_wmd()
+
+pc2_plotter <- function(wmd, pc1_group){
+  ggplot(wmd) +
+    geom_point(aes(x = group,
+                   y = median,
+                   color = tod),
+               position = position_dodge(width = .5),
+               size = 2) +
+    geom_errorbar(aes(x = group,
+                      ymin = lbound,
+                      ymax = hbound,
+                      color = tod),
+                  width = .25,
+                  position = position_dodge(width = .5),
+                  size = 1) +
+    scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
+    scale_y_reverse(limits = c(600,0)) +
+    labs(y = 'Depth [m]', x = paste0('PC2 Level Groups - ',pc1_group), col = "")+
+    theme_pubr()
+}
+
+sm_plot <- pc2_plotter(small_pc2, 'Small PC1')
+mid_plot <- pc2_plotter(mid_pc2, 'Mid PC1')
+lg_plot <- pc2_plotter(lg_pc2, 'Large PC1')
+
+ggarrange(sm_plot, mid_plot, lg_plot,
+          ncol = 3, common.legend = T)
+
+```
+
+```{r}
+DT::datatable(small_pc2, caption = 'Small PC1 - PC2 Groups')
+DT::datatable(mid_pc2, caption = 'Mid PC1 - PC2 Groups')
+DT::datatable(lg_pc2, caption = 'Large PC1 - PC2 Groups')
+
+
 ```
 
