@@ -133,6 +133,8 @@ features <- c('major','minor', 'area','feret','perim.',
 cope_features <- all_copes[,which(names(all_copes) %in% features)]
 
 # |- Run PCA --------------------------------------------
+
+set.seed(20230314)
 cope_pca <- PCA(cope_features, scale.unit = TRUE,
                 row.w = all_copes$weight, graph = FALSE)
 
@@ -154,28 +156,27 @@ saveRDS(cope_pca, './data/02_cope-pca-res.rds')
 
 # get just the pc's we want, size and transparency
 main_pcs <- cope_pca$ind$coord[,c(1,2)]
-
-# |- Identifying the optimal clusters ----
 # 
-# cluster_ss <- function(k, x) {
-#   w <- kmeans(x, centers = k, iter.max= 100, nstart = 1000)
-#   return(1 - (w$tot.withinss/w$totss))
-# }
+# # |- Identifying the optimal clusters ----
+# # 
+# # cluster_ss <- function(k, x) {
+# #   w <- kmeans(x, centers = k, iter.max= 100, nstart = 1000)
+# #   return(1 - (w$tot.withinss/w$totss))
+# # }
+# # 
+# # cluster_curve <- c(1:10) |>  sapply(cluster_ss, main_pcs)
+# # plot(cluster_curve~c(1:10), type = 'p')
+# # diff(cluster_curve)
+# # Four clusters seems to be the most elbowish
+# # Explains ~65% of variability, adding k is >10% variability
 # 
-# cluster_curve <- c(1:10) |>  sapply(cluster_ss, main_pcs)
-# plot(cluster_curve~c(1:10), type = 'p')
-# diff(cluster_curve)
-# Four clusters seems to be the most elbowish
-# Explains ~65% of variability, adding k is >10% variability
-
-# |- Actual clustering ----
-set.seed(012623)
-cope_cluster <- kmeans(main_pcs, centers = 4, iter.max = 100, nstart = 1000)
+# # |- Actual clustering ----
+# set.seed(012623)
+# cope_cluster <- kmeans(main_pcs, centers = 4, iter.max = 100, nstart = 1000)
 
 # |- Bringing it all together ----
 results <- data.frame(orig_id = all_copes$orig_id,
                       profileid = all_copes$profileid,
-                      cluster = cope_cluster$cluster,
                       PC1 = cope_pca$ind$coord[,1],
                       PC2 = cope_pca$ind$coord[,2])
 
@@ -183,4 +184,4 @@ results <- data.frame(orig_id = all_copes$orig_id,
 # plot(results$PC1, results$PC2, col = results$cluster)
 
 # |- Save Results
-saveRDS(results,'./data/02_cluster-copepods.rds')
+saveRDS(results,'./data/02_PCA-copepods.rds')
