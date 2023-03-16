@@ -21,12 +21,6 @@ website:
           text: Vertical Profiles of MGs
         - href: main_04_WMD-by-morphogroup.qmd
           text: Weighted Mean Depth of Morphogroups
-        - href: main_05_all-copepod-occupancy.qmd
-          text: All Copepod Occupancy Model
-        - href: main_06_cluster-occurence.qmd
-          text: Occupancy by Morphogroup
-        - href: main_07_environmental-effect-model.qmd
-          text: Environmental Effects on Occupancy
         
       - text: Supplemental
         menu:
@@ -36,8 +30,6 @@ website:
           text: Extended PCA/Clustering Plots
         - href: supp_03_cluster-conc.qmd
           text: Integrated Abundancy by Morphogroup
-        - href: supp_04_all-copepod-occurrence.qmd
-          text: All Copepod Occupancy
 
     tools:
       - icon: github
