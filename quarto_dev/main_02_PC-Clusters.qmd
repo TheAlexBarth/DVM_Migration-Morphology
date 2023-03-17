@@ -8,21 +8,46 @@ library(DT)
 library(EcotaxaTools)
 library(ggplot2)
 library(ggpubr)
+library(cowplot)
 source('../R/tools.R')
 
+pca_cope <- readRDS('../data/02_PCA-copepods.rds')
 pca_results <- readRDS('../data/02_cope-pca-res.rds')
-cluster_res <- readRDS('../data/02_cluster-copepods.rds')
+uvp_data <- readRDS('../data/01_uvp-trim-final_large.rds') |> 
+  trim_to_cope()
+
+
+# |- Assign percentiles of morphogroups -----------------
+pca_cope$PC1_percentile <- sapply(pca_cope$PC1, function(x) ecdf(pca_cope$PC1)(x))
+pca_cope$PC2_percentile <- sapply(pca_cope$PC2, function(x) ecdf(pca_cope$PC2)(x))
+
+# |- Assign morphogroups --------
+
+morpho_switch <- function(x) {
+  if(x < .25) {
+    return('low')
+  } else if (x < .75) {
+    return('mid')
+  } else {
+    return('high')
+  }
+}
+pca_cope$pc1_class <- sapply(pca_cope$PC1_percentile, morpho_switch)
+pca_cope$pc2_class <- sapply(pca_cope$PC2_percentile, morpho_switch)
+
+pca_cope$pc1_class <- factor(pca_cope$pc1_class, levels = c('low','mid','high'))
+pca_cope$pc2_class <- factor(pca_cope$pc2_class, levels = c('low','mid','high'))
+
+
 ```
 
 # Methodology
 
-A PCA was run on the morphological features for each vignette. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check [supplemental information 2](./supp_02_pc-extended-info.html). The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only include the first two axis for definition of morphogroups. A k-means cluster analysis was used to identify morphogroups within the first two PC-space. Four clusters were determined to be the optimal number of groups as it captured 65% of the variability in the morphospace and additional clusters added less than 10% explanatory power. Individual observations were assigned to morphogroups based on the k-means analysis, which was conducted using 1000 random starts. The analysis converged on consistent results across iterations.\n\n
+A PCA was run on the morphological features for each vignette. A weighted PCA was used to adjust for any bias from uneven sampling by the UVP. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check [supplemental information 2](./supp_02_pc-extended-info.html). The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only consider the first two PC's when assessing our hypotheses. However, because of uneven sampling throughout the water column, it is not feasible to directly draw associative relationships between the continuous PC's and depth. For this reason, we elected to construct discrete groups of copepods based on the morphospace. To address the size-dependent hypothesis, groups were assigned as low, mid, or high. Then to assess if color/transparency was a secondary factor once having accounted for size, groups within each PC1 group were assigned as low, mid, or high along PC2. The low group corresponded to those that were below the 25th percentile of the PC, mid group was the middle 50% of all observations, and the high group was above the 75th percentile.
+\n\n
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
 
-# |- make a circle for plotting variable contributions -------------------
-curl <- seq(-pi,pi, length = 50)
-circ <- data.frame(x = sin(curl), y = cos(curl))
 
 # |- Extract variable contributions ----------------------------
 pc_df <- data.frame(
@@ -33,62 +58,72 @@ pc_df <- data.frame(
   vars = row.names(pca_results$var$coord)
 )
 
-# Trim the pcs to only have those with 
-
-pc1_pc2 <- ggplot() +
-  geom_path(data = circ,aes(x,y), lty = 2, color = "grey", alpha = 0.7) +
-  geom_text(data = pc_df, aes(x = pc1, y = pc2, label = vars),
-            position = position_jitter()) +
-  geom_segment(data = pc_df,
-               aes(x = 0, y = 0, xend = pc1*0.9, yend = pc2*0.9),
-               arrow = arrow(length = unit(1/2, 'picas')), color = "grey30") +
-  labs(x = 'PC1',y = 'PC2')+
-  theme_pubclean()+
-  theme(panel.border = element_rect(fill = 'transparent'))
-  
-
-cluster_pc_plot <- ggplot(cluster_res)+
-  geom_point(aes(x = PC1,
-                 y = PC2,
-                 col = as.factor(cluster),
-                 shape = as.factor(cluster)),
-             size = 1.5) +
-  theme_pubclean()+
-  scale_color_manual(values = gg_cbb_col(4))+
-  theme(panel.border = element_rect('transparent'),
-        legend.position = 'right',
-        legend.title = element_blank(),
-        panel.background = element_blank(),
-        panel.grid = element_blank())
-
-ggarrange(cluster_pc_plot, pc1_pc2)
 
 
 # To generate figure plot:
-# ggplot()+
-#   geom_point(data = cluster_res, aes(x = PC1*.1,
-#                                      y = PC2*.1,
-#                                      col = as.factor(cluster),
-#                                      shape = as.factor(cluster)),
-#              size = 1.5) +
-#   geom_hline(yintercept = 0, color = 'black', size =1, linetype = 'dotted')+
-#   geom_vline(xintercept = 0, color = 'black', size =1, linetype = 'dotted')+
-#   theme_pubclean()+
-#   scale_color_manual(values = gg_cbb_col(4))+
-#   geom_text(data = pc_df, aes(x = pc1, y = pc2, label = vars),
-#             position = position_jitter(), color = 'red') +
-#   geom_segment(data = pc_df,
-#                aes(x = 0, y = 0, xend = pc1*.9, yend = pc2*.9),
-#                arrow = arrow(length = unit(1/2, 'picas')), color = "red") +
-#   labs(x = 'PC1',y = 'PC2', color='Morphogroup', shape= 'Morphogroup')+
-#   theme_pubr()+
-#   theme(legend.position = 'right',
-#         axis.line = element_blank(),
-#         panel.background = element_blank(),
-#         panel.grid = element_blank(),
-#         axis.text = element_blank(),
-#         axis.ticks = element_blank())
+pc_main <- ggplot()+
+  geom_point(data = pca_cope, aes(x = PC1*.1,
+                                  y = PC2*.1,
+                                  fill = as.factor(pc1_class),
+                                  color = as.factor(pc1_class),
+                                  alpha = as.factor(pc2_class)),
+             size = 1.5) +
+  geom_hline(yintercept = 0, color = 'black', size =1, linetype = 'dotted')+
+  geom_vline(xintercept = 0, color = 'black', size =1, linetype = 'dotted')+
+  scale_color_manual(values = gg_cbb_col(3))+
+  scale_fill_manual(values = gg_cbb_col(3))+
+  scale_alpha_manual(values = c(0.1,.25,1))+
+  geom_text(data = pc_df, aes(x = pc1*.5, y = pc2*.5, label = vars),
+            position = position_jitter(), color = 'black') +
+  geom_segment(data = pc_df,
+               aes(x = 0, y = 0, xend = pc1*.4, yend = pc2*.4),
+               arrow = arrow(length = unit(1/2, 'picas')), color = "black") +
+  labs(x = paste0('PC1 (',round(pca_results$eig[1,2],2),'%)'),
+       y = paste0('PC2 (',round(pca_results$eig[2,2],2),'%)'))+
+  theme_pubr()+
+  theme(legend.position = 'none',
+        axis.line = element_blank(),
+        panel.background = element_blank(),
+        panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank())
 
+xdensity <- ggplot(pca_cope)+
+  geom_density(aes(x = PC1*.1))
+
+sub_x <- ggplot_build(xdensity)$data[[1]]
+
+
+xmargin <- xdensity+
+  geom_area(data = subset(sub_x, x < quantile(pca_cope$PC1*.1, probs = .25)), aes(x = x, y=y), fill = gg_cbb_col(1)[1]) + 
+  geom_area(data = subset(sub_x, x >= quantile(pca_cope$PC1*.1, probs = .25) & x <= quantile(pca_cope$PC1*.1, probs = .75)),
+            aes(x = x, y=y), fill = gg_cbb_col(2)[2]) + 
+  geom_area(data = subset(sub_x, x > quantile(pca_cope$PC1*.1, probs = .75)), aes(x = x, y=y), fill = gg_cbb_col(3)[3])+
+  theme_void()
+
+ydensity <- ggplot(pca_cope)+
+  geom_density(aes(x = PC2*.1))
+
+sub_y <- ggplot_build(ydensity)$data[[1]]
+
+
+ymargin <- ydensity+
+  geom_area(data = subset(sub_y, x < quantile(pca_cope$PC2*.1, probs = .25)), aes(x = x, y=y), fill = 'black', alpha = .1) + 
+  geom_area(data = subset(sub_y, x >= quantile(pca_cope$PC2*.1, probs = .25) & x <= quantile(pca_cope$PC2*.1, probs = .75)),
+            aes(x = x, y=y), fill = 'black', alpha = .25) + 
+  geom_area(data = subset(sub_y, x > quantile(pca_cope$PC2*.1, probs = .75)), aes(x = x, y=y), fill = 'black', alpha = 1)+
+  theme_void() +
+  coord_flip()
+
+pc_main <- pc_main+
+  border()+
+  xlim(layer_scales(xmargin)$x$range$range)+
+  ylim(layer_scales(ymargin)$x$range$range)
+  
+
+px <- insert_xaxis_grob(pc_main, xmargin, grid::unit(.2, "null"), position = "top")
+py <- insert_yaxis_grob(px, ymargin, grid::unit(.2,'null'), position = 'right')
+ggdraw(py)
 ```
 
 
@@ -96,60 +131,19 @@ ggarrange(cluster_pc_plot, pc1_pc2)
 
 ## Morphogroup definition separation
 
-The morphogroups defined by clustering in the PC-morphology space do not lend themselves to clear groupings. However, by inspecting the groups in the context of the morphospace, it can determined the characteristics best used to describe each group. Visually, it was determined that Cluster 1 can best be described by moderate sized and more transparent. Cluster 2 follows the smallest values on PC1 indicating that it is primarily composed of smaller copepods. Cluster 3 was best described by low values of PC2, interpreted as correlating to darker individuals. Finally, cluster 4 contains individuals with high PC1 scores and thus the larger copepods.
-
-To assure that these clusters were not trivial, each morphogroup's scores on PC1 and PC2 were compared with pairwise Dunn tests. It was revealed that all groups were significantly different from one another along PC1 and PC2 (p < 0.001 following Bonferroni correction for all groups).
-
-
-```{r}
-FSA::dunnTest(PC1 ~ as.factor(cluster),
-              data = cluster_res,
-              method = 'bonferroni')$res |> 
-  datatable(caption = 'PC1 Dunn multiple comprison test with bonferroni correction')
-
-pc1_dist <- ggplot(cluster_res) +
-  geom_boxplot(aes(x = as.factor(cluster),
-                   y = PC1,
-                   fill = as.factor(cluster))) +
-  scale_fill_manual(values = gg_cbb_col(4))+
-  labs(x = "Morphogroup", y = 'PC1 - Size: Small-to-Large') + 
-  theme_pubr() +
-  theme(legend.position = 'none')
-
-
-FSA::dunnTest(PC2 ~ as.factor(cluster),
-              data = cluster_res,
-              method = 'bonferroni')$res |> 
-  datatable(caption = 'PC2 Dunn multiple comprison test with bonferroni correction')
-
-pc2_dist <- ggplot(cluster_res) +
-  geom_boxplot(aes(x = as.factor(cluster),
-                   y = PC2,
-                   fill = as.factor(cluster))) +
-  scale_fill_manual(values = gg_cbb_col(4))+
-  labs(x = "Morphogroup", y = 'PC2 - Trans: dark-to-light') + 
-  theme_pubr()+
-  theme(legend.position = 'none')
-
-ggarrange(pc1_dist, pc2_dist, nrow=1)
-
-```
-
-
-Additionally, to exemplify morphogroup differences along original parameters, we plotted the distribution of individual metrics for key morphological parameters representing size and transparency.
+To assure that the morphological groups created were different along ecologically relevant metrics, the groups were compared against known metrics which are meaningful to copepod morphology. The three size groups along PC1 were compared using feret diameter and the groups along PC2 were assessed using the mean grey value.
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
 
-uvp_data <- readRDS('../data/01_uvp-trim-final_large.rds') |> 
-  trim_to_cope()
 
 ####
 # Assign Clusters to individuals ########
 ####
 
 for(i in 1:length(uvp_data$zoo_files)) {
-  idx <- which(cluster_res$orig_id %in% uvp_data$zoo_files[[i]]$orig_id)
-  uvp_data$zoo_files[[i]]$cluster <- cluster_res$cluster[idx]
+  idx <- which(pca_cope$orig_id %in% uvp_data$zoo_files[[i]]$orig_id)
+  uvp_data$zoo_files[[i]]$pc1_class <- pca_cope$pc1_class[idx]
+  uvp_data$zoo_files[[i]]$pc2_class <- pca_cope$pc2_class[idx]
 }
 
 all_copes <- uvp_data$zoo_files |> 
@@ -159,22 +153,28 @@ all_copes <- uvp_data$zoo_files |>
 all_copes$feret <- all_copes$feret * unique(uvp_data$meta$acq_pixel)
 
 feret_plot <- ggplot(all_copes) + 
-  geom_boxplot(aes(x = as.factor(cluster),
+  geom_boxplot(aes(x = as.factor(pc1_class),
                    y = feret,
-                   fill = as.factor(cluster))) +  scale_fill_manual(values = gg_cbb_col(4))+
-  labs(x = "Morphogroup", y = 'Feret Diam [mm]') + 
+                   fill = as.factor(pc1_class))) +  scale_fill_manual(values = gg_cbb_col(3))+
+  labs(x = "PC1-Groups", y = 'Feret Diam [mm]') + 
   theme_pubr()+
   theme(legend.position = 'none')
 
-meanGrey_plot <- ggplot(all_copes) + 
-  geom_boxplot(aes(x = as.factor(cluster),
+
+
+meanGrey_plot <- ggplot(all_copes) +
+  geom_boxplot(aes(x = as.factor(pc2_class),
                    y = mean,
-                   fill = as.factor(cluster))) +  scale_fill_manual(values = gg_cbb_col(4))+
-  labs(x = "Morphogroup", y = 'Mean Grey Value') + 
+                   fill = as.factor(pc1_class))) +  
+  scale_fill_manual(values = gg_cbb_col(3))+
+  labs(x = "PC2-Groups", y = 'Mean Grey Value') +
   theme_pubr()+
   theme(legend.position = 'none')
 
-ggarrange(feret_plot, meanGrey_plot, rnow = 1)
+
+ggarrange(feret_plot, meanGrey_plot, ncol = 1)
 
 ```
 
+Across all PC1-groups, there was a clear difference in feret diameter. The median feret diameter of the low group is `r mean(all_copes$feret[which(all_copes$pc1_class == 'low')])` mm. The median feret diameter of the mid and high groups are `r mean(all_copes$feret[which(all_copes$pc1_class == 'mid')])`mm and `r mean(all_copes$feret[which(all_copes$pc1_class == 'high')])`mm, respectively. All groups were significantly different from one another (Dunn Krustall-wallace test, p < 0.001).
+PC2 groups as a whole were also significantly different from one another (Dunn Krustall-wallace test, p < 0.001). However, within each PC2-group, there was a clear tendency for larger copepods (PC1-groupings) to be lighter. This phenomena is likely due to the ease of identifying a more transparent copepod if it is larger. This justifies the comparison of PC2-groups to be within a PC1-group - so that the effect of transparency on copepod DVM is separated from the effect of size. 

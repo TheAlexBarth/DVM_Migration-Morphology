@@ -13,7 +13,6 @@ library(ggpubr)
 
 
 pca_results <- readRDS('../data/02_cope-pca-res.rds')
-cluster_res <- readRDS('../data/02_cluster-copepods.rds')
 ```
 
 
@@ -64,30 +63,5 @@ Specific loading scores are available for each of the four dimensions:
 ```{r}
 datatable(pca_results$var$coord[,c(1:4)])
 ```
-## Identifying optimal number of clusters in k-means cluster
 
-4 clusters were chosen as the optimal number of clusters
-
-```{r}
-
-
-# get just the pc's we want, size and transparency
-main_pcs <- pca_results$ind$coord[,c(1,2)]
-
-# |- Identifying the optimal clusters ----
-
-cluster_ss <- function(k, x) {
-  w <- kmeans(x, centers = k, iter.max= 100, nstart = 1000)
-  return(1 - (w$tot.withinss/w$totss))
-}
-
-cluster_curve <- c(1:10) |>  
-  sapply(cluster_ss, main_pcs) |> 
-  suppressWarnings()
-plot(cluster_curve~c(1:10), type = 'b', xlab = 'Number of Clusters',ylab = 'Within SS / Total SS')
-print('Explanitory power added for each new center added:')
-rbind(numCluster = seq(2,10,1), AddedExplain= diff(cluster_curve))
-# Four clusters seems to be the most elbowish
-# Explains ~65% of variability, adding k is >10% variability
-```
 

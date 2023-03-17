@@ -1,5 +1,5 @@
 ---
-title: Weighted Mean Depth of Morphogroups
+title: Weighted Mean Depth of Morphological Groups
 ---
 
 ## Methodology
@@ -8,17 +8,27 @@ Weighted mean depth is a commonly used metric to describe zooplankton population
 
 \n\n
 
-In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles, even in a depth bin, directly calculating the average WMD is not feasible. Instead, we take a depth-bin constrained bootstrap approach to define WMD for each morphogroup. Morphogroups were defined on PC1 (size) as the 25% quantile, 25-75% quantile, and the 75% quantile. In this approach, the concentration of each morphogroup was calculated in 20m depth bins for each profile. Then all profiles from the same time of day were 'pooled' providing a distribution of concentration values in each depth bin. From these distribution a value, $WMD^*$, can be calculated where $d_i$ is a 20m depth bin between (0m,20m\] and (580,600\] and $conc_i^*$ is a randomly selected measured concentration. This processes was iterated 999 times to create a distribution of $WMD^*$ for each morphogroup ($mg$) and time of day ($tod$). This effectively is re-sampling of the study region for a given time of day to construct new profiles. $$WMD^*_{mg, tod} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,mg,tod})}{\sum_i^{N = 60}{conc^*_{i,mg,tod}}}}$$ From the distribution of $WMD^*$, the mean and 95% confidence interval can be calculated. The confidence interval will be widened both by the spread of zooplankton through the water column and the variability between profiles. This provides the ability to directly quantify a DVM signal, as the daytime and nighttime confidence intervals should not overlap if there is a consistent and compact trend of copepods occupying distinct layers of the water column. 
-\n\n 
-Following the hypothesis H1, we would expect the DVM signal to be largest for Morphogroup 2, as it contains the larger and *darker* copepods. It follows that Morphogroup 3 should then have the smallest DVM signal.
+In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles directly calculating the average WMD is not feasible. However, understanding variation around the WMD is necessary to interpret the vertical structure and strength of DVM. Here, we took a depth-bin constrained bootstrap approach to define WMD with a confidence interval. To do this, the concentraiton of each group, was calculated in 20m depth bin for each profile. Then all profiles from the same time of day were 'pooled'. This provides a distribution of concentrations in each depth bin. Traditional bootstrapping randomly samples with replacement from all observations. With vertically structured data however, full random sampling would bias estimates towards the surface, where there were more profiles. To avoid this, samples were "bin-constrained" such that for each iteration, a random observation was sampled within each depth bin, then replaced for the next iteration. A maximum depth was set to 600m, as it is unlikely that copepods are migrated beyond this depth (See figure 3). This approach then effectively created a random profile by resampling a concentration, $conc^*$, from each depth bin, $d$. This profile then was used to calculate a bootstrapped weighted mean depth, $WMD^*$. This was done for each morphological group $g$, at each time of day $t$ (\ref{Equation 1}).
+
+\begin{align}
+  $WMD^*_{g,t} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,g,t})}{\sum_i^{N = 60}{conc^*_{i,g,t}}}}$ \label{Equation 1}
+\end{align}
+
+The distribution of $WMD^*_{g,t}$ then was used to calculate a bootstrapped mean and 95% confidence interval. Then, the confidence intervals could be compared between times of day and morphological groups to assess the strength of DVM. This approach was used to investigate the DVM hypotheses related to size and transparency. Using PC1 to assess size, the WMD was compared between the three PC1-groups by percentile level. Then to assess the effect of transparency, while accounting for size, the WMD was compared between PC2-groups for each PC1-grouping.
+
+From the visual detection hypothesis, it is predicted that larger and darker copepods will have a larger signal of DVM. A larger signal of DVM would be evident by a clearly deeper (non-overlapping 95% CI) daytime WMD.
+
 
 ## Key Figures and Takeaways
 
-Shown in the figure below, it can be seen that all morphogroups have distinct daytime and nighttime WMDs (non-overlapping CI). This indicates a clear signal for DVM. Generally, the nighttime WMD confidence intervals are similar across all morphogroups, suggesting all groups concentrate towards the surface at night. Additionally, daytime WMD intervals span a deeper range for all morphogroups. The average daytime WMD is clearly deeper for morphogroup 3 and 2 compared to morphogroup 4. This result is surprising. The hypothesis that visual risk drives DVM predicts that darker copepods (morphogroup 3) need to migrate further. However, it would also be expected that morphogroup 4 (larger copepods) would need to migrate further than morphogroup 2 (smaller copepods). One possibility is that the few observations of morphogroup 4 resulted in a falsely-small confidence interval for WMD. 
+For the size assessment, there was a clear signal of DVM across all groups. All the daytime confidence intervals were deeper and non-overlapping with the nighttime intervals. However, the depth of the daytime WMD was different across PC1-groups. The low group had the shallowest WMD (95% CI: [235.2,296.0m]), followed by the middle group (95% CI: [309.0,347.1m]), then the high group (95% CI: [352.3,405.0m]). This pattern provides strong support for the size-dependent DVM hypothesis. The larger a copepod is, the deeper it must migrate during the daytime to avoid visual detection. 
+
+For the influence of transparency, the effect is only clear amongst large (high-PC1 group). For the low-PC1 and mid-PC1 groups, the daytime WMD 95% CI's are overlapping for all levels of PC2-groups. However, within the larger copepods (high PC1-group), there was a clear signal of weaker DVM by lighter (low PC2-group) copepods. The mid-PC2 and high-PC2 groups had deeper, yet overlapping, daytime 95%CIs. This suggests that some larger copepods can escape the DVM burden through maintaining transparency.
+ 
 \n\n
 
 
-```{r}
+```{r, fig.width='80mm', fig.height='40mm'}
 rm(list = ls())
 library(ggplot2)
 library(ggpubr)
@@ -40,21 +50,21 @@ summarize_wmd <- function(wmd_group) {
   wmd_df <- data.frame(group = rep(c('low','mid','high'), each = 2),
                        tod = rep(c('day','night'), times = 3),
                        lbound = rep(NA,6),
-                       median = rep(NA,6),
+                       mean = rep(NA,6),
                        hbound = rep(NA,6))
   
   for(group in c('low','mid','high')) {
     wmd_df[['lbound']][which(wmd_df[['tod']] == 'day' &
                                wmd_df[['group']] == group)] <- day_summary[[group]][['2.5%']]
-    wmd_df[['median']][which(wmd_df[['tod']] == 'day' &
-                               wmd_df[['group']] == group)] <- day_summary[[group]][['50%']]
+    wmd_df[['mean']][which(wmd_df[['tod']] == 'day' &
+                               wmd_df[['group']] == group)] <- mean(wmd_group$day[[group]])
     wmd_df[['hbound']][which(wmd_df[['tod']] == 'day' &
                                wmd_df[['group']] == group)] <- day_summary[[group]][['97.5%']]
     
     wmd_df[['lbound']][which(wmd_df[['tod']] == 'night' &
                                wmd_df[['group']] == group)] <- night_summary[[group]][['2.5%']]
-    wmd_df[['median']][which(wmd_df[['tod']] == 'night' &
-                               wmd_df[['group']] == group)] <- night_summary[[group]][['50%']]
+    wmd_df[['mean']][which(wmd_df[['tod']] == 'night' &
+                               wmd_df[['group']] == group)] <- mean(wmd_group$night[[group]])
     wmd_df[['hbound']][which(wmd_df[['tod']] == 'night' &
                                wmd_df[['group']] == group)] <- night_summary[[group]][['97.5%']]
   }
@@ -68,7 +78,7 @@ pc1_wmd_df <- boot_wmd$pc1 |> summarize_wmd()
 
 ggplot(pc1_wmd_df) +
   geom_point(aes(x = group,
-                 y = median,
+                 y = mean,
                  color = tod),
              position = position_dodge(width = .5),
              size = 2) +
@@ -84,7 +94,7 @@ ggplot(pc1_wmd_df) +
   labs(y = 'Depth [m]', x = 'PC1 Level Groups', col = "")+
   theme_pubr()
   
-DT::datatable(pc1_wmd_df)
+knitr::kable(pc1_wmd_df)
 
 ```
 
@@ -92,7 +102,7 @@ DT::datatable(pc1_wmd_df)
 
 Observe for PC2 breaks by PC1 group
 
-```{r}
+```{r, fig.width='80mm',fig.height='40mm'}
 
 small_pc2 <- boot_wmd$pc2_sm |> summarize_wmd()
 mid_pc2 <- boot_wmd$pc2_mid |> summarize_wmd()
@@ -101,7 +111,7 @@ lg_pc2 <- boot_wmd$pc2_lg |> summarize_wmd()
 pc2_plotter <- function(wmd, pc1_group){
   ggplot(wmd) +
     geom_point(aes(x = group,
-                   y = median,
+                   y = mean,
                    color = tod),
                position = position_dodge(width = .5),
                size = 2) +
@@ -114,7 +124,7 @@ pc2_plotter <- function(wmd, pc1_group){
                   size = 1) +
     scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
     scale_y_reverse(limits = c(600,0)) +
-    labs(y = 'Depth [m]', x = paste0('PC2 Level Groups - ',pc1_group), col = "")+
+    labs(y = 'Depth [m]', x = paste0('PC2 Level Groups','\n',pc1_group), col = "")+
     theme_pubr()
 }
 
