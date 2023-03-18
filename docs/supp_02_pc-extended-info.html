@@ -178,18 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="./main_04_WMD-by-morphogroup.html">
  <span class="dropdown-text">Weighted Mean Depth of Morphogroups</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./main_05_all-copepod-occupancy.html">
- <span class="dropdown-text">All Copepod Occupancy Model</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./main_06_cluster-occurence.html">
- <span class="dropdown-text">Occupancy by Morphogroup</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./main_07_environmental-effect-model.html">
- <span class="dropdown-text">Environmental Effects on Occupancy</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -204,12 +192,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Extended PCA/Clustering Plots</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./supp_03_cluster-conc.html">
+    <a class="dropdown-item" href="./supp_03_cluster-conc.qmd">
  <span class="dropdown-text">Integrated Abundancy by Morphogroup</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./supp_04_all-copepod-occurrence.html">
- <span class="dropdown-text">All Copepod Occupancy</span></a>
   </li>  
     </ul>
   </li>
@@ -264,8 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cope-pca-res.rds'</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cluster_res <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cluster-copepods.rds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cope-pca-res.rds'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -320,64 +303,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3920a899f5d5a9e16e6d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3920a899f5d5a9e16e6d">{"x":{"filter":"none","vertical":false,"data":[["area","circ.","elongation","feret","fractal","histcum1","major","mean","median","minor","perim.","perimferet","perimmajor","skew","stddev","symetriev","symetrievc","thickr"],[0.711513052187533,-0.762726509993103,0.408063158429971,0.909614801043115,0.881676992331941,0.219717975725573,0.759365227010664,0.226614536482527,0.175811589472569,0.566821517693417,0.926895702978194,0.325129491249291,0.418314244174336,-0.321678079132406,-0.22346406738238,0.709173738257407,0.567373047168291,0.460947312007848],[0.513773773986802,0.266555694680614,-0.148755967892137,0.275694805488254,0.290496201389272,-0.898792180471855,0.343248879316818,-0.920188046548025,-0.887267282533338,0.559359642643334,0.268589756972487,0.0068371756139063,-0.146058327843411,0.701749021206667,0.797184861552041,-0.279359348821664,-0.18075421573927,-0.237953331893123],[-0.130192809384183,-0.302623903441554,-0.783184742804635,-0.247964842955863,-0.044058036776376,-0.0901743540145259,-0.511543820590838,-0.0611831925471591,0.0657405560619913,0.289146051644209,0.0681774454878042,0.798929215259189,0.862770691317885,0.151451735097005,0.153128816413205,-0.0605050917829264,-0.236815650304309,0.58320350858697],[0.378975254055633,0.303432852461427,-0.296567060514466,0.00828078346702662,0.179378467871138,0.300536136812102,0.149840696399837,0.28755602785991,0.166819846060431,0.458516581281596,0.113571582715349,0.211110532563488,-0.138969585418888,-0.144776402082946,-0.364766304851634,-0.572060211925089,-0.481125612197408,-0.395435771917791]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Dim.1<\/th>\n      <th>Dim.2<\/th>\n      <th>Dim.3<\/th>\n      <th>Dim.4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-b8413aae0a3cc70a4525" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b8413aae0a3cc70a4525">{"x":{"filter":"none","vertical":false,"data":[["area","circ.","elongation","feret","fractal","histcum1","major","mean","median","minor","perim.","perimferet","perimmajor","skew","stddev","symetriev","symetrievc","thickr"],[0.711513052187533,-0.762726509993103,0.408063158429971,0.909614801043115,0.881676992331941,0.219717975725573,0.759365227010664,0.226614536482527,0.175811589472569,0.566821517693417,0.926895702978194,0.325129491249291,0.418314244174336,-0.321678079132406,-0.22346406738238,0.709173738257407,0.567373047168291,0.460947312007848],[0.513773773986802,0.266555694680614,-0.148755967892137,0.275694805488254,0.290496201389272,-0.898792180471855,0.343248879316818,-0.920188046548025,-0.887267282533338,0.559359642643334,0.268589756972487,0.0068371756139063,-0.146058327843411,0.701749021206667,0.797184861552041,-0.279359348821664,-0.18075421573927,-0.237953331893123],[-0.130192809384183,-0.302623903441554,-0.783184742804635,-0.247964842955863,-0.044058036776376,-0.0901743540145259,-0.511543820590838,-0.0611831925471591,0.0657405560619913,0.289146051644209,0.0681774454878042,0.798929215259189,0.862770691317885,0.151451735097005,0.153128816413205,-0.0605050917829264,-0.236815650304309,0.58320350858697],[0.378975254055633,0.303432852461427,-0.296567060514466,0.00828078346702662,0.179378467871138,0.300536136812102,0.149840696399837,0.28755602785991,0.166819846060431,0.458516581281596,0.113571582715349,0.211110532563488,-0.138969585418888,-0.144776402082946,-0.364766304851634,-0.572060211925089,-0.481125612197408,-0.395435771917791]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Dim.1<\/th>\n      <th>Dim.2<\/th>\n      <th>Dim.3<\/th>\n      <th>Dim.4<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
-</div>
-<section id="identifying-optimal-number-of-clusters-in-k-means-cluster" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-optimal-number-of-clusters-in-k-means-cluster">Identifying optimal number of clusters in k-means cluster</h2>
-<p>4 clusters were chosen as the optimal number of clusters</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get just the pc's we want, size and transparency</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>main_pcs <span class="ot">&lt;-</span> pca_results<span class="sc">$</span>ind<span class="sc">$</span>coord[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Identifying the optimal clusters ----</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>cluster_ss <span class="ot">&lt;-</span> <span class="cf">function</span>(k, x) {</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(x, <span class="at">centers =</span> k, <span class="at">iter.max=</span> <span class="dv">100</span>, <span class="at">nstart =</span> <span class="dv">1000</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">1</span> <span class="sc">-</span> (w<span class="sc">$</span>tot.withinss<span class="sc">/</span>w<span class="sc">$</span>totss))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>cluster_curve <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(cluster_ss, main_pcs) <span class="sc">|&gt;</span> </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cluster_curve<span class="sc">~</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="at">type =</span> <span class="st">'b'</span>, <span class="at">xlab =</span> <span class="st">'Number of Clusters'</span>,<span class="at">ylab =</span> <span class="st">'Within SS / Total SS'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="supp_02_pc-extended-info_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">'Explanitory power added for each new center added:'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Explanitory power added for each new center added:"</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">numCluster =</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="at">AddedExplain=</span> <span class="fu">diff</span>(cluster_curve))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  [,1]      [,2]      [,3]       [,4]      [,5]       [,6]
-numCluster   2.0000000 3.0000000 4.0000000 5.00000000 6.0000000 7.00000000
-AddedExplain 0.3401388 0.1997294 0.1043404 0.06010293 0.0431955 0.03563069
-                   [,7]       [,8]        [,9]
-numCluster   8.00000000 9.00000000 10.00000000
-AddedExplain 0.02442993 0.02247799  0.01431144</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Four clusters seems to be the most elbowish</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Explains ~65% of variability, adding k is &gt;10% variability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -529,96 +462,72 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Additional PCA Information</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>Additional Information related to the PCA used in this analysis are visible here. View the main conclusions from the analysis <span class="co">[</span><span class="ot">here</span><span class="co">](./main_02_PC-Clusters.html)</span>.</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EcotaxaTools)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cope-pca-res.rds'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>cluster_res <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cluster-copepods.rds'</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># |- make a circle for plotting variable contributions -------------------</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>curl <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>pi,pi, <span class="at">length =</span> <span class="dv">50</span>)</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>circ <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sin</span>(curl), <span class="at">y =</span> <span class="fu">cos</span>(curl))</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Extract variable contributions ----------------------------</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>pc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc1 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">1</span>],</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc2 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">2</span>],</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc3 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">3</span>],</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc4 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">4</span>],</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">row.names</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord)</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>pc1_pc2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc1, <span class="at">y =</span> pc2, <span class="at">label =</span> vars),</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc1<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc2<span class="sc">*</span><span class="fl">0.9</span>),</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC1 - 34.23%'</span>,<span class="at">y =</span> <span class="st">'PC2 - 27.24%'</span>)<span class="sc">+</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>pc3_pc4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc3, <span class="at">y =</span> pc4, <span class="at">label =</span> vars),</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc3<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc4<span class="sc">*</span><span class="fl">0.9</span>),</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC3 - 17.05%'</span>,<span class="at">y =</span> <span class="st">'PC4 - 09.38%'</span>)<span class="sc">+</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(pc1_pc2, pc3_pc4)</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>Specific loading scores are available for each of the four dimensions:</span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)])</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identifying optimal number of clusters in k-means cluster</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>4 clusters were chosen as the optimal number of clusters</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="co"># get just the pc's we want, size and transparency</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>main_pcs <span class="ot">&lt;-</span> pca_results<span class="sc">$</span>ind<span class="sc">$</span>coord[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Identifying the optimal clusters ----</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>cluster_ss <span class="ot">&lt;-</span> <span class="cf">function</span>(k, x) {</span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(x, <span class="at">centers =</span> k, <span class="at">iter.max=</span> <span class="dv">100</span>, <span class="at">nstart =</span> <span class="dv">1000</span>)</span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">1</span> <span class="sc">-</span> (w<span class="sc">$</span>tot.withinss<span class="sc">/</span>w<span class="sc">$</span>totss))</span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>cluster_curve <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(cluster_ss, main_pcs) <span class="sc">|&gt;</span> </span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cluster_curve<span class="sc">~</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="at">type =</span> <span class="st">'b'</span>, <span class="at">xlab =</span> <span class="st">'Number of Clusters'</span>,<span class="at">ylab =</span> <span class="st">'Within SS / Total SS'</span>)</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">'Explanitory power added for each new center added:'</span>)</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">numCluster =</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">10</span>,<span class="dv">1</span>), <span class="at">AddedExplain=</span> <span class="fu">diff</span>(cluster_curve))</span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Four clusters seems to be the most elbowish</span></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Explains ~65% of variability, adding k is &gt;10% variability</span></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Additional PCA Information</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Additional Information related to the PCA used in this analysis are visible here. View the main conclusions from the analysis <span class="co">[</span><span class="ot">here</span><span class="co">](./main_02_PC-Clusters.html)</span>.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EcotaxaTools)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>pca_results <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">'../data/02_cope-pca-res.rds'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># |- make a circle for plotting variable contributions -------------------</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>curl <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>pi,pi, <span class="at">length =</span> <span class="dv">50</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>circ <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">sin</span>(curl), <span class="at">y =</span> <span class="fu">cos</span>(curl))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># |- Extract variable contributions ----------------------------</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>pc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc1 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">1</span>],</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc2 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">2</span>],</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc3 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">3</span>],</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">pc4 =</span> pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="dv">4</span>],</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">row.names</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>pc1_pc2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc1, <span class="at">y =</span> pc2, <span class="at">label =</span> vars),</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc1<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc2<span class="sc">*</span><span class="fl">0.9</span>),</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC1 - 34.23%'</span>,<span class="at">y =</span> <span class="st">'PC2 - 27.24%'</span>)<span class="sc">+</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>pc3_pc4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> circ,<span class="fu">aes</span>(x,y), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> pc_df, <span class="fu">aes</span>(<span class="at">x =</span> pc3, <span class="at">y =</span> pc4, <span class="at">label =</span> vars),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>()) <span class="sc">+</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> pc_df,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> pc3<span class="sc">*</span><span class="fl">0.9</span>, <span class="at">yend =</span> pc4<span class="sc">*</span><span class="fl">0.9</span>),</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="st">'picas'</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'PC3 - 17.05%'</span>,<span class="at">y =</span> <span class="st">'PC4 - 09.38%'</span>)<span class="sc">+</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">'transparent'</span>))</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(pc1_pc2, pc3_pc4)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>Specific loading scores are available for each of the four dimensions:</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(pca_results<span class="sc">$</span>var<span class="sc">$</span>coord[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)])</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

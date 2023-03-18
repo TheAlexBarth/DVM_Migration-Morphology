@@ -8,7 +8,7 @@ Weighted mean depth is a commonly used metric to describe zooplankton population
 
 \n\n
 
-In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles directly calculating the average WMD is not feasible. However, understanding variation around the WMD is necessary to interpret the vertical structure and strength of DVM. Here, we took a depth-bin constrained bootstrap approach to define WMD with a confidence interval. To do this, the concentraiton of each group, was calculated in 20m depth bin for each profile. Then all profiles from the same time of day were 'pooled'. This provides a distribution of concentrations in each depth bin. Traditional bootstrapping randomly samples with replacement from all observations. With vertically structured data however, full random sampling would bias estimates towards the surface, where there were more profiles. To avoid this, samples were "bin-constrained" such that for each iteration, a random observation was sampled within each depth bin, then replaced for the next iteration. A maximum depth was set to 600m, as it is unlikely that copepods are migrated beyond this depth (See figure 3). This approach then effectively created a random profile by resampling a concentration, $conc^*$, from each depth bin, $d$. This profile then was used to calculate a bootstrapped weighted mean depth, $WMD^*$. This was done for each morphological group $g$, at each time of day $t$ (\ref{Equation 1}).
+In this study, because profiles extend to different depths and sampling effort (volume) is inconsistent between profiles directly calculating the average WMD is not feasible. However, understanding variation around the WMD is necessary to interpret the vertical structure and strength of DVM. Here, we took a depth-bin constrained bootstrap approach to define WMD with a confidence interval. To do this, the concentration of each group, was calculated in 20m depth bin for each profile. Then all profiles from the same time of day were 'pooled'. This provides a distribution of concentrations in each depth bin. Traditional bootstrapping randomly samples with replacement from all observations. With vertically structured data however, full random sampling would bias estimates towards the surface, where there were more profiles. To avoid this, samples were "bin-constrained" such that for each iteration, a random observation was sampled within each depth bin, then replaced for the next iteration. A maximum depth was set to 600m, as it is unlikely that copepods are migrated beyond this depth (See figure 3). This approach then effectively created a random profile by resampling a concentration, $conc^*$, from each depth bin, $d$. This profile then was used to calculate a bootstrapped weighted mean depth, $WMD^*$. This was done for each morphological group $g$, at each time of day $t$ (\ref{Equation 1}).
 
 \begin{align}
   $WMD^*_{g,t} = \sum_{i}^{N = 60}{\frac{d_i(conc^*_{i,g,t})}{\sum_i^{N = 60}{conc^*_{i,g,t}}}}$ \label{Equation 1}
@@ -28,7 +28,7 @@ For the influence of transparency, the effect is only clear amongst large (high-
 \n\n
 
 
-```{r, fig.width='80mm', fig.height='40mm'}
+```{r, fig.width=3.15, fig.height=1.57}
 rm(list = ls())
 library(ggplot2)
 library(ggpubr)
@@ -102,7 +102,7 @@ knitr::kable(pc1_wmd_df)
 
 Observe for PC2 breaks by PC1 group
 
-```{r, fig.width='80mm',fig.height='40mm'}
+```{r, fig.width=3.15, fig.height=1.57}
 
 small_pc2 <- boot_wmd$pc2_sm |> summarize_wmd()
 mid_pc2 <- boot_wmd$pc2_mid |> summarize_wmd()
