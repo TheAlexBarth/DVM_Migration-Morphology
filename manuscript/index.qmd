@@ -1,12 +1,12 @@
 ---
 title: |
-  Applicability of in situ imaging to investigate copepod DVM patterns and morphology
+  Size and transparency influence diel vertical migration patterns in copepods.
 format:
   pdf:
    number-sections: true
    linestretch: 2
-   include-in-header: 
-      text: '\usepackage{lineno}\linenumbers'
+   # include-in-header: 
+   #    text: '\usepackage{lineno}\linenumbers'
 date: now
 date-format: "DD MMM YYYY"
 bibliography: references.bib
@@ -20,10 +20,23 @@ author:
     orcid: 
     affiliations:
       - name: Biological Sciences Deptartment, University of South Carolina
+  - name: ?????
+    affiliations:
+      
   - name: Joshua Stone
     affiliations:
       - name: Biological Sciences Department, University of South Carolina
 ---
+
+```{r}
+#| child: ./00_abstract.qmd
+```
+
+
+```{r}
+#| child: ./01_science-sig-statement.qmd
+```
+
 
 ```{r}
 #| child: ./intro.qmd

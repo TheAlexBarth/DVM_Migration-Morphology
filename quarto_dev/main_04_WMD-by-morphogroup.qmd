@@ -76,7 +76,7 @@ pc1_wmd_df <- boot_wmd$pc1 |> summarize_wmd()
 
 
 
-ggplot(pc1_wmd_df) +
+pc1_plot <- ggplot(pc1_wmd_df) +
   geom_point(aes(x = group,
                  y = mean,
                  color = tod),
@@ -86,13 +86,19 @@ ggplot(pc1_wmd_df) +
                     ymin = lbound,
                     ymax = hbound,
                     color = tod),
-                width = .25,
+                width = .5,
                 position = position_dodge(width = .5),
-                size = 1) +
+                size = .5) +
   scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
   scale_y_reverse(limits = c(600,0)) +
   labs(y = 'Depth [m]', x = 'PC1 Level Groups', col = "")+
   theme_pubr()
+pc1_plot
+
+# 
+# ggsave('../media/raw_04_figure.pdf', pc1_plot,
+#        width = 80, height = 80, units = 'mm',
+#        dpi = 600)
   
 knitr::kable(pc1_wmd_df)
 
@@ -119,9 +125,9 @@ pc2_plotter <- function(wmd, pc1_group){
                       ymin = lbound,
                       ymax = hbound,
                       color = tod),
-                  width = .25,
+                  width = .5,
                   position = position_dodge(width = .5),
-                  size = 1) +
+                  size = .5) +
     scale_color_manual(values = c(dn_cols['day'],dn_cols['night'])) +
     scale_y_reverse(limits = c(600,0)) +
     labs(y = 'Depth [m]', x = paste0('PC2 Level Groups','\n',pc1_group), col = "")+
@@ -132,8 +138,22 @@ sm_plot <- pc2_plotter(small_pc2, 'Small PC1')
 mid_plot <- pc2_plotter(mid_pc2, 'Mid PC1')
 lg_plot <- pc2_plotter(lg_pc2, 'Large PC1')
 
-ggarrange(sm_plot, mid_plot, lg_plot,
-          ncol = 3, common.legend = T)
+pc2_plot <- ggarrange(sm_plot, mid_plot + theme(axis.title.y = element_blank(),
+                                                axis.text.y = element_blank()),
+                      lg_plot + theme(axis.title.y = element_blank(),
+                                      axis.text.y = element_blank()),
+          ncol = 3, common.legend = T, widths = c(1,.9,.9))
+
+pc2_plot
+
+# ggarrange(pc1_plot,
+#           pc2_plot,
+#           nrow = 2)
+
+
+ggsave('../media/raw_05_figure.pdf', pc2_plot,
+       width = 180, height = 80, units = 'mm',
+       dpi = 600)
 
 ```
 

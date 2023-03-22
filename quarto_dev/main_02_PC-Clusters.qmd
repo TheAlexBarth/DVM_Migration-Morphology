@@ -43,7 +43,7 @@ pca_cope$pc2_class <- factor(pca_cope$pc2_class, levels = c('low','mid','high'))
 
 # Methodology
 
-A PCA was run on the morphological features for each vignette. A weighted PCA was used to adjust for any bias from uneven sampling by the UVP. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check [supplemental information 2](./supp_02_pc-extended-info.html). The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only consider the first two PC's when assessing our hypotheses. However, because of uneven sampling throughout the water column, it is not feasible to directly draw associative relationships between the continuous PC's and depth. For this reason, we elected to construct discrete groups of copepods based on the morphospace. To address the size-dependent hypothesis, groups were assigned as low, mid, or high. Then to assess if color/transparency was a secondary factor once having accounted for size, groups within each PC1 group were assigned as low, mid, or high along PC2. The low group corresponded to those that were below the 25th percentile of the PC, mid group was the middle 50% of all observations, and the high group was above the 75th percentile.
+A PCA was run on the morphological features for each vignette. A weighted PCA was used to adjust for any bias from uneven sampling by the UVP. Principle components with eigenvalues greater than 1 were considered. This comprised the first four PCs, which explained a total of 87.9% of the variance in the data (view the complete PCA results check [supplemental information 2](./supp_02_pc-extended-info.html). The first two components explained 34.23% and 27.24% respectively. The first principle component was largely correlated with metrics associated with size (perimeter, feret diameter, fractal dimension, major axis). The second principle component is best described by darkness, where positive values indicate more transparent organisms and negative values are darker ones. Similar to Vilgraine et al. (2020), we observe the third PC to be best described by orientation and the fourth axis to be described by appendage visibility. \n\n It can be assumed that the orientation and appendage visibility of copepods are artefacts of the imaging method and not indicative of their ecology/behavior. For this reason, we chose to only consider the first two PC's when assessing our hypotheses. However, because of uneven sampling throughout the water column, it is not feasible to directly draw associative relationships between the continuous PC's and depth. We elected to construct discrete groups of copepods based on the morphospace. To address the size-dependent hypothesis, groups were assigned as low, mid, or high. Then to assess if color/transparency was a secondary factor once having accounted for size, groups within each PC1 group were assigned as low, mid, or high along PC2. The low group corresponded to those that were below the 25th percentile of the PC, mid group was the middle 50% of all observations, and the high group was above the 75th percentile.
 \n\n
 
 ```{r, fig.width=7, fig.height=7, out.width='100%', out.height='100%'}
@@ -123,7 +123,11 @@ pc_main <- pc_main+
 
 px <- insert_xaxis_grob(pc_main, xmargin, grid::unit(.2, "null"), position = "top")
 py <- insert_yaxis_grob(px, ymargin, grid::unit(.2,'null'), position = 'right')
+
 ggdraw(py)
+# ggsave('../media/raw_figure_01.pdf',height = 180,
+#        width = 180, units = 'mm', dpi = 600)
+
 ```
 
 
@@ -167,12 +171,17 @@ meanGrey_plot <- ggplot(all_copes) +
                    y = mean,
                    fill = as.factor(pc1_class))) +  
   scale_fill_manual(values = gg_cbb_col(3))+
-  labs(x = "PC2-Groups", y = 'Mean Grey Value') +
+  labs(x = "PC2-Groups", y = 'Mean Grey Value', fill = 'PC1-Groups') +
   theme_pubr()+
-  theme(legend.position = 'none')
+  theme(legend.position = c(.1,.20), legend.box.background = element_rect(),
+        legend.background = element_blank())
 
 
-ggarrange(feret_plot, meanGrey_plot, ncol = 1)
+metric_plot <- ggarrange(feret_plot, meanGrey_plot, ncol = 1)
+metric_plot
+
+# ggsave('../media/raw_02_figure.pdf',metric_plot,
+#        width = 80, height = 160, units = 'mm', dpi = 600)
 
 ```
 

@@ -160,7 +160,7 @@ We can zoom in on the upper 600m to get a better picture of the changes in the u
 
 #| column: screen-inset
 
-ggarrange(plot_list$low_high + xlim(600,0), #TL
+short_plot <- ggarrange(plot_list$low_high + xlim(600,0), #TL
           plot_list$mid_high + y_axis_clear + xlim(600,0), #TM
           plot_list$high_high + y_axis_clear + xlim(600,0), #TR
           plot_list$mid_high + x_axis_clear + xlim(600,0), #ML
@@ -173,4 +173,8 @@ ggarrange(plot_list$low_high + xlim(600,0), #TL
           widths = c(1,.85,.85,
                      1,.85,.85,
                      1,.85,.85))
+
+short_plot
+# ggsave('../media/raw_03_figure.pdf',short_plot,
+#        height = 170, width = 170, units = 'mm', dpi = 600)
 ```

@@ -1,0 +1,8 @@
+---
+title: Scientific Significance Statement
+bibliography: references.bib
+---
+
+# *Scientific Significance Statement*
+
+Diel Vertical Migration is a widespread phenomenon across marine and freshwater systems. The predator evasion hypothesis suggests that DVM occurs as zooplankton attempt to escape visual predators. Yet, DVM itself is a costly and risky behavior. Thus, DVM should only occur when visual risk is high. Several studies have shown that copepod size influences the magnitude of DVM. However, an individual’s visual risk may include traits beyond simply size. In this study, we utilize an in-situ imaging tool to reveal how copepod morphological traits influence DVM. Our findings show that both size and transparency influence DVM. This finding highlights that DVM is a complex behavior driven by copepod traits. Furthermore, this study exemplifies the ability of new technology to draw insights into plankton ecology.
