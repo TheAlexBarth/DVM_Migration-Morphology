@@ -5,8 +5,8 @@ format:
   pdf:
    number-sections: true
    linestretch: 2
-   # include-in-header: 
-   #    text: '\usepackage{lineno}\linenumbers'
+   include-in-header:
+      text: '\usepackage{lineno}\linenumbers'
 date: now
 date-format: "DD MMM YYYY"
 bibliography: references.bib
