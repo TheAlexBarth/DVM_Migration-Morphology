@@ -11,25 +11,22 @@ website:
         text: Home
       - text: Main Analyses
         menu:
-        - href: main_00_CTD-UVP-map.qmd
-          text: Sampling Region
-        - href: main_01_ctd_interp.qmd
-          text: Physical Backdrop
-        - href: main_02_PC-Clusters.qmd
-          text: PCA-Morphogroup clustering
+        - href: main_01_morphospace.qmd
+          text: PCA-Morphospace & Groups
         - href: main_03_Vert-Distrib.qmd
-          text: Vertical Profiles of MGs
+          text: Vertical Profiles
         - href: main_04_WMD-by-morphogroup.qmd
-          text: Weighted Mean Depth of Morphogroups
+          text: Weighted Mean Depth Analysis
         
       - text: Supplemental
         menu:
-        - href: supp_01_ctd-by-cruise.qmd
-          text: CTD by Cruise
-        - href: supp_02_pc-extended-info.qmd
-          text: Extended PCA/Clustering Plots
-        - href: supp_03_cluster-conc.qmd
-          text: Integrated Abundancy by Morphogroup
+        - href: supp_01_uvp-cast-info.qmd
+          text: UVP Cast Info
+        - href: supp_02_ctd-interp.qmd
+          text: Physical Parameters
+        - href: supp_03_pc-extended-info.qmd
+          text: Extended PCA Info
+        
 
     tools:
       - icon: github
