@@ -10,7 +10,7 @@ format:
 date: now
 date-format: "DD MMM YYYY"
 bibliography: references.bib
-csl: limnology-and-oceanography.csl
+csl: './limnology-and-oceanography.csl'
 execute:
   echo: false
   warning: false
@@ -20,9 +20,8 @@ author:
     orcid: 
     affiliations:
       - name: Biological Sciences Deptartment, University of South Carolina
-  - name: ?????
-    affiliations:
-      
+  - name: Rod Johnson
+    affiliations: Bermuda Institute of Ocean Sciences, Bermuda GE 01, UK
   - name: Joshua Stone
     affiliations:
       - name: Biological Sciences Department, University of South Carolina
