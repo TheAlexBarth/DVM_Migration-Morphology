@@ -16,8 +16,7 @@ execute:
   warning: false
   message: false
 author:
-  - name: Alex Barth
-    orcid: 
+  - name: Alex Barth*
     affiliations:
       - name: Biological Sciences Deptartment, University of South Carolina
   - name: Rod Johnson

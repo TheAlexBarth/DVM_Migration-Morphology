@@ -1,0 +1,7 @@
+---
+title: Data Availability Statement
+---
+
+### *Data availability statement*
+
+All data used in this project are hosted on Ecopart (<https://ecopart.obs-vlfr.fr/>). Data in its raw form can be accessed from their portal. However, all summary and intermediate data products, as well as code, are publicly available on GitHub (<https://github.com/TheAlexBarth/DVM_Migration-Morphology>). Intermediate data products are formatted as R Data Structure objects, other formats are available on request.
