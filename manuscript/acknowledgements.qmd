@@ -1,5 +1,0 @@
----
-title: Acknowledgements
----
-
-Field work for this project was supported by the Bermuda Atlantic Time Series Study through NSF OCE 1756105 & NSF OCE 1756312. We would also like to thank the BATS research technicians, marine technicians, and crew of the R/V Atlantic Explorer. Dr. Ryan Rykaczewski assisted with the initial set-up of the UVP. Dr. Leo Blanco-Bercial and Dr. Amy Maas both valuable insight and guandance on the analysis.

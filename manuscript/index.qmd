@@ -1,14 +1,5 @@
 ---
-title: |
-  Size and transparency influence diel vertical migration patterns in copepods.
-format:
-  pdf:
-   number-sections: true
-   linestretch: 2
-   include-in-header:
-      text: '\usepackage{lineno}\linenumbers'
-date: now
-date-format: "DD MMM YYYY"
+title: Size and transparency influence diel vertical migration patterns in copepods.
 bibliography: references.bib
 csl: './limnology-and-oceanography.csl'
 execute:
@@ -18,13 +9,41 @@ execute:
 author:
   - name: Alex Barth*
     affiliations:
-      - name: Biological Sciences Deptartment, University of South Carolina
+    - name: University of South Carolina
+      department: Biological Sciences
+      address: 700 Sumter St 401, Columbia, SC 29208
   - name: Rod Johnson
-    affiliations: Bermuda Institute of Ocean Sciences, Bermuda GE 01, UK
+    affiliations: 
+    - name: Bermuda Institute of Ocean Sciences
+      address: Bermuda GE 01, UK
   - name: Joshua Stone
     affiliations:
-      - name: Biological Sciences Department, University of South Carolina
+    - name: University of South Carolina
+      department: Biological Sciences
+      address: 700 Sumter St 401, Columbia, SC 29208
+format:
+  pdf:
+    template-partials:
+      - "before-body.tex"
+      - "_titlepage.tex"
+    include-in-header:
+      - "in-header.tex"
+    number-sections: true
+    linestretch: 2
+    tbl-cap-location: top
+    filters: [wordcount.lua]
 ---
+
+
+```{r}
+#| child: ./00_science-sig-statement.qmd
+```
+
+
+```{r}
+#| child: ./00_author_contributions.qmd
+```
+
 
 ```{r}
 #| child: ./00_abstract.qmd
@@ -32,25 +51,36 @@ author:
 
 
 ```{r}
-#| child: ./01_science-sig-statement.qmd
+#| child: ./01_intro.qmd
+```
+
+```{r}
+#| child: ./02_methods.qmd
+```
+
+```{r}
+#| child: ./03_results.qmd
+```
+
+```{r}
+#| child: ./04_discussion.qmd
+```
+
+```{r}
+#| child: ./05_acknowledgements.qmd
+```
+
+## References
+::: {#refs}
+:::
+
+
+```{r}
+#| child: ./06_data_availability.qmd
 ```
 
 
 ```{r}
-#| child: ./intro.qmd
+#| child: ./Supplemental Information.qmd
 ```
 
-```{r}
-#| child: ./methods.qmd
-```
-
-```{r}
-#| child: ./results.qmd
-```
-
-```{r}
-#| child: ./discussion.qmd
-```
-
-
-## References{#sec-references}

@@ -1,0 +1,41 @@
+---
+title: Results
+---
+
+# Results
+
+## Morphological Groups
+
+The PCA revealed four major axis of variability (Figure 1). The first axis (PC1, 34.23% of variability) was largely explained by increasing values related to size, such as perimeter (loading score = 0.927) and feret diameter (loading score = 0.910). The second axis (PC2, 27.24% of variability) can be interpreted as a gradient of transparent to dark individuals. PC2 was largely anticorrelated with mean grey value (higher values indicate a more transparent individual) (loading score = -0.920). As noted in the methods, PC3 and PC4 were both related to the orientation of the copepod and the appendage visibility respectively (Supplemental Figure 3).
+
+```{r, fig.cap='First two principal components of the morphospace. Proportion of variance explained by the two axis is 61.1%. Each point represents an individual copepod. The color and transparency of each point corressponds to the morphological groups based on pecentile along each axis. Along PC1, grey corresponds to the low-group (<25th percentile), orange to the mid group (25th-75th percentiles), and blue to the high-group (75th percentile). Along PC2, low, mid, and high groups are distinguished by increasing opacity. Marginal distribution display the proportion of observations in each group. Representative vignettes of copepods are shown in the corners corresponding to their place in the morphospace. 4mm scale bar in the bottom right is shown for the vignettes.'}
+knitr::include_graphics('../media/figure_01.pdf')
+```
+
+The morphological groupings were assigned along PC1 as low, mid and high. Then along PC2, groups were assigned within each PC1-group (Figure 1). To confirm the morphospace grouping resulted in ecologically relevant categories, the morphological groups were compared against known copepod metrics. Across all PC1-groups, there was a clear difference in feret diameter. The median feret diameter of the low group was 1.97mm. The median feret diameter of the mid and high groups were 2.84mm and 4.83mm, respectively (Figure 2A). All groups were significantly different from one another (Dunn Kruskall-Wallace test, p \< 0.001). PC2 groups as a whole were also significantly different from one another (Dunn Krustall-wallace test, p \< 0.001). However, within each PC2-group, there was a clear tendency for larger copepods (high PC1 group) to be more transparent (Figure 2B).
+
+```{r, fig.cap = 'Comparison of morphological groups to relevant parameters. Groups were constructed along principal components with low as below 25th percentile, mid as 25th-50th percentile, and high as above 75th percentile. (A) PC1 groups are significantly different along feret diameter and display a clear trend for size. (B) PC2 groups are significantly different in terms of mean grey value. Note that a low mean grey value indicates a darker copepod.'}
+knitr::include_graphics('../media/figure_02.pdf')
+```
+
+## Vertical Profiles of Morphological Groups
+
+For all groups, the 20m-binned profiles show a notable structure. While copepods were observed throughout the mesopelagic (Supplemental Figure 4), the majority of day/night differences were observed above 600m (Figure 3). For most morphological groups, there was a peak in nighttime concentration in the lower epipelagic (50m-200m). Similarly, there was a decrease in average daytime concentration over the same region. This pattern is particularly apparent for the groups which are mid and high on both PCs (Figure 3B, C, E, F). Across all groups, both average daytime and nighttime concentration were low in the upper mesopelagic (200m-300m). Then, there was a peak in average daytime concentration in the depth bins in the mid-mesopelagic (400m-600m).
+
+```{r, fig.cap='Average vertical profile of different copepod morphological groups. Bars display average concentration in a 20m depth bin. On each panel, left-side bars (tan) correspond to daytime while right-side (teal) bars correspond to nighttime. Standard deviation is shown for each 20m depth bin. Each panel corresponds to a morphological group along PC1 (size axis) and PC2 (transparency axis). (A) low PC1, high PC2; (B) mid PC1, high PC2; (C) high PC1, high PC2; (D) low PC1, mid PC2; (E) mid PC1, mid PC2; (F) high PC1, mid PC2; (G) low PC1, low PC2; (H) mid PC1, low PC2; (I) high PC1, low PC2'}
+knitr::include_graphics('../media/figure_03.pdf')
+```
+
+## Weighted mean depth analysis
+
+The bin-constrained bootstrap approach provided a direct method to compare DVM between groups. Size (PC1) had a clear effect on DVM magnitude. First, for all PC1 groups, daytime WMD 95% bootstrapped confidence intervals (95% CIs) were deeper and non-overlapping with the nighttime 95% CIs (Figure 4). This indicates a clear DVM pattern. However, the differences in day and night CIs varied between morphological groups. All PC1 groups had a similar, overlapping nighttime 95% CI in the lower epipelagic (\~145m - \~200m). However, there was a clear difference in the depth of the daytime 95% CIs. The small (low PC1) group had the shallowest 95% CI (235.2m-296.0m). The mid PC1 group's daytime 95% CI was slightly deeper (309.0m-347.3m). The large (high PC1) group daytime 95% CI was even lower (352.3m-405.0m).
+
+```{r, fig.cap = 'Mean bootstrapped weightd mean depth and 95% confidence intervals for copepods of different morphological groups. Low, mid, and high groups correspond to the different percentiles along PC1 from the morphospace. PC1 largely is explained by size metrics, with higher scores indicating a larger copepod.'}
+knitr::include_graphics('../media/figure_04.pdf')
+```
+
+When considering the influence of transparency (PC2) on DVM magnitude, we compared PC2 groups within their PC1 grouping. This approach was warranted because of the tendency for size to have a slight effect on transparency (Figure 2). At this level of comparison, there were several notable trends. For the smaller copepods (low PC1), once the data were split into PC2 groups, the wider 95% CIs indicate little to no DVM signal. Generally, the daytime 95% CIs and nighttime 95% CIs are overlapping or near-overlapping (Figure 5A). With mid sized copepods, there was a clear DVM signal. However, all PC2 groups appeared to have a similar DVM magnitude with each group's daytime 95% CIs overlapping with each other (Figure 5B). There was a difference in DVM magnitude across PC2 groups within the largest copepods. The more transparent copepods (low PC2 group) showed no DVM signal, with a shallow daytime WMD. However, the darker copepods (mid and high PC2 groups) had deeper daytime WMDs (Figure 5c).
+
+```{r, fig.cap = 'Mean bootstrapped weighted mean depth and 95% confidence intervals shown by copepod morphological groups along PC2 (transparency). Each panel represents a different size group of copepods (PC1 groups).'}
+knitr::include_graphics('../media/figure_05.pdf')
+```
