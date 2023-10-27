@@ -12,6 +12,8 @@ author:
     - name: University of South Carolina
       department: Biological Sciences
       address: 700 Sumter St 401, Columbia, SC 29208
+      email: AB93@email.sc.edu
+      phone: +1 (440) 668-8376
   - name: Rod Johnson
     affiliations: 
     - name: Bermuda Institute of Ocean Sciences
@@ -28,7 +30,7 @@ format:
       - "_titlepage.tex"
     include-in-header:
       - "in-header.tex"
-    number-sections: true
+    number-sections: false
     linestretch: 2
     tbl-cap-location: top
     filters: [wordcount.lua]
