@@ -34,6 +34,7 @@ format:
     linestretch: 2
     tbl-cap-location: top
     filters: [wordcount.lua]
+    keep-tex: true
 ---
 
 
@@ -72,14 +73,13 @@ format:
 #| child: ./05_acknowledgements.qmd
 ```
 
+```{r}
+#| child: ./06_data_availability.qmd
+```
 ## References
 ::: {#refs}
 :::
 
-
-```{r}
-#| child: ./06_data_availability.qmd
-```
 
 
 ```{r}
